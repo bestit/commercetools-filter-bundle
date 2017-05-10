@@ -9,7 +9,9 @@ It still uses the [commmercetools/php-sdk](https://github.com/commercetools/comm
 
 Open composer.json and add the repository:
 
-```composer.json
+```
+# composer.json
+
     "repositories": [
         {
             "type": "vcs",
@@ -129,7 +131,8 @@ and the current listing category (Commercetools Object) for creating the listing
 Example:
 
 ```php
-# ListingController.php
+// ListingController.php
+
     public function indexAction(Request $request, Category $category): array
     {
         $result = $this->get('best_it_commercetools_filter.manager.filter_manager')->listing($request, $category);
@@ -153,7 +156,8 @@ and the search string for creating the search request.
 Example:
 
 ```php
-# SearchController.php
+// SearchController.php
+
     public function indexAction(Request $request, Category $category): array
     {
         $result = $this->get('best_it_commercetools_filter.manager.filter_manager')->search($request, $request->query->get('search'));
