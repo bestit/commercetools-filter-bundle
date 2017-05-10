@@ -6,10 +6,6 @@ services:
   best_it_commercetools_filter.normalizer.simple_product_normalizer:
       class: BestIt\Commercetools\FilterBundle\Normalizer\SimpleProductNormalizer
 
-  best_it_commercetools_filter.model.facet_config_collection:
-      class: BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection
-      factory: 'best_it_commercetools_filter.factory.facet_config_collection_factory:create'
-
   best_it_commercetools_filter.factory.config_factory:
       class: BestIt\Commercetools\FilterBundle\Factory\ConfigFactory
       arguments:
@@ -33,8 +29,6 @@ services:
 
   best_it_commercetools_filter.factory.facet_config_collection_factory:
       class: BestIt\Commercetools\FilterBundle\Factory\FacetConfigCollectionFactory
-      arguments:
-          - '@translator'
 
   best_it_commercetools_filter.manager.filter_manager:
       class: BestIt\Commercetools\FilterBundle\Manager\FilterManager

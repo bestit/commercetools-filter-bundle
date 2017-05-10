@@ -3,9 +3,9 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
 use BestIt\Commercetools\FilterBundle\Factory\FacetConfigCollectionFactory;
+use BestIt\Commercetools\FilterBundle\Factory\FacetConfigCollectionFactoryInterface;
 use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Test for facet config collection factory
@@ -24,19 +24,20 @@ class FacetConfigCollectionFactoryTest extends TestCase
     private $fixture;
 
     /**
-     * The translator
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @inheritdoc
      */
     public function setUp()
     {
-        $this->fixture = new FacetConfigCollectionFactory(
-            $this->translator = $this->createMock(TranslatorInterface::class)
-        );
+        $this->fixture = new FacetConfigCollectionFactory();
+    }
+
+    /**
+     * Test implement interface
+     * @return void
+     */
+    public function testImplementInterface()
+    {
+        static::assertInstanceOf(FacetConfigCollectionFactoryInterface::class, $this->fixture);
     }
 
     /**
@@ -45,22 +46,6 @@ class FacetConfigCollectionFactoryTest extends TestCase
      */
     public function testCreate()
     {
-        $this->translator
-            ->expects(self::exactly(4))
-            ->method('trans')
-            ->withConsecutive(
-                ['facet_manufacturer', [], 'app'],
-                ['facet_wares_key_name', [], 'app'],
-                ['facet_color', [], 'app'],
-                ['facet_price', [], 'app']
-            )
-            ->willReturnOnConsecutiveCalls(
-                'Hersteller',
-                'WKZ - Name',
-                'Farbe',
-                'Preis'
-            );
-
         static::assertInstanceOf(FacetConfigCollection::class, $this->fixture->create());
     }
 }
