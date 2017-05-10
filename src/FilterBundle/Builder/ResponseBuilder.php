@@ -7,7 +7,7 @@ use BestIt\Commercetools\FilterBundle\Factory\PaginationFactory;
 use BestIt\Commercetools\FilterBundle\Form\FacetType;
 use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
-use BestIt\Commercetools\FilterBundle\Model\Response;
+use BestIt\Commercetools\FilterBundle\Model\Result;
 use Commercetools\Core\Response\PagedSearchResponse;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -67,9 +67,9 @@ class ResponseBuilder
      * Build response
      * @param Context $context
      * @param PagedSearchResponse $pagedSearchResponse
-     * @return Response
+     * @return Result
      */
-    public function build(Context $context, PagedSearchResponse $pagedSearchResponse): Response
+    public function build(Context $context, PagedSearchResponse $pagedSearchResponse): Result
     {
         $totalProducts = $pagedSearchResponse->getTotal();
         $facets = $pagedSearchResponse->getFacets();
@@ -89,14 +89,14 @@ class ResponseBuilder
             $products[] = $this->getProductNormalizer()->normalize($product);
         }
 
-        $response = (new Response())
+        $result = (new Result())
             ->setContext($context)
             ->setProducts($products)
             ->setTotalProducts($totalProducts)
             ->setPagination($pagination)
             ->setForm($form->createView());
 
-        return $response;
+        return $result;
     }
 
     /**

@@ -6,7 +6,7 @@ use BestIt\Commercetools\FilterBundle\Builder\RequestBuilder;
 use BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder;
 use BestIt\Commercetools\FilterBundle\Factory\ContextFactory;
 use BestIt\Commercetools\FilterBundle\Factory\SortingFactory;
-use BestIt\Commercetools\FilterBundle\Model\Response;
+use BestIt\Commercetools\FilterBundle\Model\Result;
 use Commercetools\Core\Model\Category\Category;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Exception\NotImplementedException;
@@ -103,9 +103,9 @@ class FilterManager
      * Perform a listing request
      * @param Request $request
      * @param Category $category
-     * @return Response
+     * @return Result
      */
-    public function listing(Request $request, Category $category): Response
+    public function listing(Request $request, Category $category): Result
     {
         $context = $this->getContextFactory()->createFromCategory($request, $category);
         $sorting = $this->getSortingFactory()->create($context);
@@ -121,9 +121,9 @@ class FilterManager
      * Perform a search request
      * @param Request $request
      * @param string $search
-     * @return Response
+     * @return Result
      */
-    public function search(Request $request, string $search = null): Response
+    public function search(Request $request, string $search = null): Result
     {
         $context = $this->getContextFactory()->createFromSearch($request, $search);
         $sorting = $this->getSortingFactory()->create($context);

@@ -5,12 +5,12 @@ namespace BestIt\Commercetools\FilterBundle\Model;
 use Symfony\Component\Form\FormView;
 
 /**
- * Response data for filter bundle
+ * Result data for filter bundle
  * @author chowanski <chowanski@bestit-online.de>
  * @package BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
-class Response
+class Result
 {
     /**
      * @var Context
@@ -104,9 +104,9 @@ class Response
     /**
      * Set context
      * @param Context $context
-     * @return Response
+     * @return Result
      */
-    public function setContext(Context $context): Response
+    public function setContext(Context $context): Result
     {
         $this->context = $context;
 
@@ -116,9 +116,9 @@ class Response
     /**
      * Set form
      * @param FormView $form
-     * @return Response
+     * @return Result
      */
-    public function setForm(FormView $form): Response
+    public function setForm(FormView $form): Result
     {
         $this->form = $form;
 
@@ -128,9 +128,9 @@ class Response
     /**
      * Set pagination
      * @param Pagination $pagination
-     * @return Response
+     * @return Result
      */
-    public function setPagination(Pagination $pagination): Response
+    public function setPagination(Pagination $pagination): Result
     {
         $this->pagination = $pagination;
 
@@ -140,9 +140,9 @@ class Response
     /**
      * Set products
      * @param array $products
-     * @return Response
+     * @return Result
      */
-    public function setProducts(array $products): Response
+    public function setProducts(array $products): Result
     {
         $this->products = $products;
 
@@ -152,9 +152,9 @@ class Response
     /**
      * Set sorting
      * @param SortingCollection $sorting
-     * @return Response
+     * @return Result
      */
-    public function setSorting(SortingCollection $sorting): Response
+    public function setSorting(SortingCollection $sorting): Result
     {
         $this->sorting = $sorting;
 
@@ -164,9 +164,9 @@ class Response
     /**
      * Set amount of products
      * @param int $totalProducts
-     * @return Response
+     * @return Result
      */
-    public function setTotalProducts(int $totalProducts): Response
+    public function setTotalProducts(int $totalProducts): Result
     {
         $this->totalProducts = $totalProducts;
 

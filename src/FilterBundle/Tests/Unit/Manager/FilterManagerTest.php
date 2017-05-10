@@ -9,7 +9,7 @@ use BestIt\Commercetools\FilterBundle\Factory\SortingFactory;
 use BestIt\Commercetools\FilterBundle\Manager\FilterManager;
 use BestIt\Commercetools\FilterBundle\Model\Config;
 use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\Response;
+use BestIt\Commercetools\FilterBundle\Model\Result;
 use BestIt\Commercetools\FilterBundle\Model\SortingCollection;
 use Commercetools\Core\Model\Category\Category;
 use Commercetools\Core\Response\PagedSearchResponse;
@@ -107,10 +107,10 @@ class FilterManagerTest extends TestCase
             ->expects(self::once())
             ->method('build')
             ->with(self::equalTo($context), self::equalTo($rawResponse))
-            ->willReturn($response = new Response());
+            ->willReturn($response = new Result());
 
         $result = $this->fixture->listing($request, $category);
-        static::assertInstanceOf(Response::class, $result);
+        static::assertInstanceOf(Result::class, $result);
         static::assertEquals($sortingCollection, $result->getSorting());
     }
 
@@ -151,10 +151,10 @@ class FilterManagerTest extends TestCase
             ->expects(self::once())
             ->method('build')
             ->with(self::equalTo($context), self::equalTo($rawResponse))
-            ->willReturn($response = new Response());
+            ->willReturn($response = new Result());
 
         $result = $this->fixture->search($request, $search);
-        static::assertInstanceOf(Response::class, $result);
+        static::assertInstanceOf(Result::class, $result);
         static::assertEquals($sortingCollection, $result->getSorting());
     }
 }

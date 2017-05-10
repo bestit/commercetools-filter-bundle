@@ -4,24 +4,24 @@ namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Model;
 
 use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Model\Pagination;
-use BestIt\Commercetools\FilterBundle\Model\Response;
+use BestIt\Commercetools\FilterBundle\Model\Result;
 use BestIt\Commercetools\FilterBundle\Model\SortingCollection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormView;
 
 /**
- * Class ResponseTest
+ * Class ResultTest
  * @author chowanski <chowanski@bestit-online.de>
  * @category Tests\Unit
  * @package BestIt\Commercetools\FilterBundle
  * @subpackage Model
  * @version $id$
  */
-class ResponseTest extends TestCase
+class ResultTest extends TestCase
 {
     /**
      * The model to test
-     * @var Response
+     * @var Result
      */
     private $fixture;
 
@@ -30,7 +30,7 @@ class ResponseTest extends TestCase
      */
     public function setUp()
     {
-        $this->fixture = new Response();
+        $this->fixture = new Result();
     }
 
     /**
