@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="filter_messages_sorting_price_asc">
+                <source>sorting_price_asc</source>
+                <target>Preis aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="filter_messages_sorting_price_desc">
+                <source>sorting_price_desc</source>
+                <target>Preis absteigend</target>
+            </trans-unit>
+            <trans-unit id="filter_messages_sorting_name_asc">
+                <source>sorting_name_asc</source>
+                <target>Name aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="filter_messages_sorting_name_desc">
+                <source>sorting_name_desc</source>
+                <target>Name absteigend</target>
+            </trans-unit>
+            <trans-unit id="filter_messages_sorting_created_at_asc">
+                <source>sorting_created_at_asc</source>
+                <target>Neueste Artikel</target>
+            </trans-unit>
+            <trans-unit id="filter_messages_sorting_created_at_desc">
+                <source>sorting_created_at_desc</source>
+                <target>Älteste Artikel</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

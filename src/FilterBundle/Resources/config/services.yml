@@ -1,0 +1,59 @@
+services:
+  best_it_commercetools_filter.model.config:
+      class: BestIt\Commercetools\FilterBundle\Model\Config
+      factory: 'best_it_commercetools_filter.factory.config_factory:create'
+
+  best_it_commercetools_filter.normalizer.simple_product_normalizer:
+      class: BestIt\Commercetools\FilterBundle\Normalizer\SimpleProductNormalizer
+
+  best_it_commercetools_filter.model.facet_config_collection:
+      class: BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection
+      factory: 'best_it_commercetools_filter.factory.facet_config_collection_factory:create'
+
+  best_it_commercetools_filter.factory.config_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\ConfigFactory
+      arguments:
+          - '%best_it_commercetools_filter.config%'
+
+  best_it_commercetools_filter.factory.context_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\ContextFactory
+      arguments:
+          - '@best_it_commercetools_filter.model.config'
+
+  best_it_commercetools_filter.factory.pagination_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\PaginationFactory
+
+  best_it_commercetools_filter.factory.sorting_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\SortingFactory
+
+  best_it_commercetools_filter.factory.facet_collection_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory
+      arguments:
+          - '@best_it_commercetools_filter.model.facet_config_collection'
+
+  best_it_commercetools_filter.factory.facet_config_collection_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\FacetConfigCollectionFactory
+      arguments:
+          - '@translator'
+
+  best_it_commercetools_filter.manager.filter_manager:
+      class: BestIt\Commercetools\FilterBundle\Manager\FilterManager
+      arguments:
+          - '@best_it_commercetools_filter.factory.context_factory'
+          - '@best_it_commercetools_filter.factory.sorting_factory'
+          - '@best_it_commercetools_filter.builder.request_builder'
+          - '@best_it_commercetools_filter.builder.response_builder'
+
+  best_it_commercetools_filter.builder.request_builder:
+      class: BestIt\Commercetools\FilterBundle\Builder\RequestBuilder
+      arguments:
+          - '@best_it_commercetools_filter.request.client'
+          - '@best_it_commercetools_filter.model.facet_config_collection'
+
+  best_it_commercetools_filter.builder.response_builder:
+      class: BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder
+      arguments:
+          - '@best_it_commercetools_filter.normalizer.product'
+          - '@best_it_commercetools_filter.factory.pagination_factory'
+          - '@form.factory'
+          - '@best_it_commercetools_filter.factory.facet_collection_factory'
