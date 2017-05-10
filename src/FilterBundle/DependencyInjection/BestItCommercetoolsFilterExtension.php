@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  * @subpackage DependencyInjection
  * @version $id$
  */
-class FilterExtension extends Extension
+class BestItCommercetoolsFilterExtension extends Extension
 {
     /**
      * @inheritdoc

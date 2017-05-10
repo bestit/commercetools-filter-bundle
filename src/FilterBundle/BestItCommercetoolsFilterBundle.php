@@ -10,6 +10,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @package BestIt\Commercetools\FilterBundle
  * @version $id$
  */
-class FilterBundle extends Bundle
+class BestItCommercetoolsFilterBundle extends Bundle
 {
 }
