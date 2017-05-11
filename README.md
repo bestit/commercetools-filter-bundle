@@ -62,63 +62,111 @@ class AppKernel extends Kernel
 
 ### Step 4: Configure the Bundle
 
+#### Minimum configuration (only _all_ required fields)
 ```
-# Default configuration for "BestItCommercetoolsFilterBundle"
+# Minimum configuration for "BestItCommercetoolsFilterBundle"
+best_it_commercetools_filter:
+    
+    # Client service id of commerce tools sdk client
+    client_id: app.commercetools.client
+    
+    # Sorting. At least one sorting options must exist
+    sorting:
+    
+        # Default sorting to use if no sorting is selected
+        default: name_asc
+        
+        # This is an array with all available sortings.
+        choices:
+            name_asc:
+            
+                # Translation key
+                translation: sorting_name_asc
+                
+                # Api query for sdk
+                query: 'name.de asc'
+```
+
+#### Maximum configuration (all required and optional fields)
+```
+# Maximum configuration for "BestItCommercetoolsFilterBundle"
 best_it_commercetools_filter:
 
-    # Amount of products per page
-    products_per_page: 20
+    # Optional used translation domain (default "messages")
+    translation_domain: app
     
-    # Amount of neighbours at pagination
-    neighbours: 1
-    
-    # Http query key for current page
-    page_query_key: page
-    
-    # Http query key for current sort
-    sort_query_key: sort
-    
-    # Http query key for current view
-    view_query_key: view
-    
-    # Default view mode 
-    default_view: list
-    
-    # Product normalizer for normalizing fetched products (service id)
+    # Optional product normalizer (service id / implement interface)
     product_normalizer_id: bh.app.normalizer.product_normalizer
     
-    # Used http client (service id)
-    client_id: bh.app.commercetools.client                                      # Required
+    # Client service id of commerce tools sdk client
+    client_id: bh.app.commercetools.client                                          # Required
     
-    # Config provider for filter configs (service id)
+    # Optional facets factory config provider (service id / implement interface)
     config_provider_id: bh_app.factory.facet_config_collection_factory
     
-    # Available sortings
-    sorting:                                                                    # Required (at least one element)
-        price_asc:
-            # Translation key for translation
-            translation: sorting_price_asc                                      # Required
+    # Optional facet config
+    facet:
+    
+        # Translation label for reset button OR false for disable button
+        reset: button_filter_reset
+        
+        # Translation label for submit button OR false for disable button
+        submit: false
+    
+    # Optional pagination settings
+    pagination:
+        
+        # Products per page
+        products_per_page: 20
+        
+        # Neighbours at pagination 1 => "1 2 3" | 2 => "1 2 3 4 5"
+        neighbours: 1
+        
+        # Query key name
+        query_key: page
+        
+    # Optional view settings
+    view:
+    
+        # Query key name
+        query_key: view
+        
+        # Default value
+        default: list
+        
+    # Sorting. At least one sorting options must exist
+    sorting:                                                                        # Required
+        
+        # Optional query key name
+        query_key: sort
+        
+        # Default sorting to use if no sorting is selected
+        default: name_asc                                                           # Required
+        
+        # This is an array with all available sortings.
+        choices:
+            price_asc:
             
-            # Commerce tools query command
-            query: 'price asc'                                                  # Required
-        price_desc:
-            translation: sorting_price_desc
-            query: 'price desc'
-        name_asc:
-            translation: sorting_name_asc
-            query: 'name.de asc'
-            
-            # Use this as default
-            default: true
-        name_desc:
-            translation: sorting_name_desc
-            query: 'name.de desc'
-        created_at_asc:
-            translation: sorting_created_at_asc
-            query: 'createdAt asc'
-        created_at_desc:
-            translation: sorting_created_at_desc
-            query: 'createdAt desc'
+                # Translation key
+                translation: sorting_price_asc                                      # Required
+                
+                # Api query for sdk
+                query: 'price asc'                                                  # Required
+            price_desc:
+                translation: sorting_price_desc
+                query: 'price desc'
+            name_asc:
+                translation: sorting_name_asc
+                query: 'name.de asc'
+            name_desc:
+                translation: sorting_name_desc
+                query: 'name.de desc'
+            created_at_asc:
+                translation: sorting_created_at_asc
+                query: 'createdAt asc'
+            created_at_desc:
+                translation: sorting_created_at_desc
+                query: 'createdAt desc'
 ```
 
 ## Usage
@@ -177,6 +225,7 @@ Example:
 
 In most cases, products need to be normalized for the frontend. You can choose one of the base normalizer from filter bundle or use your 
 own if you implement the _ProductNormalizerInterface_ and add the service id to the app config. The filter bundle contains two base normalizer:
+
 * ArrayProductNormalizer: Converts the _ProductProjection_ object to array.
 * EmptyProductNormalizer: Just return the _ProductProjection_ without normalization
 

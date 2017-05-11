@@ -41,21 +41,19 @@ class SortingFactoryTest extends TestCase
             'config' => new Config([
                 'sortings' => [
                     'name_asc' => [
-                        'default' => false,
                         'translation' => 'name.asc',
                         'query' => 'name.de asc'
                     ],
                     'price_asc' => [
-                        'default' => true,
                         'translation' => 'price.asc',
                         'query' => 'price asc'
                     ],
                     'name_desc' => [
-                        'default' => false,
                         'translation' => 'name.desc',
                         'query' => 'name.de desc'
                     ]
-                ]
+                ],
+                'defaultSorting' => 'price_asc'
             ]),
             'sorting' => 'name_desc'
         ]);
@@ -78,21 +76,19 @@ class SortingFactoryTest extends TestCase
             'config' => new Config([
                 'sortings' => [
                     'name_asc' => [
-                        'default' => false,
                         'translation' => 'name.asc',
                         'query' => 'name.de asc'
                     ],
                     'price_asc' => [
-                        'default' => true,
                         'translation' => 'price.asc',
                         'query' => 'price asc'
                     ],
                     'name_desc' => [
-                        'default' => false,
                         'translation' => 'name.desc',
                         'query' => 'name.de desc'
                     ]
-                ]
+                ],
+                'defaultSorting' => 'price_asc'
             ]),
             'sorting' => 'foo'
         ]);
@@ -115,21 +111,19 @@ class SortingFactoryTest extends TestCase
             'config' => new Config([
                 'sortings' => [
                     'name_asc' => [
-                        'default' => false,
                         'translation' => 'name.asc',
                         'query' => 'name.de asc'
                     ],
                     'price_asc' => [
-                        'default' => true,
                         'translation' => 'price.asc',
                         'query' => 'price asc'
                     ],
                     'name_desc' => [
-                        'default' => false,
                         'translation' => 'name.desc',
                         'query' => 'name.de desc'
                     ]
-                ]
+                ],
+                'defaultSorting' => 'price_asc'
             ]),
             'sorting' => 'foo'
         ]);

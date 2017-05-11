@@ -6,6 +6,8 @@ use BestIt\Commercetools\FilterBundle\Enum\FacetType as EnumFacetType;
 use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Form\MinMaxRangeType;
 use BestIt\Commercetools\FilterBundle\Form\TermType;
+use BestIt\Commercetools\FilterBundle\Model\Config;
+use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Model\Facet;
 use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
@@ -13,6 +15,8 @@ use BestIt\Commercetools\FilterBundle\Model\RangeCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
 use BestIt\Commercetools\FilterBundle\Model\TermCollection;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -92,7 +96,7 @@ class FilterTypeTest extends TestCase
 
         $builder = $this->createMock(FormBuilderInterface::class);
         $builder
-            ->expects(self::exactly(2))
+            ->expects(self::exactly(4))
             ->method('add')
             ->withConsecutive(
                 [
@@ -121,10 +125,34 @@ class FilterTypeTest extends TestCase
                         'max' => 3500,
                         'label' => 'Foo-Range',
                     ]
+                ],
+                [
+                    'reset',
+                    ResetType::class,
+                    [
+                        'translation_domain' => 'messages',
+                        'label' => 'reset'
+                    ]
+                ],
+                [
+                    'submit',
+                    SubmitType::class,
+                    [
+                        'translation_domain' => 'messages',
+                        'label' => 'submit'
+                    ]
                 ]
             );
 
-        $this->fixture->buildForm($builder, ['facets' => $facetCollection]);
+        $this->fixture->buildForm($builder, ['facets' => $facetCollection, 'context' => new Context([
+            'config' => new Config([
+                'translationDomain' => 'messages',
+                'facet' => [
+                    'reset' => 'reset',
+                    'submit' => 'submit'
+                ]
+            ])
+        ])]);
     }
 
     /**
@@ -146,12 +174,21 @@ class FilterTypeTest extends TestCase
         $resolver
             ->expects(self::once())
             ->method('setRequired')
-            ->with(self::equalTo(['facets']));
+            ->with(self::equalTo(['facets', 'context']));
 
         $resolver
-            ->expects(self::once())
+            ->expects(self::exactly(2))
             ->method('setAllowedTypes')
-            ->with(self::equalTo('facets'), self::equalTo([FacetCollection::class]));
+            ->withConsecutive(
+                [
+                    self::equalTo('facets'),
+                    self::equalTo([FacetCollection::class])
+                ],
+                [
+                    self::equalTo('context'),
+                    self::equalTo([Context::class])
+                ]
+            );
 
         $this->fixture->configureOptions($resolver);
     }

@@ -25,7 +25,7 @@ class SortingFactory
         foreach ($context->getConfig()->getSortings() as $key => $item) {
             $collection->addSorting($sorting = new Sorting($key, $item['translation'], $item['query']));
 
-            if ($item['default'] === true) {
+            if ($key === $context->getConfig()->getDefaultSorting()) {
                 $collection->setDefault($sorting);
             }
 

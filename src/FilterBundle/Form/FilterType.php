@@ -2,11 +2,13 @@
 
 namespace BestIt\Commercetools\FilterBundle\Form;
 
+use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Model\Facet;
 use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,6 +25,9 @@ class FilterType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Context $context */
+        $context = $options['context'];
+
         /** @var Facet $facet */
         foreach ($options['facets'] as $facet) {
             switch ($facet->getType()) {
@@ -65,6 +70,20 @@ class FilterType extends AbstractType
                     break;
             }
         }
+
+        if ($reset = $context->getConfig()->getFacet()['reset']) {
+            $builder->add('reset', ResetType::class, [
+                'translation_domain' => $context->getConfig()->getTranslationDomain(),
+                'label' => $reset
+            ]);
+        }
+
+        if ($submit = $context->getConfig()->getFacet()['submit']) {
+            $builder->add('submit', SubmitType::class, [
+                'translation_domain' => $context->getConfig()->getTranslationDomain(),
+                'label' => $submit
+            ]);
+        }
     }
 
     /**
@@ -78,7 +97,8 @@ class FilterType extends AbstractType
             'allow_extra_fields' => true,
         ]);
 
-        $resolver->setRequired(['facets']);
+        $resolver->setRequired(['facets', 'context']);
         $resolver->setAllowedTypes('facets', [FacetCollection::class]);
+        $resolver->setAllowedTypes('context', [Context::class]);
     }
 }

@@ -79,6 +79,7 @@ class ResponseBuilder
 
         $form = $this->getFormFactory()->create(FilterType::class, [], [
             'facets' => $facetCollection,
+            'context' => $context,
             'method' => 'GET'
         ]);
 

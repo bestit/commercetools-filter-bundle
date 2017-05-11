@@ -25,30 +25,9 @@ class Configuration implements ConfigurationInterface
 
         $builder->root('best_it_commercetools_filter')
             ->children()
-                ->append($this->getSortingNode())
-                ->scalarNode('products_per_page')
-                    ->info('Products per page')
-                    ->defaultValue(20)
-                ->end()
-                ->scalarNode('neighbours')
-                    ->info('Neighbours at pagination')
-                    ->defaultValue(1)
-                ->end()
-                ->scalarNode('page_query_key')
-                    ->info('The query key for current page')
-                    ->defaultValue('page')
-                ->end()
-                ->scalarNode('sort_query_key')
-                    ->info('The query key for sorting')
-                    ->defaultValue('sort')
-                ->end()
-                ->scalarNode('view_query_key')
-                    ->info('The view key for sorting')
-                    ->defaultValue('view')
-                ->end()
-                ->scalarNode('default_view')
-                    ->info('Default view type (eg. grid, list)')
-                    ->defaultValue('list')
+                ->scalarNode('translation_domain')
+                    ->info('Used translation domain for all this bundle')
+                    ->defaultValue('messages')
                 ->end()
                 ->scalarNode('product_normalizer_id')
                     ->info('Used product normalizer')
@@ -63,9 +42,93 @@ class Configuration implements ConfigurationInterface
                     ->info('Used config provider')
                     ->defaultValue('best_it_commercetools_filter.factory.facet_config_collection_factory')
                 ->end()
-            ->end();
+            ->end()
+            ->append($this->getSortingNode())
+            ->append($this->getPaginationNode())
+            ->append($this->getViewNode())
+            ->append($this->getFacetsNode())
+        ;
 
         return $builder;
+    }
+
+    /**
+     * Add the config for view
+     * @return ArrayNodeDefinition
+     */
+    private function getViewNode(): ArrayNodeDefinition
+    {
+        $node = (new TreeBuilder())->root('view');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('query_key')
+                    ->info('The view key for sorting')
+                    ->defaultValue('view')
+                ->end()
+                ->scalarNode('default')
+                    ->info('Default view type (eg. grid, list)')
+                    ->defaultValue('list')
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     * Add the config for facets
+     * @return ArrayNodeDefinition
+     */
+    private function getFacetsNode(): ArrayNodeDefinition
+    {
+        $node = (new TreeBuilder())->root('facet');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('reset')
+                    ->info('Translation key for reset button or false for disable reset button')
+                    ->defaultValue('reset')
+                ->end()
+                ->scalarNode('submit')
+                    ->info('Translation key for reset button or false for disable submit button')
+                    ->defaultValue('submit')
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     * Add the config for pagination
+     * @return ArrayNodeDefinition
+     */
+    private function getPaginationNode(): ArrayNodeDefinition
+    {
+        $node = (new TreeBuilder())->root('pagination');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('products_per_page')
+                    ->info('Products per page')
+                    ->defaultValue(20)
+                ->end()
+                ->scalarNode('neighbours')
+                    ->info('Neighbours at pagination')
+                    ->defaultValue(1)
+                ->end()
+                ->scalarNode('query_key')
+                    ->info('The query key for current page')
+                    ->defaultValue('page')
+                ->end()
+            ->end()
+        ;
+
+        return $node;
     }
 
     /**
@@ -77,16 +140,34 @@ class Configuration implements ConfigurationInterface
         $node = (new TreeBuilder())->root('sorting');
 
         $node
-                ->info('Define the sorting id, the translation key and sort query')
-                ->normalizeKeys(false)
-                ->requiresAtLeastOneElement()
-                ->isRequired()
-                ->useAttributeAsKey('key')
-                ->prototype('array')
-                    ->children()
-                        ->scalarNode('query')->isRequired()->end()
-                        ->scalarNode('translation')->isRequired()->end()
-                        ->booleanNode('default')->defaultFalse()->end()
+            ->isRequired()
+            ->children()
+                ->scalarNode('query_key')
+                    ->info('The query key for sorting')
+                    ->defaultValue('sort')
+                ->end()
+                ->scalarNode('default')
+                    ->info('The default sort')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->arrayNode('choices')
+                    ->info('Define the sorting id, the translation key and sort query')
+                    ->normalizeKeys(false)
+                    ->requiresAtLeastOneElement()
+                    ->isRequired()
+                    ->useAttributeAsKey('key')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('query')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                            ->end()
+                            ->scalarNode('translation')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end();

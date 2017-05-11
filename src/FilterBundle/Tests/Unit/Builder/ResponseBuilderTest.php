@@ -120,6 +120,7 @@ class ResponseBuilderTest extends TestCase
             ->method('create')
             ->with(self::equalTo(FilterType::class), self::equalTo([]), self::equalTo([
                 'facets' => $facetCollection,
+                'context' => $context,
                 'method' => 'GET'
             ]))
             ->willReturn($form = $this->createMock(Form::class));

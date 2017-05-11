@@ -33,23 +33,17 @@ class ConfigFactory
      */
     public function create(): Config
     {
-        $defaultSorting = null;
-        foreach ($this->getConfig()['sorting'] as $key => $item) {
-            if ($item['default'] === true) {
-                $defaultSorting = $key;
-                break;
-            }
-        }
-
         return new Config([
-            'itemsPerPage' => $this->getConfig()['products_per_page'],
-            'defaultView' => $this->getConfig()['default_view'],
-            'defaultSorting' => $defaultSorting,
-            'neighbours' => $this->getConfig()['neighbours'],
-            'pageQueryKey' => $this->getConfig()['page_query_key'],
-            'sortQueryKey' => $this->getConfig()['sort_query_key'],
-            'viewQueryKey' => $this->getConfig()['view_query_key'],
-            'sortings' => $this->getConfig()['sorting'],
+            'itemsPerPage' => $this->getConfig()['pagination']['products_per_page'],
+            'defaultView' => $this->getConfig()['view']['default'],
+            'defaultSorting' => $this->getConfig()['sorting']['default'],
+            'neighbours' => $this->getConfig()['pagination']['neighbours'],
+            'pageQueryKey' => $this->getConfig()['pagination']['query_key'],
+            'sortQueryKey' => $this->getConfig()['sorting']['query_key'],
+            'viewQueryKey' => $this->getConfig()['view']['query_key'],
+            'sortings' => $this->getConfig()['sorting']['choices'],
+            'facet' => $this->getConfig()['facet'],
+            'translationDomain' => $this->getConfig()['translation_domain'],
         ]);
     }
 
