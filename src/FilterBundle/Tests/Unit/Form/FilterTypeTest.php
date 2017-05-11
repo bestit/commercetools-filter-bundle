@@ -3,8 +3,11 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Form;
 
 use BestIt\Commercetools\FilterBundle\Enum\FacetType as EnumFacetType;
-use BestIt\Commercetools\FilterBundle\Form\FacetType;
-use BestIt\Commercetools\FilterBundle\Form\MinMaxRange;
+use BestIt\Commercetools\FilterBundle\Form\FilterType;
+use BestIt\Commercetools\FilterBundle\Form\MinMaxRangeType;
+use BestIt\Commercetools\FilterBundle\Form\TermType;
+use BestIt\Commercetools\FilterBundle\Model\Config;
+use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Model\Facet;
 use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
@@ -12,23 +15,24 @@ use BestIt\Commercetools\FilterBundle\Model\RangeCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
 use BestIt\Commercetools\FilterBundle\Model\TermCollection;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Test the facet type
+ * Test the filter type
  * @author chowanski <chowanski@bestit-online.de>
  * @category Tests\Unit
  * @package BestIt\Commercetools\FilterBundle
  * @subpackage Form
  * @version $id$
  */
-class FacetTypeTest extends TestCase
+class FilterTypeTest extends TestCase
 {
     /**
-     * The facet type
-     * @var FacetType
+     * The filter type
+     * @var FilterType
      */
     private $fixture;
 
@@ -37,7 +41,7 @@ class FacetTypeTest extends TestCase
      */
     public function setUp()
     {
-        $this->fixture = new FacetType();
+        $this->fixture = new FilterType();
     }
 
     /**
@@ -92,12 +96,12 @@ class FacetTypeTest extends TestCase
 
         $builder = $this->createMock(FormBuilderInterface::class);
         $builder
-            ->expects(self::exactly(2))
+            ->expects(self::exactly(4))
             ->method('add')
             ->withConsecutive(
                 [
                     'foo.bar',
-                    ChoiceType::class,
+                    TermType::class,
                     [
                         'multiple' => true,
                         'expanded' => true,
@@ -114,17 +118,41 @@ class FacetTypeTest extends TestCase
                 ],
                 [
                     'foo.range',
-                    MinMaxRange::class,
+                    MinMaxRangeType::class,
                     [
                         'translation_domain' => false,
                         'min' => 1500,
                         'max' => 3500,
                         'label' => 'Foo-Range',
                     ]
+                ],
+                [
+                    'reset',
+                    ResetType::class,
+                    [
+                        'translation_domain' => 'messages',
+                        'label' => 'reset'
+                    ]
+                ],
+                [
+                    'submit',
+                    SubmitType::class,
+                    [
+                        'translation_domain' => 'messages',
+                        'label' => 'submit'
+                    ]
                 ]
             );
 
-        $this->fixture->buildForm($builder, ['facets' => $facetCollection]);
+        $this->fixture->buildForm($builder, ['facets' => $facetCollection, 'context' => new Context([
+            'config' => new Config([
+                'translationDomain' => 'messages',
+                'facet' => [
+                    'reset' => 'reset',
+                    'submit' => 'submit'
+                ]
+            ])
+        ])]);
     }
 
     /**
@@ -146,12 +174,21 @@ class FacetTypeTest extends TestCase
         $resolver
             ->expects(self::once())
             ->method('setRequired')
-            ->with(self::equalTo(['facets']));
+            ->with(self::equalTo(['facets', 'context']));
 
         $resolver
-            ->expects(self::once())
+            ->expects(self::exactly(2))
             ->method('setAllowedTypes')
-            ->with(self::equalTo('facets'), self::equalTo([FacetCollection::class]));
+            ->withConsecutive(
+                [
+                    self::equalTo('facets'),
+                    self::equalTo([FacetCollection::class])
+                ],
+                [
+                    self::equalTo('context'),
+                    self::equalTo([Context::class])
+                ]
+            );
 
         $this->fixture->configureOptions($resolver);
     }

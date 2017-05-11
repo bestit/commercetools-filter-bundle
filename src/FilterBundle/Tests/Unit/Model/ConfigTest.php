@@ -124,4 +124,28 @@ class ConfigTest extends TestCase
         self::assertEquals($this->fixture, $this->fixture->setViewQueryKey($value));
         self::assertEquals($value, $this->fixture->getViewQueryKey());
     }
+
+    /**
+     * Test setter / getter for facet property
+     * @return void
+     */
+    public function testSetAndGetFacet()
+    {
+        $value = ['foo' => 'bar'];
+
+        self::assertEquals($this->fixture, $this->fixture->setFacet($value));
+        self::assertEquals($value, $this->fixture->getFacet());
+    }
+
+    /**
+     * Test setter / getter for translation domain property
+     * @return void
+     */
+    public function testSetAndGetTranslationDomain()
+    {
+        $value = 'view';
+
+        self::assertEquals($this->fixture, $this->fixture->setTranslationDomain($value));
+        self::assertEquals($value, $this->fixture->getTranslationDomain());
+    }
 }

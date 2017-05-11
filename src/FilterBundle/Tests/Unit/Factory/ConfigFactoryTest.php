@@ -24,30 +24,39 @@ class ConfigFactoryTest extends TestCase
     {
         $sortingConfigData = [
             'name_asc' => [
-                'default' => false,
                 'translation' => 'name.asc',
                 'query' => 'name.de asc'
             ],
             'price_asc' => [
-                'default' => true,
                 'translation' => 'price.asc',
                 'query' => 'price asc'
             ],
             'name_desc' => [
-                'default' => false,
                 'translation' => 'name.desc',
                 'query' => 'name.de desc'
             ],
         ];
 
         $configData = [
-            'products_per_page' => 23,
-            'default_view' => 'grid',
-            'neighbours' => 4,
-            'page_query_key' => 'page',
-            'sort_query_key' => 'sort',
-            'view_query_key' => 'view',
-            'sorting' => $sortingConfigData
+            'pagination' => [
+                'products_per_page' => 23,
+                'neighbours' => 4,
+                'query_key' => 'page',
+            ],
+            'sorting' => [
+                'query_key' => 'sort',
+                'choices' => $sortingConfigData,
+                'default' => 'price_asc'
+            ],
+            'view' => [
+                'default' => 'grid',
+                'query_key' => 'view',
+            ],
+            'facet' => [
+                'reset' => 'reset',
+                'submit' => 'submit'
+            ],
+            'translation_domain' => 'messages'
         ];
 
         $resolvedConfig = (new ConfigFactory($configData))->create();
@@ -61,5 +70,7 @@ class ConfigFactoryTest extends TestCase
         static::assertEquals(4, $resolvedConfig->getNeighbours());
         static::assertEquals(23, $resolvedConfig->getItemsPerPage());
         static::assertEquals($sortingConfigData, $resolvedConfig->getSortings());
+        static::assertEquals('reset', $resolvedConfig->getFacet()['reset']);
+        static::assertEquals('messages', $resolvedConfig->getTranslationDomain());
     }
 }

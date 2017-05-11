@@ -59,6 +59,18 @@ class Config
     private $sortings;
 
     /**
+     * Available facet config values
+     * @var array
+     */
+    private $facet;
+
+    /**
+     * Used translation domain
+     * @var string
+     */
+    private $translationDomain;
+
+    /**
      * Config constructor
      * @param array $values
      */
@@ -237,6 +249,46 @@ class Config
     {
         $this->viewQueryKey = $viewQueryKey;
 
+        return $this;
+    }
+
+    /**
+     * Get facet
+     * @return array
+     */
+    public function getFacet(): array
+    {
+        return $this->facet;
+    }
+
+    /**
+     * Set facet
+     * @param array $facet
+     * @return Config
+     */
+    public function setFacet(array $facet): Config
+    {
+        $this->facet = $facet;
+        return $this;
+    }
+
+    /**
+     * Get translationDomain
+     * @return string
+     */
+    public function getTranslationDomain(): string
+    {
+        return $this->translationDomain;
+    }
+
+    /**
+     * Set translationDomain
+     * @param string $translationDomain
+     * @return Config
+     */
+    public function setTranslationDomain(string $translationDomain): Config
+    {
+        $this->translationDomain = $translationDomain;
         return $this;
     }
 }

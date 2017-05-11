@@ -11,12 +11,12 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class MinMaxRange
+ * Class MinMaxRangeType
  * @author chowanski <chowanski@bestit-online.de>
  * @package BestIt\Commercetools\FilterBundle
  * @subpackage Form
  */
-class MinMaxRange extends AbstractType
+class MinMaxRangeType extends AbstractType
 {
     /**
      * {@inheritdoc}

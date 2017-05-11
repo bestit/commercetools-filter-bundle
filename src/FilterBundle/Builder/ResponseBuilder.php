@@ -4,7 +4,7 @@ namespace BestIt\Commercetools\FilterBundle\Builder;
 
 use BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory;
 use BestIt\Commercetools\FilterBundle\Factory\PaginationFactory;
-use BestIt\Commercetools\FilterBundle\Form\FacetType;
+use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
 use BestIt\Commercetools\FilterBundle\Model\Result;
@@ -77,8 +77,9 @@ class ResponseBuilder
         $pagination = $this->getPaginationFactory()->create($context, $totalProducts);
         $facetCollection = $this->getFacetCollectionFactory()->create($facets);
 
-        $form = $this->getFormFactory()->create(FacetType::class, [], [
+        $form = $this->getFormFactory()->create(FilterType::class, [], [
             'facets' => $facetCollection,
+            'context' => $context,
             'method' => 'GET'
         ]);
 

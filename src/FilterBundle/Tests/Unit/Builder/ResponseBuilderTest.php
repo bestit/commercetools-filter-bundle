@@ -6,7 +6,7 @@ use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
 use BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder;
 use BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory;
 use BestIt\Commercetools\FilterBundle\Factory\PaginationFactory;
-use BestIt\Commercetools\FilterBundle\Form\FacetType;
+use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\Pagination;
@@ -118,8 +118,9 @@ class ResponseBuilderTest extends TestCase
         $this->formFactory
             ->expects(self::once())
             ->method('create')
-            ->with(self::equalTo(FacetType::class), self::equalTo([]), self::equalTo([
+            ->with(self::equalTo(FilterType::class), self::equalTo([]), self::equalTo([
                 'facets' => $facetCollection,
+                'context' => $context,
                 'method' => 'GET'
             ]))
             ->willReturn($form = $this->createMock(Form::class));
