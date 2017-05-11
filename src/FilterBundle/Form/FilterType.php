@@ -2,7 +2,6 @@
 
 namespace BestIt\Commercetools\FilterBundle\Form;
 
-use BestIt\Commercetools\FilterBundle\Enum\FacetType as EnumFacetType;
 use BestIt\Commercetools\FilterBundle\Model\Facet;
 use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
@@ -12,12 +11,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Form type for facets
+ * Form type for filter
  * @author chowanski <chowanski@bestit-online.de>
  * @package BestIt\Commercetools\FilterBundle
  * @subpackage Form
  */
-class FacetType extends AbstractType
+class FilterType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -41,7 +40,7 @@ class FacetType extends AbstractType
                         $choices[$title] = $term;
                     }
 
-                    $builder->add($facet->getConfig()->getAlias(), ChoiceType::class, [
+                    $builder->add($facet->getConfig()->getAlias(), TermType::class, [
                         'multiple' => $facet->getConfig()->isMultiSelect(),
                         'expanded' => true,
                         'choices' => $choices,
@@ -57,7 +56,7 @@ class FacetType extends AbstractType
                     break;
 
                 case 'range':
-                    $builder->add($facet->getConfig()->getAlias(), MinMaxRange::class, [
+                    $builder->add($facet->getConfig()->getAlias(), MinMaxRangeType::class, [
                         'translation_domain' => false,
                         'min' => $facet->getRanges()->getMin(),
                         'max' => $facet->getRanges()->getMax(),

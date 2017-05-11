@@ -3,8 +3,9 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Form;
 
 use BestIt\Commercetools\FilterBundle\Enum\FacetType as EnumFacetType;
-use BestIt\Commercetools\FilterBundle\Form\FacetType;
-use BestIt\Commercetools\FilterBundle\Form\MinMaxRange;
+use BestIt\Commercetools\FilterBundle\Form\FilterType;
+use BestIt\Commercetools\FilterBundle\Form\MinMaxRangeType;
+use BestIt\Commercetools\FilterBundle\Form\TermType;
 use BestIt\Commercetools\FilterBundle\Model\Facet;
 use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
@@ -12,23 +13,22 @@ use BestIt\Commercetools\FilterBundle\Model\RangeCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
 use BestIt\Commercetools\FilterBundle\Model\TermCollection;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Test the facet type
+ * Test the filter type
  * @author chowanski <chowanski@bestit-online.de>
  * @category Tests\Unit
  * @package BestIt\Commercetools\FilterBundle
  * @subpackage Form
  * @version $id$
  */
-class FacetTypeTest extends TestCase
+class FilterTypeTest extends TestCase
 {
     /**
-     * The facet type
-     * @var FacetType
+     * The filter type
+     * @var FilterType
      */
     private $fixture;
 
@@ -37,7 +37,7 @@ class FacetTypeTest extends TestCase
      */
     public function setUp()
     {
-        $this->fixture = new FacetType();
+        $this->fixture = new FilterType();
     }
 
     /**
@@ -97,7 +97,7 @@ class FacetTypeTest extends TestCase
             ->withConsecutive(
                 [
                     'foo.bar',
-                    ChoiceType::class,
+                    TermType::class,
                     [
                         'multiple' => true,
                         'expanded' => true,
@@ -114,7 +114,7 @@ class FacetTypeTest extends TestCase
                 ],
                 [
                     'foo.range',
-                    MinMaxRange::class,
+                    MinMaxRangeType::class,
                     [
                         'translation_domain' => false,
                         'min' => 1500,

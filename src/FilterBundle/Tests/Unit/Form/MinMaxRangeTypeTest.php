@@ -2,7 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Form;
 
-use BestIt\Commercetools\FilterBundle\Form\MinMaxRange;
+use BestIt\Commercetools\FilterBundle\Form\MinMaxRangeType;
 use BestIt\Commercetools\FilterBundle\Form\Transformer\PriceMaxDataTransformer;
 use BestIt\Commercetools\FilterBundle\Form\Transformer\PriceMinDataTransformer;
 use PHPUnit\Framework\TestCase;
@@ -19,11 +19,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @subpackage Form
  * @version $id$
  */
-class MinMaxRangeTest extends TestCase
+class MinMaxRangeTypeTest extends TestCase
 {
     /**
      * The min max type
-     * @var MinMaxRange
+     * @var MinMaxRangeType
      */
     private $fixture;
 
@@ -32,7 +32,7 @@ class MinMaxRangeTest extends TestCase
      */
     public function setUp()
     {
-        $this->fixture = new MinMaxRange();
+        $this->fixture = new MinMaxRangeType();
     }
 
     /**
