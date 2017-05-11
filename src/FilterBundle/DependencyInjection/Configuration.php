@@ -52,7 +52,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('product_normalizer_id')
                     ->info('Used product normalizer')
-                    ->defaultValue('best_it_commercetools_filter.normalizer.simple_product_normalizer')
+                    ->defaultValue('best_it_commercetools_filter.normalizer.empty_product_normalizer')
                 ->end()
                 ->scalarNode('client_id')
                     ->info('Used commerce tools client')

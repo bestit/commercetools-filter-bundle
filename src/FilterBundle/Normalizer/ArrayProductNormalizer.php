@@ -5,12 +5,12 @@ namespace BestIt\Commercetools\FilterBundle\Normalizer;
 use Commercetools\Core\Model\Product\ProductProjection;
 
 /**
- * Simple product normalizer
+ * Array product normalizer
  * @author chowanski <chowanski@bestit-online.de>
  * @package BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
-class SimpleProductNormalizer implements ProductNormalizerInterface
+class ArrayProductNormalizer implements ProductNormalizerInterface
 {
     /**
      * @inheritdoc

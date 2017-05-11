@@ -33,7 +33,7 @@ This command requires you to have Composer installed globally, as explained
 in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
 of the Composer documentation.
 
-### Step 2: Enable the Bundle
+### Step 3: Enable the Bundle
 
 Then, enable the bundle by adding it to the list of registered bundles
 in the `app/AppKernel.php` file of your project:
@@ -60,7 +60,7 @@ class AppKernel extends Kernel
 }
 ```
 
-### Step 3: Configure the Bundle
+### Step 4: Configure the Bundle
 
 ```
 # Default configuration for "BestItCommercetoolsFilterBundle"
@@ -172,3 +172,17 @@ Example:
         ];
     }
 ```
+
+### Product Normalizer
+
+In most cases, products need to be normalized for the frontend. You can choose one of the base normalizer from filter bundle or use your 
+own if you implement the _ProductNormalizerInterface_ and add the service id to the app config. The filter bundle contains two base normalizer:
+* ArrayProductNormalizer: Converts the _ProductProjection_ object to array.
+* EmptyProductNormalizer: Just return the _ProductProjection_ without normalization
+
+_EmptyProductNormalizer_ will be use if you don't fill the _product_normalizer_id_ Parameter (@ config.yml).
+
+### Config Provider id
+
+You can add you own filter config provider. Just implement the _FacetConfigCollectionFactoryInterface_ and add your service id to _config_provider_id_ (@ config.yml).
+The filter bundle default provider will be use if you don't fill the _config_provider_id_ Parameter (@ config.yml), which returns no filters.

@@ -2,24 +2,24 @@
 
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Normalizer;
 
+use BestIt\Commercetools\FilterBundle\Normalizer\EmptyProductNormalizer;
 use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
-use BestIt\Commercetools\FilterBundle\Normalizer\SimpleProductNormalizer;
 use Commercetools\Core\Model\Product\ProductProjection;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class SimpleProductNormalizerTest
+ * Class EmptyProductNormalizerTest
  * @author chowanski <chowanski@bestit-online.de>
  * @category Tests\Unit
  * @package BestIt\Commercetools\FilterBundle
  * @subpackage Normalizer
  * @version $id$
  */
-class SimpleProductNormalizerTest extends TestCase
+class EmptyProductNormalizerTest extends TestCase
 {
     /**
      * The normalizer to test
-     * @var SimpleProductNormalizer
+     * @var EmptyProductNormalizer
      */
     private $fixture;
 
@@ -28,7 +28,7 @@ class SimpleProductNormalizerTest extends TestCase
      */
     public function setUp()
     {
-        $this->fixture = new SimpleProductNormalizer();
+        $this->fixture = new EmptyProductNormalizer();
     }
 
     /**
@@ -48,6 +48,6 @@ class SimpleProductNormalizerTest extends TestCase
     {
         $projection = new ProductProjection();
 
-        static::assertEquals($projection->toArray(), $this->fixture->normalize($projection));
+        static::assertEquals($projection, $this->fixture->normalize($projection));
     }
 }

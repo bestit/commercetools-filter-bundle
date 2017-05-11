@@ -3,8 +3,11 @@ services:
       class: BestIt\Commercetools\FilterBundle\Model\Config
       factory: 'best_it_commercetools_filter.factory.config_factory:create'
 
-  best_it_commercetools_filter.normalizer.simple_product_normalizer:
-      class: BestIt\Commercetools\FilterBundle\Normalizer\SimpleProductNormalizer
+  best_it_commercetools_filter.normalizer.array_product_normalizer:
+      class: BestIt\Commercetools\FilterBundle\Normalizer\ArrayProductNormalizer
+
+  best_it_commercetools_filter.normalizer.empty_product_normalizer:
+      class: BestIt\Commercetools\FilterBundle\Normalizer\EmptyProductNormalizer
 
   best_it_commercetools_filter.factory.config_factory:
       class: BestIt\Commercetools\FilterBundle\Factory\ConfigFactory
