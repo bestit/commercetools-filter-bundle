@@ -83,7 +83,8 @@ class ResponseBuilder
             'method' => 'GET'
         ]);
 
-        $form->submit($context->getQuery()['facet'] ?? []);
+        // TODO: Uncool - remove hard coded name
+        $form->submit($context->getQuery()['filter'] ?? []);
 
         $products = [];
         foreach ($pagedSearchResponse->toObject() as $product) {

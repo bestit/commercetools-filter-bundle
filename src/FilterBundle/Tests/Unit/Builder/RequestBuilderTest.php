@@ -110,7 +110,7 @@ class RequestBuilderTest extends TestCase
                 'page' => 1,
                 'query' => [
                     'foo' => 'bar',
-                    'facet' => [
+                    'filter' => [
                         'foobar' => 'bestit'
                     ]
                 ],
@@ -140,7 +140,7 @@ class RequestBuilderTest extends TestCase
             ->expand('productType');
 
         $builder = new FacetBuilder($this->facetConfigCollection);
-        $resolvedValues = $builder->resolve($context->getQuery()['facet']);
+        $resolvedValues = $builder->resolve($context->getQuery()['filter']);
         $request = $builder->build($request, $resolvedValues);
 
         $this->client

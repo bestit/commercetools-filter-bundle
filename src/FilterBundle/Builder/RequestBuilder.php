@@ -63,10 +63,11 @@ class RequestBuilder
      * Decode facet query
      * @param array $query
      * @return array
+     * @TODO: Add query encoder / decoder service
      */
     public function decode(array $query): array
     {
-        return $query['facet'] ?? [];
+        return $query['filter'] ?? [];
     }
 
     /**

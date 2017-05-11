@@ -79,7 +79,7 @@ class ResponseBuilderTest extends TestCase
     {
         $context = new Context([
             'query' => [
-                'facet' => [
+                'filter' => [
                     'foo' => 'bar'
                 ]
             ]
