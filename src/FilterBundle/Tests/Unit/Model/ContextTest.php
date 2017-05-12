@@ -8,22 +8,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class ContextTest
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class ContextTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var Context
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -32,6 +34,7 @@ class ContextTest extends TestCase
 
     /**
      * Test setter / getter for config property
+     *
      * @return void
      */
     public function testSetAndGetConfig()
@@ -44,6 +47,7 @@ class ContextTest extends TestCase
 
     /**
      * Test setter / getter for page property
+     *
      * @return void
      */
     public function testSetAndGetPage()
@@ -56,6 +60,7 @@ class ContextTest extends TestCase
 
     /**
      * Test setter / getter for query property
+     *
      * @return void
      */
     public function testSetAndGetQuery()
@@ -68,6 +73,7 @@ class ContextTest extends TestCase
 
     /**
      * Test setter / getter for route property
+     *
      * @return void
      */
     public function testSetAndGetRoute()
@@ -80,6 +86,7 @@ class ContextTest extends TestCase
 
     /**
      * Test setter / getter for sorting property
+     *
      * @return void
      */
     public function testSetAndGetSorting()
@@ -92,6 +99,7 @@ class ContextTest extends TestCase
 
     /**
      * Test setter / getter for view property
+     *
      * @return void
      */
     public function testSetAndGetView()

@@ -9,22 +9,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for sorting factory
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Factory
- * @version $id$
+ * @version    $id$
  */
 class SortingFactoryTest extends TestCase
 {
     /**
      * The sorting factory
+     *
      * @var SortingFactory
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -33,30 +35,35 @@ class SortingFactoryTest extends TestCase
 
     /**
      * Test create method with active sort
+     *
      * @return void
      */
     public function testCreateWithActiveSort()
     {
-        $context = new Context([
-            'config' => new Config([
-                'sortings' => [
-                    'name_asc' => [
-                        'translation' => 'name.asc',
-                        'query' => 'name.de asc'
-                    ],
-                    'price_asc' => [
-                        'translation' => 'price.asc',
-                        'query' => 'price asc'
-                    ],
-                    'name_desc' => [
-                        'translation' => 'name.desc',
-                        'query' => 'name.de desc'
+        $context = new Context(
+            [
+                'config' => new Config(
+                    [
+                        'sortings' => [
+                            'name_asc' => [
+                                'translation' => 'name.asc',
+                                'query' => 'name.de asc'
+                            ],
+                            'price_asc' => [
+                                'translation' => 'price.asc',
+                                'query' => 'price asc'
+                            ],
+                            'name_desc' => [
+                                'translation' => 'name.desc',
+                                'query' => 'name.de desc'
+                            ]
+                        ],
+                        'defaultSorting' => 'price_asc'
                     ]
-                ],
-                'defaultSorting' => 'price_asc'
-            ]),
-            'sorting' => 'name_desc'
-        ]);
+                ),
+                'sorting' => 'name_desc'
+            ]
+        );
 
         $sortingCollection = $this->fixture->create($context);
 
@@ -68,30 +75,35 @@ class SortingFactoryTest extends TestCase
 
     /**
      * Test create method with all value
+     *
      * @return void
      */
     public function testCreateWithAllValues()
     {
-        $context = new Context([
-            'config' => new Config([
-                'sortings' => [
-                    'name_asc' => [
-                        'translation' => 'name.asc',
-                        'query' => 'name.de asc'
-                    ],
-                    'price_asc' => [
-                        'translation' => 'price.asc',
-                        'query' => 'price asc'
-                    ],
-                    'name_desc' => [
-                        'translation' => 'name.desc',
-                        'query' => 'name.de desc'
+        $context = new Context(
+            [
+                'config' => new Config(
+                    [
+                        'sortings' => [
+                            'name_asc' => [
+                                'translation' => 'name.asc',
+                                'query' => 'name.de asc'
+                            ],
+                            'price_asc' => [
+                                'translation' => 'price.asc',
+                                'query' => 'price asc'
+                            ],
+                            'name_desc' => [
+                                'translation' => 'name.desc',
+                                'query' => 'name.de desc'
+                            ]
+                        ],
+                        'defaultSorting' => 'price_asc'
                     ]
-                ],
-                'defaultSorting' => 'price_asc'
-            ]),
-            'sorting' => 'foo'
-        ]);
+                ),
+                'sorting' => 'foo'
+            ]
+        );
 
         $sortingCollection = $this->fixture->create($context);
 
@@ -103,30 +115,35 @@ class SortingFactoryTest extends TestCase
 
     /**
      * Test create method with default value
+     *
      * @return void
      */
     public function testCreateWithDefaultValues()
     {
-        $context = new Context([
-            'config' => new Config([
-                'sortings' => [
-                    'name_asc' => [
-                        'translation' => 'name.asc',
-                        'query' => 'name.de asc'
-                    ],
-                    'price_asc' => [
-                        'translation' => 'price.asc',
-                        'query' => 'price asc'
-                    ],
-                    'name_desc' => [
-                        'translation' => 'name.desc',
-                        'query' => 'name.de desc'
+        $context = new Context(
+            [
+                'config' => new Config(
+                    [
+                        'sortings' => [
+                            'name_asc' => [
+                                'translation' => 'name.asc',
+                                'query' => 'name.de asc'
+                            ],
+                            'price_asc' => [
+                                'translation' => 'price.asc',
+                                'query' => 'price asc'
+                            ],
+                            'name_desc' => [
+                                'translation' => 'name.desc',
+                                'query' => 'name.de desc'
+                            ]
+                        ],
+                        'defaultSorting' => 'price_asc'
                     ]
-                ],
-                'defaultSorting' => 'price_asc'
-            ]),
-            'sorting' => 'foo'
-        ]);
+                ),
+                'sorting' => 'foo'
+            ]
+        );
 
         $sortingCollection = $this->fixture->create($context);
 

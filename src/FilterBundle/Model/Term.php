@@ -4,32 +4,37 @@ namespace BestIt\Commercetools\FilterBundle\Model;
 
 /**
  * Term object
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class Term
 {
     /**
      * The term
+     *
      * @var string|null
      */
     private $term;
 
     /**
      * Count
+     *
      * @var int
      */
     private $count = 0;
 
     /**
      * The title
+     *
      * @var string|null
      */
     private $title;
 
     /**
      * Matched results
+     *
      * @return int
      */
     public function getCount(): int
@@ -39,6 +44,7 @@ class Term
 
     /**
      * Result key must no be displayed in frontend
+     *
      * @return string|null
      */
     public function getTerm()
@@ -48,6 +54,7 @@ class Term
 
     /**
      * Display name
+     *
      * @return string|null
      */
     public function getTitle()
@@ -57,7 +64,9 @@ class Term
 
     /**
      * Set count
+     *
      * @param int $count
+     *
      * @return Term
      */
     public function setCount(int $count = null): Term
@@ -69,7 +78,9 @@ class Term
 
     /**
      * Set term
+     *
      * @param string|null $term
+     *
      * @return Term
      */
     public function setTerm(string $term = null): Term
@@ -81,7 +92,9 @@ class Term
 
     /**
      * Set title
+     *
      * @param string|null $title
+     *
      * @return Term
      */
     public function setTitle(string $title = null): Term

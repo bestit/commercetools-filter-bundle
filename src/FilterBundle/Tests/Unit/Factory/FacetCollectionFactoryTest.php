@@ -12,28 +12,31 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for facet collection factory
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Factory
- * @version $id$
+ * @version    $id$
  */
 class FacetCollectionFactoryTest extends TestCase
 {
     /**
      * The factory
+     *
      * @var FacetCollectionFactory
      */
     private $fixture;
 
     /**
      * The collection
+     *
      * @var FacetConfigCollection
      */
     private $facetConfigCollection;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -41,27 +44,34 @@ class FacetCollectionFactoryTest extends TestCase
             $this->facetConfigCollection = new FacetConfigCollection()
         );
 
-        $this->facetConfigCollection->add((new FacetConfig())
-            ->setName('Preis')
-            ->setField('price')
-            ->setAlias('price')
-            ->setType(FacetType::RANGE));
+        $this->facetConfigCollection->add(
+            (new FacetConfig())
+                ->setName('Preis')
+                ->setField('price')
+                ->setAlias('price')
+                ->setType(FacetType::RANGE)
+        );
 
-        $this->facetConfigCollection->add((new FacetConfig())
-            ->setName('Hersteller')
-            ->setField('attribute_manufacturer_name')
-            ->setAlias('attribute_manufacturer_name')
-            ->setType(FacetType::TEXT));
+        $this->facetConfigCollection->add(
+            (new FacetConfig())
+                ->setName('Hersteller')
+                ->setField('attribute_manufacturer_name')
+                ->setAlias('attribute_manufacturer_name')
+                ->setType(FacetType::TEXT)
+        );
 
-        $this->facetConfigCollection->add((new FacetConfig())
-            ->setName('foobar')
-            ->setField('foobar')
-            ->setAlias('foobar')
-            ->setType(FacetType::TEXT));
+        $this->facetConfigCollection->add(
+            (new FacetConfig())
+                ->setName('foobar')
+                ->setField('foobar')
+                ->setAlias('foobar')
+                ->setType(FacetType::TEXT)
+        );
     }
 
     /**
      * Test create method
+     *
      * @return void
      */
     public function testCreate()
@@ -106,6 +116,7 @@ class FacetCollectionFactoryTest extends TestCase
 
     /**
      * Test create method ignore non config facets
+     *
      * @return void
      */
     public function testCreateIgnoreNonConfigFacets()

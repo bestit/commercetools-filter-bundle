@@ -13,8 +13,9 @@ use Commercetools\Core\Response\PagedSearchResponse;
 
 /**
  * Builder and executer of requests
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Builder
  */
 class RequestBuilder
@@ -23,12 +24,14 @@ class RequestBuilder
 
     /**
      * The client for executing
+     *
      * @var Client
      */
     private $client;
 
     /**
      * RequestManager constructor.
+     *
      * @param Client $client
      * @param FacetConfigCollection $facetConfigCollection
      */
@@ -41,6 +44,7 @@ class RequestBuilder
 
     /**
      * Get client
+     *
      * @return Client
      */
     private function getClient(): Client
@@ -50,7 +54,9 @@ class RequestBuilder
 
     /**
      * Set client
+     *
      * @param Client $client
+     *
      * @return RequestBuilder
      */
     private function setClient(Client $client): RequestBuilder
@@ -61,9 +67,11 @@ class RequestBuilder
 
     /**
      * Decode facet query
+     *
      * @param array $query
+     *
      * @return array
-     * @TODO: Add query encoder / decoder service
+     * @TODO:  Add query encoder / decoder service
      */
     public function decode(array $query): array
     {
@@ -72,8 +80,10 @@ class RequestBuilder
 
     /**
      * Execute request
+     *
      * @param Context $context
      * @param SortingCollection $sorting
+     *
      * @return PagedSearchResponse
      */
     public function execute(Context $context, SortingCollection $sorting): PagedSearchResponse
@@ -100,7 +110,11 @@ class RequestBuilder
         $resolvedValues = $builder->resolve($this->decode($context->getQuery()));
         $request = $builder->build($request, $resolvedValues);
 
-        /** @var PagedSearchResponse $result */
+        /**
+         * Commercetools response
+         *
+         * @var PagedSearchResponse $result
+         */
         $result = $this->getClient()->execute($request);
 
         return $result;

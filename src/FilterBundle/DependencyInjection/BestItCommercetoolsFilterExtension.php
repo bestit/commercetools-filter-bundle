@@ -11,15 +11,16 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * Loads the config for the filter bundle.
- * @author chowanski <michel.chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <michel.chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage DependencyInjection
- * @version $id$
+ * @version    $id$
  */
 class BestItCommercetoolsFilterExtension extends Extension
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

@@ -8,22 +8,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test the term model
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class TermTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var Term
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -32,6 +34,7 @@ class TermTest extends TestCase
 
     /**
      * Test setter / getter for count property
+     *
      * @return void
      */
     public function testSetAndGetCount()
@@ -45,6 +48,7 @@ class TermTest extends TestCase
 
     /**
      * Test setter / getter for term property
+     *
      * @return void
      */
     public function testSetAndGetTerm()
@@ -58,6 +62,7 @@ class TermTest extends TestCase
 
     /**
      * Test setter / getter for title property
+     *
      * @return void
      */
     public function testSetAndGetTitle()

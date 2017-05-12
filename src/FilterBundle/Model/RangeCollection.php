@@ -4,28 +4,33 @@ namespace BestIt\Commercetools\FilterBundle\Model;
 
 /**
  * Range collection
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class RangeCollection
 {
     /**
      * Lowest range
+     *
      * @var int
      */
     private $min;
 
     /**
      * Highest range
+     *
      * @var int
      */
     private $max;
 
     /**
      * Add a range
+     *
      * @param int $min
      * @param int $max
+     *
      * @return RangeCollection
      */
     public function addRange(int $min, int $max): RangeCollection
@@ -43,6 +48,7 @@ class RangeCollection
 
     /**
      * Get max
+     *
      * @return int
      */
     public function getMax(): int
@@ -52,6 +58,7 @@ class RangeCollection
 
     /**
      * Get min
+     *
      * @return int
      */
     public function getMin(): int
@@ -61,7 +68,9 @@ class RangeCollection
 
     /**
      * Set max
+     *
      * @param int $max
+     *
      * @return RangeCollection
      */
     public function setMax(int $max): RangeCollection
@@ -73,7 +82,9 @@ class RangeCollection
 
     /**
      * Set min
+     *
      * @param int $min
+     *
      * @return RangeCollection
      */
     public function setMin(int $min): RangeCollection

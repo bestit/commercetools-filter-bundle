@@ -4,20 +4,23 @@ namespace BestIt\Commercetools\FilterBundle\Model;
 
 /**
  * Collection for sortings
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class SortingCollection
 {
     /**
      * Array of available sortings
+     *
      * @var Sorting[]
      */
     private $collection = [];
 
     /**
      * SortingCollection constructor.
+     *
      * @param array $collection
      */
     public function __construct(array $collection = [])
@@ -29,7 +32,9 @@ class SortingCollection
 
     /**
      * Add one sorting
+     *
      * @param Sorting $sorting
+     *
      * @return SortingCollection
      */
     public function addSorting(Sorting $sorting): SortingCollection
@@ -41,6 +46,7 @@ class SortingCollection
 
     /**
      * Get sorting
+     *
      * @return Sorting[]
      */
     public function all(): array
@@ -50,6 +56,7 @@ class SortingCollection
 
     /**
      * Get active sorting
+     *
      * @return Sorting|null
      */
     public function getActive()
@@ -73,7 +80,9 @@ class SortingCollection
 
     /**
      * Get sorting by key
+     *
      * @param string $key
+     *
      * @return Sorting|null
      */
     public function getByKey(string $key)
@@ -83,6 +92,7 @@ class SortingCollection
 
     /**
      * Get default
+     *
      * @return Sorting|null
      */
     public function getDefault()
@@ -101,7 +111,9 @@ class SortingCollection
 
     /**
      * Check if sorting with given key exists
+     *
      * @param string $key
+     *
      * @return bool
      */
     public function hasSorting(string $key): bool
@@ -120,7 +132,9 @@ class SortingCollection
 
     /**
      * Set active
+     *
      * @param Sorting $activeSorting
+     *
      * @return SortingCollection
      */
     public function setActive(Sorting $activeSorting): SortingCollection
@@ -134,7 +148,9 @@ class SortingCollection
 
     /**
      * Set default sorting
+     *
      * @param Sorting $defaultSorting
+     *
      * @return SortingCollection
      */
     public function setDefault(Sorting $defaultSorting): SortingCollection

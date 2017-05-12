@@ -11,22 +11,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test facet collection model
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class FacetCollectionTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var FacetCollection
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -35,6 +37,7 @@ class FacetCollectionTest extends TestCase
 
     /**
      * Test add facet
+     *
      * @return void
      */
     public function testAddFacet()
@@ -47,6 +50,7 @@ class FacetCollectionTest extends TestCase
 
     /**
      * Test get iterator
+     *
      * @return void
      */
     public function testGetIterator()
@@ -56,6 +60,7 @@ class FacetCollectionTest extends TestCase
 
     /**
      * Test iterator implementation
+     *
      * @return void
      */
     public function testImplementsIteratorInterface()
@@ -65,6 +70,7 @@ class FacetCollectionTest extends TestCase
 
     /**
      * Test get sorted facets
+     *
      * @return void
      */
     public function testSortedFacets()

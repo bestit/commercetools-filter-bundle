@@ -8,22 +8,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test facet config collection model
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class FacetConfigCollectionTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var FacetConfigCollection
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -35,6 +37,7 @@ class FacetConfigCollectionTest extends TestCase
 
     /**
      * Test add method
+     *
      * @return void
      */
     public function testAdd()
@@ -44,6 +47,7 @@ class FacetConfigCollectionTest extends TestCase
 
     /**
      * Test get all configs
+     *
      * @return void
      */
     public function testAll()
@@ -55,6 +59,7 @@ class FacetConfigCollectionTest extends TestCase
 
     /**
      * Test find no value by alias
+     *
      * @return void
      */
     public function testFindNoValueByAlias()
@@ -64,6 +69,7 @@ class FacetConfigCollectionTest extends TestCase
 
     /**
      * Test find no value by name
+     *
      * @return void
      */
     public function testFindNoValueByName()
@@ -73,6 +79,7 @@ class FacetConfigCollectionTest extends TestCase
 
     /**
      * Test find by alias
+     *
      * @return void
      */
     public function testFindValueByAlias()
@@ -82,6 +89,7 @@ class FacetConfigCollectionTest extends TestCase
 
     /**
      * Test find by name
+     *
      * @return void
      */
     public function testFindValueByName()

@@ -4,32 +4,37 @@ namespace BestIt\Commercetools\FilterBundle\Model;
 
 /**
  * Config data for filter bundle
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class Config
 {
     /**
      * Items per page
+     *
      * @var int
      */
     private $itemsPerPage;
 
     /**
      * Name of default view (eg. grid, list)
+     *
      * @var string
      */
     private $defaultView;
 
     /**
      * Name of default sorting (eg. name_asc)
+     *
      * @var string
      */
     private $defaultSorting;
 
     /**
      * Amount of neighbours at pagination
+     *
      * @var int
      */
     private $neighbours;
@@ -42,36 +47,42 @@ class Config
 
     /**
      * The sort query key
+     *
      * @var string
      */
     private $sortQueryKey;
 
     /**
      * The view query key
+     *
      * @var string
      */
     private $viewQueryKey;
 
     /**
      * Available sortings
+     *
      * @var array
      */
     private $sortings;
 
     /**
      * Available facet config values
+     *
      * @var array
      */
     private $facet;
 
     /**
      * Used translation domain
+     *
      * @var string
      */
     private $translationDomain;
 
     /**
      * Config constructor
+     *
      * @param array $values
      */
     public function __construct(array $values = [])
@@ -86,6 +97,7 @@ class Config
 
     /**
      * Get defaultSorting
+     *
      * @return string
      */
     public function getDefaultSorting(): string
@@ -95,6 +107,7 @@ class Config
 
     /**
      * Get defaultView
+     *
      * @return string
      */
     public function getDefaultView(): string
@@ -104,6 +117,7 @@ class Config
 
     /**
      * Get itemsPerPage
+     *
      * @return int
      */
     public function getItemsPerPage(): int
@@ -113,6 +127,7 @@ class Config
 
     /**
      * Get neighbours
+     *
      * @return int
      */
     public function getNeighbours(): int
@@ -122,6 +137,7 @@ class Config
 
     /**
      * Get pageQueryKey
+     *
      * @return string
      */
     public function getPageQueryKey(): string
@@ -131,6 +147,7 @@ class Config
 
     /**
      * Get sortQueryKey
+     *
      * @return string
      */
     public function getSortQueryKey(): string
@@ -140,6 +157,7 @@ class Config
 
     /**
      * Get sortings
+     *
      * @return array
      */
     public function getSortings(): array
@@ -149,6 +167,7 @@ class Config
 
     /**
      * Get viewQueryKey
+     *
      * @return string
      */
     public function getViewQueryKey(): string
@@ -158,7 +177,9 @@ class Config
 
     /**
      * Set defaultSorting
+     *
      * @param string $defaultSorting
+     *
      * @return Config
      */
     public function setDefaultSorting(string $defaultSorting): Config
@@ -170,7 +191,9 @@ class Config
 
     /**
      * Set defaultView
+     *
      * @param string $defaultView
+     *
      * @return Config
      */
     public function setDefaultView(string $defaultView): Config
@@ -182,7 +205,9 @@ class Config
 
     /**
      * Set itemsPerPage
+     *
      * @param int $itemsPerPage
+     *
      * @return Config
      */
     public function setItemsPerPage(int $itemsPerPage): Config
@@ -194,7 +219,9 @@ class Config
 
     /**
      * Set neighbours
+     *
      * @param int $neighbours
+     *
      * @return Config
      */
     public function setNeighbours(int $neighbours): Config
@@ -206,7 +233,9 @@ class Config
 
     /**
      * Set pageQueryKey
+     *
      * @param string $pageQueryKey
+     *
      * @return Config
      */
     public function setPageQueryKey(string $pageQueryKey): Config
@@ -218,7 +247,9 @@ class Config
 
     /**
      * Set sortQueryKey
+     *
      * @param string $sortQueryKey
+     *
      * @return Config
      */
     public function setSortQueryKey(string $sortQueryKey): Config
@@ -230,7 +261,9 @@ class Config
 
     /**
      * Set sortings
+     *
      * @param array $sortings
+     *
      * @return Config
      */
     public function setSortings(array $sortings): Config
@@ -242,7 +275,9 @@ class Config
 
     /**
      * Set viewQueryKey
+     *
      * @param string $viewQueryKey
+     *
      * @return Config
      */
     public function setViewQueryKey(string $viewQueryKey): Config
@@ -254,6 +289,7 @@ class Config
 
     /**
      * Get facet
+     *
      * @return array
      */
     public function getFacet(): array
@@ -263,7 +299,9 @@ class Config
 
     /**
      * Set facet
+     *
      * @param array $facet
+     *
      * @return Config
      */
     public function setFacet(array $facet): Config
@@ -274,6 +312,7 @@ class Config
 
     /**
      * Get translationDomain
+     *
      * @return string
      */
     public function getTranslationDomain(): string
@@ -283,7 +322,9 @@ class Config
 
     /**
      * Set translationDomain
+     *
      * @param string $translationDomain
+     *
      * @return Config
      */
     public function setTranslationDomain(string $translationDomain): Config

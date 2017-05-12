@@ -7,22 +7,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigTest
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class ConfigTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var Config
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -31,6 +33,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for defaultSorting property
+     *
      * @return void
      */
     public function testSetAndGetDefaultSorting()
@@ -43,6 +46,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for defaultView property
+     *
      * @return void
      */
     public function testSetAndGetDefaultView()
@@ -55,6 +59,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for itemsPerPage property
+     *
      * @return void
      */
     public function testSetAndGetItemsPerPage()
@@ -67,6 +72,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for neighbours property
+     *
      * @return void
      */
     public function testSetAndGetNeighbours()
@@ -79,6 +85,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for pageQueryKey property
+     *
      * @return void
      */
     public function testSetAndGetPageQueryKey()
@@ -91,6 +98,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for sortQueryKey property
+     *
      * @return void
      */
     public function testSetAndGetSortQueryKey()
@@ -103,6 +111,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for sortings property
+     *
      * @return void
      */
     public function testSetAndGetSortings()
@@ -115,6 +124,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for viewQueryKey property
+     *
      * @return void
      */
     public function testSetAndGetViewQueryKey()
@@ -127,6 +137,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for facet property
+     *
      * @return void
      */
     public function testSetAndGetFacet()
@@ -139,6 +150,7 @@ class ConfigTest extends TestCase
 
     /**
      * Test setter / getter for translation domain property
+     *
      * @return void
      */
     public function testSetAndGetTranslationDomain()

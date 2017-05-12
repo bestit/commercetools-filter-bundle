@@ -13,38 +13,44 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 /**
  * Builder for parsing response
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Builder
  */
 class ResponseBuilder
 {
     /**
      * Factory for pagination
+     *
      * @var PaginationFactory
      */
     private $paginationFactory;
 
     /**
      * Form factory
+     *
      * @var FormFactoryInterface
      */
     private $formFactory;
 
     /**
      * The facet collection factory
+     *
      * @var FacetCollectionFactory
      */
     private $facetCollectionFactory;
 
     /**
      * The product normalizer
+     *
      * @var ProductNormalizerInterface
      */
     private $productNormalizer;
 
     /**
      * ResponseManager constructor.
+     *
      * @param ProductNormalizerInterface $productNormalizer
      * @param PaginationFactory $paginationFactory
      * @param FormFactoryInterface $formFactory
@@ -65,8 +71,10 @@ class ResponseBuilder
 
     /**
      * Build response
+     *
      * @param Context $context
      * @param PagedSearchResponse $pagedSearchResponse
+     *
      * @return Result
      */
     public function build(Context $context, PagedSearchResponse $pagedSearchResponse): Result
@@ -77,11 +85,15 @@ class ResponseBuilder
         $pagination = $this->getPaginationFactory()->create($context, $totalProducts);
         $facetCollection = $this->getFacetCollectionFactory()->create($facets);
 
-        $form = $this->getFormFactory()->create(FilterType::class, [], [
-            'facets' => $facetCollection,
-            'context' => $context,
-            'method' => 'GET'
-        ]);
+        $form = $this->getFormFactory()->create(
+            FilterType::class,
+            [],
+            [
+                'facets' => $facetCollection,
+                'context' => $context,
+                'method' => 'GET'
+            ]
+        );
 
         // TODO: Uncool - remove hard coded name
         $form->submit($context->getQuery()['filter'] ?? []);
@@ -103,6 +115,7 @@ class ResponseBuilder
 
     /**
      * Get productNormalizer
+     *
      * @return ProductNormalizerInterface
      */
     private function getProductNormalizer(): ProductNormalizerInterface
@@ -112,7 +125,9 @@ class ResponseBuilder
 
     /**
      * Set productNormalizer
+     *
      * @param ProductNormalizerInterface $productNormalizer
+     *
      * @return ResponseBuilder
      */
     private function setProductNormalizer(ProductNormalizerInterface $productNormalizer): ResponseBuilder
@@ -123,6 +138,7 @@ class ResponseBuilder
 
     /**
      * Get facetCollectionFactory
+     *
      * @return FacetCollectionFactory
      */
     private function getFacetCollectionFactory(): FacetCollectionFactory
@@ -132,6 +148,7 @@ class ResponseBuilder
 
     /**
      * Get formFactory
+     *
      * @return FormFactoryInterface
      */
     private function getFormFactory(): FormFactoryInterface
@@ -141,6 +158,7 @@ class ResponseBuilder
 
     /**
      * Get paginationFactory
+     *
      * @return PaginationFactory
      */
     private function getPaginationFactory(): PaginationFactory
@@ -150,7 +168,9 @@ class ResponseBuilder
 
     /**
      * Set facetCollectionFactory
+     *
      * @param FacetCollectionFactory $facetCollectionFactory
+     *
      * @return ResponseBuilder
      */
     private function setFacetCollectionFactory(FacetCollectionFactory $facetCollectionFactory): ResponseBuilder
@@ -162,7 +182,9 @@ class ResponseBuilder
 
     /**
      * Set formFactory
+     *
      * @param FormFactoryInterface $formFactory
+     *
      * @return ResponseBuilder
      */
     private function setFormFactory(FormFactoryInterface $formFactory): ResponseBuilder
@@ -174,7 +196,9 @@ class ResponseBuilder
 
     /**
      * Set paginationFactory
+     *
      * @param PaginationFactory $paginationFactory
+     *
      * @return ResponseBuilder
      */
     private function setPaginationFactory(PaginationFactory $paginationFactory): ResponseBuilder

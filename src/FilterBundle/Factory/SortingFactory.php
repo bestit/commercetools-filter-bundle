@@ -8,15 +8,18 @@ use BestIt\Commercetools\FilterBundle\Model\SortingCollection;
 
 /**
  * Factory for sorting data
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Factory
  */
 class SortingFactory
 {
     /**
      * Create sorting collection by context
+     *
      * @param Context $context
+     *
      * @return SortingCollection
      */
     public function create(Context $context): SortingCollection

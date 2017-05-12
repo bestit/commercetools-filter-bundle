@@ -6,49 +6,58 @@ use Symfony\Component\Form\FormView;
 
 /**
  * Result data for filter bundle
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class Result
 {
     /**
+     * Result context
+     *
      * @var Context
      */
     private $context;
 
     /**
      * Amount of articles
+     *
      * @var int
      */
     private $totalProducts = 0;
 
     /**
      * Array of products
+     *
      * @var array
      */
     private $products;
 
     /**
      * Pagination data
+     *
      * @var Pagination
      */
     private $pagination;
 
     /**
      * Array of sorting options
+     *
      * @var SortingCollection
      */
     private $sorting;
 
     /**
      * The facet forms
+     *
      * @var FormView
      */
     private $form;
 
     /**
      * Get context
+     *
      * @return Context
      */
     public function getContext(): Context
@@ -58,6 +67,7 @@ class Result
 
     /**
      * Get form
+     *
      * @return FormView
      */
     public function getForm(): FormView
@@ -67,6 +77,7 @@ class Result
 
     /**
      * Get pagination
+     *
      * @return Pagination
      */
     public function getPagination(): Pagination
@@ -76,6 +87,7 @@ class Result
 
     /**
      * Get products
+     *
      * @return array
      */
     public function getProducts(): array
@@ -85,6 +97,7 @@ class Result
 
     /**
      * Get sorting
+     *
      * @return SortingCollection
      */
     public function getSorting(): SortingCollection
@@ -94,6 +107,7 @@ class Result
 
     /**
      * Get amount of articles
+     *
      * @return int
      */
     public function getTotalProducts(): int
@@ -103,7 +117,9 @@ class Result
 
     /**
      * Set context
+     *
      * @param Context $context
+     *
      * @return Result
      */
     public function setContext(Context $context): Result
@@ -115,7 +131,9 @@ class Result
 
     /**
      * Set form
+     *
      * @param FormView $form
+     *
      * @return Result
      */
     public function setForm(FormView $form): Result
@@ -127,7 +145,9 @@ class Result
 
     /**
      * Set pagination
+     *
      * @param Pagination $pagination
+     *
      * @return Result
      */
     public function setPagination(Pagination $pagination): Result
@@ -139,7 +159,9 @@ class Result
 
     /**
      * Set products
+     *
      * @param array $products
+     *
      * @return Result
      */
     public function setProducts(array $products): Result
@@ -151,7 +173,9 @@ class Result
 
     /**
      * Set sorting
+     *
      * @param SortingCollection $sorting
+     *
      * @return Result
      */
     public function setSorting(SortingCollection $sorting): Result
@@ -163,7 +187,9 @@ class Result
 
     /**
      * Set amount of products
+     *
      * @param int $totalProducts
+     *
      * @return Result
      */
     public function setTotalProducts(int $totalProducts): Result

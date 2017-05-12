@@ -4,20 +4,23 @@ namespace BestIt\Commercetools\FilterBundle\Model;
 
 /**
  * Collection for facet config
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class FacetConfigCollection
 {
     /**
      * Array of configs
+     *
      * @var FacetConfig[]
      */
     private $configs = [];
 
     /**
      * Add one config
+     *
      * @param FacetConfig $config
      */
     public function add(FacetConfig $config)
@@ -27,6 +30,7 @@ class FacetConfigCollection
 
     /**
      * Get all configs
+     *
      * @return FacetConfig[]
      */
     public function all(): array
@@ -36,7 +40,9 @@ class FacetConfigCollection
 
     /**
      * Find config by alias
+     *
      * @param string $name
+     *
      * @return FacetConfig|null
      */
     public function findByAlias(string $name)
@@ -54,7 +60,9 @@ class FacetConfigCollection
 
     /**
      * Find config by name
+     *
      * @param string $name
+     *
      * @return FacetConfig|null
      */
     public function findByName(string $name)

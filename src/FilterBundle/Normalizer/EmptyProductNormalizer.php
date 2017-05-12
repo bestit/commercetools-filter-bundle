@@ -6,14 +6,15 @@ use Commercetools\Core\Model\Product\ProductProjection;
 
 /**
  * Empty product normalizer
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class EmptyProductNormalizer implements ProductNormalizerInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function normalize(ProductProjection $projection)
     {

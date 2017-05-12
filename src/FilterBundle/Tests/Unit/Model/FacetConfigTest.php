@@ -9,22 +9,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test facet config model
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class FacetConfigTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var FacetConfig
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -33,6 +35,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test facet field fallback
+     *
      * @return void
      */
     public function testGetFacetFieldFallback()
@@ -56,6 +59,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test facet field fallback throw exception
+     *
      * @return void
      */
     public function testGetFacetFieldFallbackThrowException()
@@ -66,6 +70,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test filter field fallback
+     *
      * @return void
      */
     public function testGetFilterFieldFallback()
@@ -89,6 +94,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for alias property
+     *
      * @return void
      */
     public function testSetAndGetAlias()
@@ -101,6 +107,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for facet field property
+     *
      * @return void
      */
     public function testSetAndGetFacetField()
@@ -113,6 +120,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for field property
+     *
      * @return void
      */
     public function testSetAndGetField()
@@ -125,6 +133,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for filter field property
+     *
      * @return void
      */
     public function testSetAndGetFilterField()
@@ -137,6 +146,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for hierarchical property
+     *
      * @return void
      */
     public function testSetAndGetHierarchical()
@@ -150,6 +160,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for multi select property
+     *
      * @return void
      */
     public function testSetAndGetMultiSelect()
@@ -163,6 +174,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for name property
+     *
      * @return void
      */
     public function testSetAndGetName()
@@ -175,6 +187,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for type property
+     *
      * @return void
      */
     public function testSetAndGetType()
@@ -187,6 +200,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test setter / getter for weight property
+     *
      * @return void
      */
     public function testSetAndGetWeight()
@@ -200,6 +214,7 @@ class FacetConfigTest extends TestCase
 
     /**
      * Test type setter validation
+     *
      * @return void
      */
     public function testSetTypeValidation()

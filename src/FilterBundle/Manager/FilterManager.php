@@ -13,38 +13,44 @@ use Symfony\Component\Intl\Exception\NotImplementedException;
 
 /**
  * Manager for filter products
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Manager
  */
 class FilterManager
 {
     /**
      * Factory for creating a context object
+     *
      * @var ContextFactory
      */
     private $contextFactory;
 
     /**
      * Factory for sorting
+     *
      * @var SortingFactory
      */
     private $sortingFactory;
 
     /**
      * Request builder
+     *
      * @var RequestBuilder
      */
     private $requestBuilder;
 
     /**
      * Response builder
+     *
      * @var ResponseBuilder
      */
     private $responseBuilder;
 
     /**
      * FilterManager constructor.
+     *
      * @param ContextFactory $contextFactory
      * @param SortingFactory $sortingFactory
      * @param RequestBuilder $requestBuilder
@@ -65,6 +71,7 @@ class FilterManager
 
     /**
      * Get contextFactory
+     *
      * @return ContextFactory
      */
     private function getContextFactory(): ContextFactory
@@ -74,6 +81,7 @@ class FilterManager
 
     /**
      * Get requestBuilder
+     *
      * @return RequestBuilder
      */
     private function getRequestBuilder(): RequestBuilder
@@ -83,6 +91,7 @@ class FilterManager
 
     /**
      * Get responseBuilder
+     *
      * @return ResponseBuilder
      */
     private function getResponseBuilder(): ResponseBuilder
@@ -92,6 +101,7 @@ class FilterManager
 
     /**
      * Get sortingFactory
+     *
      * @return SortingFactory
      */
     private function getSortingFactory(): SortingFactory
@@ -101,8 +111,10 @@ class FilterManager
 
     /**
      * Perform a listing request
+     *
      * @param Request $request
      * @param Category $category
+     *
      * @return Result
      */
     public function listing(Request $request, Category $category): Result
@@ -119,8 +131,10 @@ class FilterManager
 
     /**
      * Perform a search request
+     *
      * @param Request $request
      * @param string $search
+     *
      * @return Result
      */
     public function search(Request $request, string $search = null): Result
@@ -137,7 +151,9 @@ class FilterManager
 
     /**
      * Set contextFactory
+     *
      * @param ContextFactory $contextFactory
+     *
      * @return FilterManager
      */
     private function setContextFactory(ContextFactory $contextFactory): FilterManager
@@ -149,7 +165,9 @@ class FilterManager
 
     /**
      * Set requestBuilder
+     *
      * @param RequestBuilder $requestBuilder
+     *
      * @return FilterManager
      */
     private function setRequestBuilder(RequestBuilder $requestBuilder): FilterManager
@@ -161,7 +179,9 @@ class FilterManager
 
     /**
      * Set responseBuilder
+     *
      * @param ResponseBuilder $responseBuilder
+     *
      * @return FilterManager
      */
     private function setResponseBuilder(ResponseBuilder $responseBuilder): FilterManager
@@ -173,7 +193,9 @@ class FilterManager
 
     /**
      * Set sortingFactory
+     *
      * @param SortingFactory $sortingFactory
+     *
      * @return FilterManager
      */
     private function setSortingFactory(SortingFactory $sortingFactory): FilterManager

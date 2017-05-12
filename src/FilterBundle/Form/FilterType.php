@@ -14,8 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Form type for filter
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Form
  */
 class FilterType extends AbstractType
@@ -25,10 +26,18 @@ class FilterType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Context $context */
+        /**
+         * Context object
+         *
+         * @var Context $context
+         */
         $context = $options['context'];
 
-        /** @var Facet $facet */
+        /**
+         * Facet collection
+         *
+         * @var Facet $facet
+         */
         foreach ($options['facets'] as $facet) {
             switch ($facet->getType()) {
                 case 'terms':
@@ -91,11 +100,13 @@ class FilterType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'required' => false,
-            'csrf_protection' => false,
-            'allow_extra_fields' => true,
-        ]);
+        $resolver->setDefaults(
+            [
+                'required' => false,
+                'csrf_protection' => false,
+                'allow_extra_fields' => true,
+            ]
+        );
 
         $resolver->setRequired(['facets', 'context']);
         $resolver->setAllowedTypes('facets', [FacetCollection::class]);

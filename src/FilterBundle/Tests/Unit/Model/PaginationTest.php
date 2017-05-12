@@ -7,22 +7,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class PaginationTest
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class PaginationTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var Pagination
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -31,6 +33,7 @@ class PaginationTest extends TestCase
 
     /**
      * Test setter / getter for currentPage property
+     *
      * @return void
      */
     public function testSetAndGetCurrentPage()
@@ -43,6 +46,7 @@ class PaginationTest extends TestCase
 
     /**
      * Test setter / getter for firstPage property
+     *
      * @return void
      */
     public function testSetAndGetFirstPage()
@@ -55,6 +59,7 @@ class PaginationTest extends TestCase
 
     /**
      * Test setter / getter for lastPage property
+     *
      * @return void
      */
     public function testSetAndGetLastPage()
@@ -67,6 +72,7 @@ class PaginationTest extends TestCase
 
     /**
      * Test setter / getter for nextPages property
+     *
      * @return void
      */
     public function testSetAndGetNextPages()
@@ -79,6 +85,7 @@ class PaginationTest extends TestCase
 
     /**
      * Test setter / getter for previousPages property
+     *
      * @return void
      */
     public function testSetAndGetPreviousPages()
@@ -91,6 +98,7 @@ class PaginationTest extends TestCase
 
     /**
      * Test setter / getter for totalPages property
+     *
      * @return void
      */
     public function testSetAndGetTotalPages()

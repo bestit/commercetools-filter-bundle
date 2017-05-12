@@ -7,16 +7,18 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for facet type enum
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Enum
- * @version $id$
+ * @version    $id$
  */
 class FacetTypeTest extends TestCase
 {
     /**
      * Test category value
+     *
      * @return void
      */
     public function testCategoryValue()
@@ -27,6 +29,7 @@ class FacetTypeTest extends TestCase
 
     /**
      * Test enum value
+     *
      * @return void
      */
     public function testEnumValue()
@@ -37,6 +40,7 @@ class FacetTypeTest extends TestCase
 
     /**
      * Test localized text value
+     *
      * @return void
      */
     public function testLocalizedTextValue()
@@ -47,6 +51,7 @@ class FacetTypeTest extends TestCase
 
     /**
      * Test range value
+     *
      * @return void
      */
     public function testRangeValue()
@@ -57,6 +62,7 @@ class FacetTypeTest extends TestCase
 
     /**
      * Test term value
+     *
      * @return void
      */
     public function testTermValue()
@@ -67,6 +73,7 @@ class FacetTypeTest extends TestCase
 
     /**
      * Test text value
+     *
      * @return void
      */
     public function testTextValue()
@@ -77,6 +84,7 @@ class FacetTypeTest extends TestCase
 
     /**
      * Test isValid method is case sensitive
+     *
      * @return void
      */
     public function testValidIsCaseSensitive()
@@ -86,6 +94,7 @@ class FacetTypeTest extends TestCase
 
     /**
      * Test isValid method is false
+     *
      * @return void
      */
     public function testValidIsFalse()
@@ -95,6 +104,7 @@ class FacetTypeTest extends TestCase
 
     /**
      * Test isValid method is true
+     *
      * @return void
      */
     public function testValidIsTrue()

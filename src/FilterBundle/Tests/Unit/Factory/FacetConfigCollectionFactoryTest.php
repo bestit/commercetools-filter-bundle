@@ -9,22 +9,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for facet config collection factory
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Factory
- * @version $id$
+ * @version    $id$
  */
 class FacetConfigCollectionFactoryTest extends TestCase
 {
     /**
      * The factory
+     *
      * @var FacetConfigCollectionFactory
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -33,6 +35,7 @@ class FacetConfigCollectionFactoryTest extends TestCase
 
     /**
      * Test implement interface
+     *
      * @return void
      */
     public function testImplementInterface()
@@ -42,6 +45,7 @@ class FacetConfigCollectionFactoryTest extends TestCase
 
     /**
      * Test create method
+     *
      * @return void
      */
     public function testCreate()

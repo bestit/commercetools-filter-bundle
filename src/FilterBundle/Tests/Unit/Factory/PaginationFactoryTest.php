@@ -10,22 +10,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for pagination factory
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Factory
- * @version $id$
+ * @version    $id$
  */
 class PaginationFactoryTest extends TestCase
 {
     /**
      * The pagination factory
+     *
      * @var PaginationFactory
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -34,6 +36,7 @@ class PaginationFactoryTest extends TestCase
 
     /**
      * Test create pagination
+     *
      * @return void
      */
     public function testCreate()
@@ -48,7 +51,7 @@ class PaginationFactoryTest extends TestCase
             ->setRoute('home_index')
             ->setConfig($config);
 
-        $result =  $this->fixture->create($context, 130);
+        $result = $this->fixture->create($context, 130);
 
         static::assertInstanceOf(Pagination::class, $result);
         static::assertEquals(1, $result->getFirstPage());

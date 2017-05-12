@@ -14,19 +14,23 @@ use Commercetools\Core\Request\Products\ProductProjectionSearchRequest;
 
 /**
  * Builder for attaching facet to request
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Builder
  */
 class FacetBuilder
 {
     /**
+     * The facet config collection
+     *
      * @var FacetConfigCollection
      */
     private $facetConfigCollection;
 
     /**
      * FacetRequestBuilder constructor
+     *
      * @param FacetConfigCollection $facetConfigCollection
      */
     public function __construct(FacetConfigCollection $facetConfigCollection)
@@ -36,15 +40,20 @@ class FacetBuilder
 
     /**
      * Build facets to request
+     *
      * @param ProductProjectionSearchRequest $request
      * @param array $values
+     *
      * @return ProductProjectionSearchRequest
      */
     public function build(ProductProjectionSearchRequest $request, array $values = []): ProductProjectionSearchRequest
     {
-        $aliases = array_map(function (FacetConfig $facetConfig) {
-            return $facetConfig->getAlias();
-        }, $this->facetConfigCollection->all());
+        $aliases = array_map(
+            function (FacetConfig $facetConfig) {
+                return $facetConfig->getAlias();
+            },
+            $this->facetConfigCollection->all()
+        );
 
         foreach ($aliases as $facetAlias) {
             $facetConfig = $this->facetConfigCollection->findByAlias($facetAlias);
@@ -71,12 +80,16 @@ class FacetBuilder
                         continue;
                     }
 
-                    $request->addFilter(Filter::ofName(sprintf(
-                        '%s:range(%s to %s)',
-                        $name,
-                        (new PriceMinDataTransformer())->reverseTransform($facetValue['min']),
-                        (new PriceMaxDataTransformer())->reverseTransform($facetValue['max'])
-                    )));
+                    $request->addFilter(
+                        Filter::ofName(
+                            sprintf(
+                                '%s:range(%s to %s)',
+                                $name,
+                                (new PriceMinDataTransformer())->reverseTransform($facetValue['min']),
+                                (new PriceMaxDataTransformer())->reverseTransform($facetValue['max'])
+                            )
+                        )
+                    );
 
                     continue;
                 }
@@ -110,7 +123,9 @@ class FacetBuilder
 
     /**
      * Resolve facets by query params
+     *
      * @param array $queryParams
+     *
      * @return array
      */
     public function resolve(array $queryParams): array

@@ -9,22 +9,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class EmptyProductNormalizerTest
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Normalizer
- * @version $id$
+ * @version    $id$
  */
 class EmptyProductNormalizerTest extends TestCase
 {
     /**
      * The normalizer to test
+     *
      * @var EmptyProductNormalizer
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -33,6 +35,7 @@ class EmptyProductNormalizerTest extends TestCase
 
     /**
      * Test that normalizer implement interface
+     *
      * @return void
      */
     public function testImplementInterface()
@@ -42,6 +45,7 @@ class EmptyProductNormalizerTest extends TestCase
 
     /**
      * Test normalize method
+     *
      * @return void
      */
     public function testNormalize()

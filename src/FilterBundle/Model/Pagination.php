@@ -4,50 +4,58 @@ namespace BestIt\Commercetools\FilterBundle\Model;
 
 /**
  * Data model for pagination
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class Pagination
 {
     /**
      * The first page
+     *
      * @var int
      */
     private $firstPage = 1;
 
     /**
      * The last page
+     *
      * @var int
      */
     private $lastPage;
 
     /**
      * The current page
+     *
      * @var int
      */
     private $currentPage;
 
     /**
      * Total pages
+     *
      * @var int
      */
     private $totalPages;
 
     /**
      * Array of prev pages
+     *
      * @var int[]
      */
     private $previousPages = [];
 
     /**
      * Array of next pages
+     *
      * @var int[]
      */
     private $nextPages = [];
 
     /**
      * Pagination constructor
+     *
      * @param array $values
      */
     public function __construct(array $values = [])
@@ -62,6 +70,7 @@ class Pagination
 
     /**
      * Get currentPage
+     *
      * @return int
      */
     public function getCurrentPage(): int
@@ -71,6 +80,7 @@ class Pagination
 
     /**
      * Get firstPage
+     *
      * @return int
      */
     public function getFirstPage(): int
@@ -80,6 +90,7 @@ class Pagination
 
     /**
      * Get lastPage
+     *
      * @return int
      */
     public function getLastPage(): int
@@ -89,6 +100,7 @@ class Pagination
 
     /**
      * Get nextPages
+     *
      * @return int[]
      */
     public function getNextPages(): array
@@ -98,6 +110,7 @@ class Pagination
 
     /**
      * Get previousPages
+     *
      * @return int[]
      */
     public function getPreviousPages(): array
@@ -107,6 +120,7 @@ class Pagination
 
     /**
      * Get totalPages
+     *
      * @return int
      */
     public function getTotalPages(): int
@@ -116,7 +130,9 @@ class Pagination
 
     /**
      * Set currentPage
+     *
      * @param int $currentPage
+     *
      * @return Pagination
      */
     public function setCurrentPage(int $currentPage): Pagination
@@ -128,7 +144,9 @@ class Pagination
 
     /**
      * Set firstPage
+     *
      * @param int $firstPage
+     *
      * @return Pagination
      */
     public function setFirstPage(int $firstPage): Pagination
@@ -140,7 +158,9 @@ class Pagination
 
     /**
      * Set lastPage
+     *
      * @param int $lastPage
+     *
      * @return Pagination
      */
     public function setLastPage(int $lastPage): Pagination
@@ -152,7 +172,9 @@ class Pagination
 
     /**
      * Set nextPages
+     *
      * @param int[] $nextPages
+     *
      * @return Pagination
      */
     public function setNextPages(array $nextPages): Pagination
@@ -164,7 +186,9 @@ class Pagination
 
     /**
      * Set previousPages
+     *
      * @param int[] $previousPages
+     *
      * @return Pagination
      */
     public function setPreviousPages(array $previousPages): Pagination
@@ -176,7 +200,9 @@ class Pagination
 
     /**
      * Set totalPages
+     *
      * @param int $totalPages
+     *
      * @return Pagination
      */
     public function setTotalPages(int $totalPages): Pagination

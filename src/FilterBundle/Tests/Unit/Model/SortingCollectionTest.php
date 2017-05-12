@@ -8,22 +8,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class SortingCollectionTest
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class SortingCollectionTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var SortingCollection
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -32,6 +34,7 @@ class SortingCollectionTest extends TestCase
 
     /**
      * Test add / getter for sorting property
+     *
      * @return void
      */
     public function testAddAndGetSorting()
@@ -44,6 +47,7 @@ class SortingCollectionTest extends TestCase
 
     /**
      * Test getByKey
+     *
      * @return void
      */
     public function testGetByKey()
@@ -56,6 +60,7 @@ class SortingCollectionTest extends TestCase
 
     /**
      * Test has sorting by key
+     *
      * @return void
      */
     public function testHasSorting()
@@ -69,6 +74,7 @@ class SortingCollectionTest extends TestCase
 
     /**
      * Test setter / getter for active property
+     *
      * @return void
      */
     public function testSetAndGetActive()
@@ -82,6 +88,7 @@ class SortingCollectionTest extends TestCase
 
     /**
      * Test setter / getter for default property
+     *
      * @return void
      */
     public function testSetAndGetDefault()
