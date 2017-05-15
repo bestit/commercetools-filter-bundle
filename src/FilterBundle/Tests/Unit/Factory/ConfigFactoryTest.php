@@ -8,16 +8,18 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for config factory
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Factory
- * @version $id$
+ * @version    $id$
  */
 class ConfigFactoryTest extends TestCase
 {
     /**
      * Test create config
+     *
      * @return void
      */
     public function testCreate()

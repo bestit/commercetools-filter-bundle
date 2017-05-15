@@ -13,22 +13,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Test the min max range form type
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Form
- * @version $id$
+ * @version    $id$
  */
 class MinMaxRangeTypeTest extends TestCase
 {
     /**
      * The min max type
+     *
      * @var MinMaxRangeType
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -37,6 +39,7 @@ class MinMaxRangeTypeTest extends TestCase
 
     /**
      * Test build form
+     *
      * @return void
      */
     public function testBuildForm()
@@ -66,6 +69,7 @@ class MinMaxRangeTypeTest extends TestCase
 
     /**
      * Test build view
+     *
      * @return void
      */
     public function testBuildView()
@@ -79,17 +83,21 @@ class MinMaxRangeTypeTest extends TestCase
         ];
 
         $this->fixture->buildView($view, $form, $options);
-        static::assertEquals([
-            'value' => null,
-            'attr' => [],
-            'min' => 45.0,
-            'max' => 78.0,
-            'isRange' => true
-        ], $view->vars);
+        static::assertEquals(
+            [
+                'value' => null,
+                'attr' => [],
+                'min' => 45.0,
+                'max' => 78.0,
+                'isRange' => true
+            ],
+            $view->vars
+        );
     }
 
     /**
      * Test configure options
+     *
      * @return void
      */
     public function testConfigureOptions()
@@ -98,10 +106,14 @@ class MinMaxRangeTypeTest extends TestCase
         $resolver
             ->expects(self::once())
             ->method('setDefaults')
-            ->with(self::equalTo([
-                'required' => false,
-                'isRange' => true
-            ]));
+            ->with(
+                self::equalTo(
+                    [
+                        'required' => false,
+                        'isRange' => true
+                    ]
+                )
+            );
 
         $resolver
             ->expects(self::once())

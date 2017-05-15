@@ -11,22 +11,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test facet model
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class FacetTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var Facet
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -35,6 +37,7 @@ class FacetTest extends TestCase
 
     /**
      * Test setter / getter for config property
+     *
      * @return void
      */
     public function testSetAndGetConfig()
@@ -47,6 +50,7 @@ class FacetTest extends TestCase
 
     /**
      * Test setter / getter for name property
+     *
      * @return void
      */
     public function testSetAndGetName()
@@ -59,6 +63,7 @@ class FacetTest extends TestCase
 
     /**
      * Test setter / getter for ranges property
+     *
      * @return void
      */
     public function testSetAndGetRanges()
@@ -71,6 +76,7 @@ class FacetTest extends TestCase
 
     /**
      * Test setter / getter for terms property
+     *
      * @return void
      */
     public function testSetAndGetTerms()
@@ -83,6 +89,7 @@ class FacetTest extends TestCase
 
     /**
      * Test setter / getter for total property
+     *
      * @return void
      */
     public function testSetAndGetTotal()
@@ -95,6 +102,7 @@ class FacetTest extends TestCase
 
     /**
      * Test setter / getter for type property
+     *
      * @return void
      */
     public function testSetAndGetType()
@@ -107,6 +115,7 @@ class FacetTest extends TestCase
 
     /**
      * Setter should throw an exception with invalid value
+     *
      * @return void
      */
     public function testSetTypeThrowsException()

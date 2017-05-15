@@ -18,34 +18,38 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for request builder
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Builder
- * @version $id$
+ * @version    $id$
  */
 class RequestBuilderTest extends TestCase
 {
     /**
      * The builder to test
+     *
      * @var RequestBuilder
      */
     private $fixture;
 
     /**
      * The client
+     *
      * @var Client
      */
     private $client;
 
     /**
      * The facet config collection
+     *
      * @var FacetConfigCollection
      */
     private $facetConfigCollection;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -57,25 +61,30 @@ class RequestBuilderTest extends TestCase
 
     /**
      * Test build function without special params
+     *
      * @return void
      */
     public function testDefaultBuild()
     {
         $context = new Context(
             [
-                'config' => $config = new Config([
-                    'itemsPerPage' => 20
-                ]),
+                'config' => $config = new Config(
+                    [
+                        'itemsPerPage' => 20
+                    ]
+                ),
                 'page' => 1,
                 'query' => ['foo' => 'bar']
             ]
         );
 
-        $sortingCollection = new SortingCollection([
-            new Sorting('name_desc', 'name_desc', 'name desc'),
-            $active = new Sorting('name_asc', 'name_asc', 'name asc'),
-            $default = new Sorting('price_asc', 'price_asc', 'price asc'),
-        ]);
+        $sortingCollection = new SortingCollection(
+            [
+                new Sorting('name_desc', 'name_desc', 'name desc'),
+                $active = new Sorting('name_asc', 'name_asc', 'name asc'),
+                $default = new Sorting('price_asc', 'price_asc', 'price asc'),
+            ]
+        );
 
         $sortingCollection->setActive($active);
         $sortingCollection->setDefault($default);
@@ -98,15 +107,18 @@ class RequestBuilderTest extends TestCase
 
     /**
      * Test build function with facets
+     *
      * @return void
      */
     public function testFacetBuild()
     {
         $context = new Context(
             [
-                'config' => $config = new Config([
-                    'itemsPerPage' => 20
-                ]),
+                'config' => $config = new Config(
+                    [
+                        'itemsPerPage' => 20
+                    ]
+                ),
                 'page' => 1,
                 'query' => [
                     'foo' => 'bar',
@@ -117,20 +129,24 @@ class RequestBuilderTest extends TestCase
             ]
         );
 
-        $sortingCollection = new SortingCollection([
-            new Sorting('name_desc', 'name_desc', 'name desc'),
-            $active = new Sorting('name_asc', 'name_asc', 'name asc'),
-            $default = new Sorting('price_asc', 'price_asc', 'price asc'),
-        ]);
+        $sortingCollection = new SortingCollection(
+            [
+                new Sorting('name_desc', 'name_desc', 'name desc'),
+                $active = new Sorting('name_asc', 'name_asc', 'name asc'),
+                $default = new Sorting('price_asc', 'price_asc', 'price asc'),
+            ]
+        );
 
         $sortingCollection->setActive($active);
         $sortingCollection->setDefault($default);
 
-        $this->facetConfigCollection->add($facetConfig = (new FacetConfig())
-            ->setName('foobar')
-            ->setField('foobar')
-            ->setAlias('foobar')
-            ->setType(FacetType::TEXT));
+        $this->facetConfigCollection->add(
+            $facetConfig = (new FacetConfig())
+                ->setName('foobar')
+                ->setField('foobar')
+                ->setAlias('foobar')
+                ->setType(FacetType::TEXT)
+        );
 
         $request = ProductProjectionSearchRequest::of()
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())

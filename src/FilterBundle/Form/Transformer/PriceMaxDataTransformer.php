@@ -6,8 +6,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 /**
  * Transformer for price max value
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Form\Transformer
  */
 class PriceMaxDataTransformer implements DataTransformerInterface

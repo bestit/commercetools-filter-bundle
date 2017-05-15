@@ -18,46 +18,52 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class FilterManagerTest
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Manager
- * @version $id$
+ * @version    $id$
  */
 class FilterManagerTest extends TestCase
 {
     /**
      * The manager to test
+     *
      * @var FilterManager
      */
     private $fixture;
 
     /**
      * Factory for creating a context object
+     *
      * @var ContextFactory
      */
     private $contextFactory;
 
     /**
      * Factory for sorting
+     *
      * @var SortingFactory
      */
     private $sortingFactory;
 
     /**
      * Request builder
+     *
      * @var RequestBuilder
      */
     private $requestBuilder;
 
     /**
      * Response builder
+     *
      * @var ResponseBuilder
      */
     private $responseBuilder;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -71,6 +77,7 @@ class FilterManagerTest extends TestCase
 
     /**
      * Test listing
+     *
      * @return void
      */
     public function testListing()
@@ -84,12 +91,18 @@ class FilterManagerTest extends TestCase
             ->expects(self::once())
             ->method('createFromCategory')
             ->with(self::equalTo($request))
-            ->willReturn($context = new Context([
-                'page' => 1,
-                'config' => new Config([
-                    'itemsPerPage' => 20
-                ])
-            ]));
+            ->willReturn(
+                $context = new Context(
+                    [
+                        'page' => 1,
+                        'config' => new Config(
+                            [
+                                'itemsPerPage' => 20
+                            ]
+                        )
+                    ]
+                )
+            );
 
         $this->sortingFactory
             ->expects(self::once())
@@ -116,6 +129,7 @@ class FilterManagerTest extends TestCase
 
     /**
      * Test search method
+     *
      * @return void
      */
     public function testSearch()
@@ -128,12 +142,18 @@ class FilterManagerTest extends TestCase
             ->expects(self::once())
             ->method('createFromSearch')
             ->with(self::equalTo($request), self::equalTo($search))
-            ->willReturn($context = new Context([
-                'page' => 1,
-                'config' => new Config([
-                    'itemsPerPage' => 20
-                ])
-            ]));
+            ->willReturn(
+                $context = new Context(
+                    [
+                        'page' => 1,
+                        'config' => new Config(
+                            [
+                                'itemsPerPage' => 20
+                            ]
+                        )
+                    ]
+                )
+            );
 
         $this->sortingFactory
             ->expects(self::once())

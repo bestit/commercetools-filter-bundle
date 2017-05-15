@@ -21,45 +21,52 @@ use Symfony\Component\Form\FormView;
 
 /**
  * Test for response builder
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Builder
- * @version $id$
+ * @version    $id$
  */
 class ResponseBuilderTest extends TestCase
 {
     /**
      * The builder to test
+     *
      * @var ResponseBuilder
      */
     private $fixture;
 
     /**
      * The normalizer
+     *
      * @var ProductNormalizerInterface
      */
     private $productNormalizer;
 
     /**
      * Factory for pagination
+     *
      * @var PaginationFactory
      */
     private $paginationFactory;
 
     /**
      * Form factory
+     *
      * @var FormFactoryInterface
      */
     private $formFactory;
 
     /**
+     * Collection factory
+     *
      * @var FacetCollectionFactory
      */
     private $facetCollectionFactory;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -73,17 +80,20 @@ class ResponseBuilderTest extends TestCase
 
     /**
      * Test default build function
+     *
      * @return void
      */
     public function testBuild()
     {
-        $context = new Context([
-            'query' => [
-                'filter' => [
-                    'foo' => 'bar'
+        $context = new Context(
+            [
+                'query' => [
+                    'filter' => [
+                        'foo' => 'bar'
+                    ]
                 ]
             ]
-        ]);
+        );
 
         $rawResponse = $this->createMock(PagedSearchResponse::class);
         $rawResponse
@@ -118,11 +128,15 @@ class ResponseBuilderTest extends TestCase
         $this->formFactory
             ->expects(self::once())
             ->method('create')
-            ->with(self::equalTo(FilterType::class), self::equalTo([]), self::equalTo([
-                'facets' => $facetCollection,
-                'context' => $context,
-                'method' => 'GET'
-            ]))
+            ->with(
+                self::equalTo(FilterType::class),
+                self::equalTo([]),
+                self::equalTo([
+                    'facets' => $facetCollection,
+                    'context' => $context,
+                    'method' => 'GET'
+                ])
+            )
             ->willReturn($form = $this->createMock(Form::class));
 
         $form

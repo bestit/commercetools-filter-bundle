@@ -4,44 +4,51 @@ namespace BestIt\Commercetools\FilterBundle\Model;
 
 /**
  * Data model for sorting
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class Sorting
 {
     /**
      * The sorting key
+     *
      * @var string
      */
     private $key;
 
     /**
      * The sorting translation key
+     *
      * @var string
      */
     private $label;
 
     /**
      * The query for this sorting
+     *
      * @var string
      */
     private $query;
 
     /**
      * Is default
+     *
      * @var bool
      */
     private $default = false;
 
     /**
      * Is active
+     *
      * @var bool
      */
     private $isActive = false;
 
     /**
      * Sorting constructor.
+     *
      * @param string $key
      * @param string $label
      * @param string $query
@@ -56,6 +63,7 @@ class Sorting
 
     /**
      * Get key
+     *
      * @return string
      */
     public function getKey(): string
@@ -65,6 +73,7 @@ class Sorting
 
     /**
      * Get label
+     *
      * @return string
      */
     public function getLabel(): string
@@ -74,6 +83,7 @@ class Sorting
 
     /**
      * Get query
+     *
      * @return string
      */
     public function getQuery(): string
@@ -83,6 +93,7 @@ class Sorting
 
     /**
      * Get isActive
+     *
      * @return bool
      */
     public function isActive(): bool
@@ -92,6 +103,7 @@ class Sorting
 
     /**
      * Get default
+     *
      * @return bool
      */
     public function isDefault(): bool
@@ -101,7 +113,9 @@ class Sorting
 
     /**
      * Set isActive
+     *
      * @param bool $isActive
+     *
      * @return Sorting
      */
     public function setActive(bool $isActive): Sorting
@@ -113,7 +127,9 @@ class Sorting
 
     /**
      * Set default
+     *
      * @param bool $default
+     *
      * @return Sorting
      */
     public function setDefault(bool $default): Sorting
@@ -125,7 +141,9 @@ class Sorting
 
     /**
      * Set key
+     *
      * @param string $key
+     *
      * @return Sorting
      */
     public function setKey(string $key): Sorting
@@ -137,7 +155,9 @@ class Sorting
 
     /**
      * Set label
+     *
      * @param string $label
+     *
      * @return Sorting
      */
     public function setLabel(string $label): Sorting
@@ -149,7 +169,9 @@ class Sorting
 
     /**
      * Set query
+     *
      * @param string $query
+     *
      * @return Sorting
      */
     public function setQuery(string $query): Sorting

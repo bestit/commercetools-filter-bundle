@@ -12,8 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class MinMaxRangeType
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Form
  */
 class MinMaxRangeType extends AbstractType
@@ -36,11 +37,14 @@ class MinMaxRangeType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         // round to get nearest value to show even numbers
-        $view->vars = array_replace($view->vars, [
-            'min' => (new PriceMinDataTransformer())->transform($options['min']),
-            'max' => (new PriceMaxDataTransformer())->transform($options['max']),
-            'isRange' => $options['isRange']
-        ]);
+        $view->vars = array_replace(
+            $view->vars,
+            [
+                'min' => (new PriceMinDataTransformer())->transform($options['min']),
+                'max' => (new PriceMaxDataTransformer())->transform($options['max']),
+                'isRange' => $options['isRange']
+            ]
+        );
     }
 
     /**
@@ -48,10 +52,12 @@ class MinMaxRangeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'required' => false,
-            'isRange' => true
-        ]);
+        $resolver->setDefaults(
+            [
+                'required' => false,
+                'isRange' => true
+            ]
+        );
 
         $resolver->setRequired(['min', 'max']);
     }

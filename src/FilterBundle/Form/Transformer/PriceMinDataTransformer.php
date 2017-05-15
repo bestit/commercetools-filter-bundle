@@ -6,8 +6,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 /**
  * Transformer for price min value
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Form\Transformer
  */
 class PriceMinDataTransformer implements DataTransformerInterface

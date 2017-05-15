@@ -6,62 +6,72 @@ use Commercetools\Core\Model\Category\Category;
 
 /**
  * Context data for filter bundle
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class Context
 {
     /**
      * The current page
+     *
      * @var int
      */
     private $page;
 
     /**
      * Current type of view (eg. grid, list)
+     *
      * @var string
      */
     private $view;
 
     /**
      * Type type of sort
+     *
      * @var string
      */
     private $sorting;
 
     /**
      * All query params
+     *
      * @var array
      */
     private $query = [];
 
     /**
      * Config data
+     *
      * @var Config
      */
     private $config;
 
     /**
      * The current route (object)
+     *
      * @var string|object
      */
     private $route;
 
     /**
      * The current category object or null
+     *
      * @var Category|null
      */
     private $category;
 
     /**
      * The search value to filter
+     *
      * @var string|null
      */
     private $search;
 
     /**
      * Context constructor
+     *
      * @param array $values
      */
     public function __construct(array $values = [])
@@ -76,6 +86,7 @@ class Context
 
     /**
      * Get category
+     *
      * @return Category|null
      */
     public function getCategory()
@@ -85,6 +96,7 @@ class Context
 
     /**
      * Get config
+     *
      * @return Config
      */
     public function getConfig(): Config
@@ -94,6 +106,7 @@ class Context
 
     /**
      * Get page
+     *
      * @return int
      */
     public function getPage(): int
@@ -103,6 +116,7 @@ class Context
 
     /**
      * Get query
+     *
      * @return array
      */
     public function getQuery(): array
@@ -112,6 +126,7 @@ class Context
 
     /**
      * Get route
+     *
      * @return object|string
      */
     public function getRoute()
@@ -121,6 +136,7 @@ class Context
 
     /**
      * Get search
+     *
      * @return null|string
      */
     public function getSearch()
@@ -130,6 +146,7 @@ class Context
 
     /**
      * Get sorting
+     *
      * @return string
      */
     public function getSorting(): string
@@ -139,6 +156,7 @@ class Context
 
     /**
      * Get view
+     *
      * @return string
      */
     public function getView(): string
@@ -148,6 +166,7 @@ class Context
 
     /**
      * Set category
+     *
      * @param Category|null $category
      */
     public function setCategory($category)
@@ -157,7 +176,9 @@ class Context
 
     /**
      * Set config
+     *
      * @param Config $config
+     *
      * @return Context
      */
     public function setConfig(Config $config): Context
@@ -169,7 +190,9 @@ class Context
 
     /**
      * Set page
+     *
      * @param int $page
+     *
      * @return Context
      */
     public function setPage(int $page): Context
@@ -181,7 +204,9 @@ class Context
 
     /**
      * Set query
+     *
      * @param array $query
+     *
      * @return Context
      */
     public function setQuery(array $query): Context
@@ -193,7 +218,9 @@ class Context
 
     /**
      * Set route
+     *
      * @param object|string $route
+     *
      * @return Context
      */
     public function setRoute($route)
@@ -205,7 +232,9 @@ class Context
 
     /**
      * Set search
+     *
      * @param null|string $search
+     *
      * @return Context
      */
     public function setSearch($search)
@@ -217,7 +246,9 @@ class Context
 
     /**
      * Set sorting
+     *
      * @param string $sorting
+     *
      * @return Context
      */
     public function setSorting(string $sorting): Context
@@ -229,7 +260,9 @@ class Context
 
     /**
      * Set view
+     *
      * @param string $view
+     *
      * @return Context
      */
     public function setView(string $view): Context

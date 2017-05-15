@@ -7,22 +7,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for price max data transformer
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Form\Transformer
- * @version $id$
+ * @version    $id$
  */
 class PriceMaxDataTransformerTest extends TestCase
 {
     /**
      * The transformer
+     *
      * @var PriceMaxDataTransformer
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -31,6 +33,7 @@ class PriceMaxDataTransformerTest extends TestCase
 
     /**
      * Test reverse value
+     *
      * @return void
      */
     public function testReverseValue()
@@ -40,6 +43,7 @@ class PriceMaxDataTransformerTest extends TestCase
 
     /**
      * Test transform odd value
+     *
      * @return void
      */
     public function testTransformOddValue()
@@ -49,6 +53,7 @@ class PriceMaxDataTransformerTest extends TestCase
 
     /**
      * Test transform single digit value
+     *
      * @return void
      */
     public function testTransformSingleDigitValue()
@@ -58,6 +63,7 @@ class PriceMaxDataTransformerTest extends TestCase
 
     /**
      * Test transform value
+     *
      * @return void
      */
     public function testTransformValue()

@@ -7,22 +7,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class SortingTest
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class SortingTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var Sorting
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -31,6 +33,7 @@ class SortingTest extends TestCase
 
     /**
      * Test constructor value
+     *
      * @return void
      */
     public function testConstructor()
@@ -42,6 +45,7 @@ class SortingTest extends TestCase
 
     /**
      * Test setter / getter for active property
+     *
      * @return void
      */
     public function testSetAndGetActive()
@@ -55,6 +59,7 @@ class SortingTest extends TestCase
 
     /**
      * Test setter / getter for default property
+     *
      * @return void
      */
     public function testSetAndGetDefault()
@@ -68,6 +73,7 @@ class SortingTest extends TestCase
 
     /**
      * Test setter / getter for key property
+     *
      * @return void
      */
     public function testSetAndGetKey()
@@ -80,6 +86,7 @@ class SortingTest extends TestCase
 
     /**
      * Test setter / getter for label property
+     *
      * @return void
      */
     public function testSetAndGetLabel()
@@ -92,6 +99,7 @@ class SortingTest extends TestCase
 
     /**
      * Test setter / getter for query property
+     *
      * @return void
      */
     public function testSetAndGetQuery()

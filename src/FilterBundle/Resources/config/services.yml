@@ -30,8 +30,8 @@ services:
       arguments:
           - '@best_it_commercetools_filter.model.facet_config_collection'
 
-  best_it_commercetools_filter.factory.facet_config_collection_factory:
-      class: BestIt\Commercetools\FilterBundle\Factory\FacetConfigCollectionFactory
+  best_it_commercetools_filter.provider.empty_facet_config_provider:
+      class: BestIt\Commercetools\FilterBundle\Provider\EmptyFacetConfigProvider
 
   best_it_commercetools_filter.manager.filter_manager:
       class: BestIt\Commercetools\FilterBundle\Manager\FilterManager

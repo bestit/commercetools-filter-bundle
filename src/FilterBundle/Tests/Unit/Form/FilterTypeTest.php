@@ -22,22 +22,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Test the filter type
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Form
- * @version $id$
+ * @version    $id$
  */
 class FilterTypeTest extends TestCase
 {
     /**
      * The filter type
+     *
      * @var FilterType
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -46,6 +48,7 @@ class FilterTypeTest extends TestCase
 
     /**
      * Test build form
+     *
      * @return void
      */
     public function testBuildForm()
@@ -144,19 +147,24 @@ class FilterTypeTest extends TestCase
                 ]
             );
 
-        $this->fixture->buildForm($builder, ['facets' => $facetCollection, 'context' => new Context([
-            'config' => new Config([
-                'translationDomain' => 'messages',
-                'facet' => [
-                    'reset' => 'reset',
-                    'submit' => 'submit'
-                ]
-            ])
-        ])]);
+        $this->fixture->buildForm($builder, ['facets' => $facetCollection, 'context' => new Context(
+            [
+                'config' => new Config(
+                    [
+                        'translationDomain' => 'messages',
+                        'facet' => [
+                            'reset' => 'reset',
+                            'submit' => 'submit'
+                        ]
+                    ]
+                )
+            ]
+        )]);
     }
 
     /**
      * Test configure options
+     *
      * @return void
      */
     public function testConfigureOptions()
@@ -165,11 +173,15 @@ class FilterTypeTest extends TestCase
         $resolver
             ->expects(self::once())
             ->method('setDefaults')
-            ->with(self::equalTo([
-                'required' => false,
-                'csrf_protection' => false,
-                'allow_extra_fields' => true,
-            ]));
+            ->with(
+                self::equalTo(
+                    [
+                        'required' => false,
+                        'csrf_protection' => false,
+                        'allow_extra_fields' => true,
+                    ]
+                )
+            );
 
         $resolver
             ->expects(self::once())

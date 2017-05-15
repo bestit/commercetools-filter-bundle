@@ -13,8 +13,9 @@ use Commercetools\Core\Model\Product\FacetResultCollection;
 
 /**
  * Factory for facets
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Factory
  */
 class FacetCollectionFactory
@@ -23,6 +24,7 @@ class FacetCollectionFactory
 
     /**
      * FacetCollectionFactory constructor.
+     *
      * @param FacetConfigCollection $facetConfigCollection
      */
     public function __construct(FacetConfigCollection $facetConfigCollection)
@@ -32,7 +34,9 @@ class FacetCollectionFactory
 
     /**
      * Create facets collection
+     *
      * @param FacetResultCollection $resultCollection
+     *
      * @return FacetCollection
      */
     public function create(FacetResultCollection $resultCollection): FacetCollection
@@ -66,12 +70,14 @@ class FacetCollectionFactory
                 }
             }
 
-            $collection->addFacet((new Facet())
-                ->setType($facet['type'])
-                ->setName($config->getName())
-                ->setConfig($config)
-                ->setRanges($rangeCollection)
-                ->setTerms($termsCollection));
+            $collection->addFacet(
+                (new Facet())
+                    ->setType($facet['type'])
+                    ->setName($config->getName())
+                    ->setConfig($config)
+                    ->setRanges($rangeCollection)
+                    ->setTerms($termsCollection)
+            );
         }
 
         return $collection;

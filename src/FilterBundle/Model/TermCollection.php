@@ -7,21 +7,25 @@ use IteratorAggregate;
 
 /**
  * Term collection
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class TermCollection implements IteratorAggregate
 {
     /**
      * The facets
+     *
      * @var Term[]
      */
     private $terms = [];
 
     /**
      * Add one facet
+     *
      * @param Term $term
+     *
      * @return TermCollection
      */
     public function addTerm(Term $term): TermCollection
@@ -33,6 +37,7 @@ class TermCollection implements IteratorAggregate
 
     /**
      * Get amount of terms
+     *
      * @return int
      */
     public function count(): int
@@ -41,7 +46,7 @@ class TermCollection implements IteratorAggregate
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIterator()
     {
@@ -50,14 +55,18 @@ class TermCollection implements IteratorAggregate
 
     /**
      * Get all terms (sorted)
+     *
      * @return Term[]
      */
     public function getTerms(): array
     {
         $termsSorted = $this->terms;
-        usort($termsSorted, function (Term $a, Term $b) {
-            return $a->getTitle() <=> $b->getTitle();
-        });
+        usort(
+            $termsSorted,
+            function (Term $a, Term $b) {
+                return $a->getTitle() <=> $b->getTitle();
+            }
+        );
 
         return $termsSorted;
     }

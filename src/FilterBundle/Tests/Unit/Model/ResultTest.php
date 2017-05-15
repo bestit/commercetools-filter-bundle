@@ -11,22 +11,24 @@ use Symfony\Component\Form\FormView;
 
 /**
  * Class ResultTest
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class ResultTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var Result
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -35,6 +37,7 @@ class ResultTest extends TestCase
 
     /**
      * Test setter / getter for context property
+     *
      * @return void
      */
     public function testSetAndGetContext()
@@ -47,6 +50,7 @@ class ResultTest extends TestCase
 
     /**
      * Test setter / getter for form property
+     *
      * @return void
      */
     public function testSetAndGetForm()
@@ -59,6 +63,7 @@ class ResultTest extends TestCase
 
     /**
      * Test setter / getter for pagination property
+     *
      * @return void
      */
     public function testSetAndGetPagination()
@@ -71,6 +76,7 @@ class ResultTest extends TestCase
 
     /**
      * Test setter / getter for products property
+     *
      * @return void
      */
     public function testSetAndGetProducts()
@@ -83,6 +89,7 @@ class ResultTest extends TestCase
 
     /**
      * Test setter / getter for sorting property
+     *
      * @return void
      */
     public function testSetAndGetSorting()
@@ -95,6 +102,7 @@ class ResultTest extends TestCase
 
     /**
      * Test setter / getter for total products property
+     *
      * @return void
      */
     public function testSetAndGetTotalProducts()

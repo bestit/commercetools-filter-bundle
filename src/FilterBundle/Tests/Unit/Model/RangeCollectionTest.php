@@ -7,22 +7,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test range collection model
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class RangeCollectionTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var RangeCollection
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -31,6 +33,7 @@ class RangeCollectionTest extends TestCase
 
     /**
      * Test add range
+     *
      * @return void
      */
     public function testAddRange()
@@ -44,6 +47,7 @@ class RangeCollectionTest extends TestCase
 
     /**
      * Test max getter return default value
+     *
      * @return void
      */
     public function testGetMaxDefaultValue()
@@ -53,6 +57,7 @@ class RangeCollectionTest extends TestCase
 
     /**
      * Test min getter return default value
+     *
      * @return void
      */
     public function testGetMinDefaultValue()
@@ -62,6 +67,7 @@ class RangeCollectionTest extends TestCase
 
     /**
      * Test setter / getter for max property
+     *
      * @return void
      */
     public function testSetAndGetMax()
@@ -74,6 +80,7 @@ class RangeCollectionTest extends TestCase
 
     /**
      * Test setter / getter for min property
+     *
      * @return void
      */
     public function testSetAndGetMin()

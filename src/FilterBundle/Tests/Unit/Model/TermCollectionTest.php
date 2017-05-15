@@ -10,22 +10,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test term collection model
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
- * @version $id$
+ * @version    $id$
  */
 class TermCollectionTest extends TestCase
 {
     /**
      * The model to test
+     *
      * @var TermCollection
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -34,6 +36,7 @@ class TermCollectionTest extends TestCase
 
     /**
      * Test add term
+     *
      * @return void
      */
     public function testAddTerm()
@@ -46,6 +49,7 @@ class TermCollectionTest extends TestCase
 
     /**
      * Test count
+     *
      * @return void
      */
     public function testCount()
@@ -61,6 +65,7 @@ class TermCollectionTest extends TestCase
 
     /**
      * Test get iterator
+     *
      * @return void
      */
     public function testGetIterator()
@@ -70,6 +75,7 @@ class TermCollectionTest extends TestCase
 
     /**
      * Test iterator implementation
+     *
      * @return void
      */
     public function testImplementsIteratorInterface()
@@ -79,6 +85,7 @@ class TermCollectionTest extends TestCase
 
     /**
      * Test get sorted terms
+     *
      * @return void
      */
     public function testSortedTerms()

@@ -11,56 +11,66 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for facet builder
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Builder
- * @version $id$
+ * @version    $id$
  */
 class FacetBuilderTest extends TestCase
 {
     /**
      * The builde to test
+     *
      * @var FacetBuilder
      */
     private $fixture;
 
     /**
      * The facet config collection
+     *
      * @var FacetConfigCollection
      */
     private $facetConfigCollection;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
         $this->facetConfigCollection = new FacetConfigCollection();
 
-        $this->facetConfigCollection->add((new FacetConfig())
-            ->setName('Preis')
-            ->setField('price')
-            ->setAlias('price')
-            ->setType(FacetType::RANGE));
+        $this->facetConfigCollection->add(
+            (new FacetConfig())
+                ->setName('Preis')
+                ->setField('price')
+                ->setAlias('price')
+                ->setType(FacetType::RANGE)
+        );
 
-        $this->facetConfigCollection->add((new FacetConfig())
-            ->setName('Hersteller')
-            ->setField('attribute_manufacturer_name')
-            ->setAlias('attribute_manufacturer_name')
-            ->setType(FacetType::TEXT));
+        $this->facetConfigCollection->add(
+            (new FacetConfig())
+                ->setName('Hersteller')
+                ->setField('attribute_manufacturer_name')
+                ->setAlias('attribute_manufacturer_name')
+                ->setType(FacetType::TEXT)
+        );
 
-        $this->facetConfigCollection->add((new FacetConfig())
-            ->setName('foobar')
-            ->setField('foobar')
-            ->setAlias('foobar')
-            ->setType(FacetType::TEXT));
+        $this->facetConfigCollection->add(
+            (new FacetConfig())
+                ->setName('foobar')
+                ->setField('foobar')
+                ->setAlias('foobar')
+                ->setType(FacetType::TEXT)
+        );
 
         $this->fixture = new FacetBuilder($this->facetConfigCollection);
     }
 
     /**
      * Test that range facet is included
+     *
      * @return void
      */
     public function testThatRangeFacetIsIncluded()
@@ -86,6 +96,7 @@ class FacetBuilderTest extends TestCase
 
     /**
      * Test that request appends filters
+     *
      * @return void
      */
     public function testThatRequestAppendsFilters()
@@ -121,6 +132,7 @@ class FacetBuilderTest extends TestCase
 
     /**
      * Test that values are resolved
+     *
      * @return void
      */
     public function testThatSelectedValuesAreResolved()

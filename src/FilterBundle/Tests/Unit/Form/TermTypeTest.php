@@ -15,22 +15,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Test the term type
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Form
- * @version $id$
+ * @version    $id$
  */
 class TermTypeTest extends TestCase
 {
     /**
      * The term type
+     *
      * @var TermType
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -39,6 +41,7 @@ class TermTypeTest extends TestCase
 
     /**
      * Test correct inheritor
+     *
      * @return void
      */
     public function testInheritor()

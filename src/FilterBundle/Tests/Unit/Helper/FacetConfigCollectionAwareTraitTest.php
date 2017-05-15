@@ -8,22 +8,24 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test facet config collection aware trait
- * @author chowanski <chowanski@bestit-online.de>
- * @category Tests\Unit
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Helper
- * @version $id$
+ * @version    $id$
  */
 class FacetConfigCollectionAwareTraitTest extends TestCase
 {
     /**
      * The trait
+     *
      * @var FacetConfigCollectionAwareTrait
      */
     private $fixture;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -32,6 +34,7 @@ class FacetConfigCollectionAwareTraitTest extends TestCase
 
     /**
      * Test setter and getter
+     *
      * @return void
      */
     public function testSetAndGet()

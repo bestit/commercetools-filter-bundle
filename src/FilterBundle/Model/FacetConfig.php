@@ -7,68 +7,79 @@ use InvalidArgumentException;
 
 /**
  * Config object for facet
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model
  */
 class FacetConfig
 {
     /**
      * Facet name
+     *
      * @var string
      */
     private $name;
 
     /**
      * Field
+     *
      * @var string
      */
     private $field;
 
     /**
      * Filter field
+     *
      * @var string
      */
     private $filterField;
 
     /**
      * Facet field
+     *
      * @var string
      */
     private $facetField;
 
     /**
      * Alias field
+     *
      * @var string
      */
     private $alias;
 
     /**
      * Is hierarchical?
+     *
      * @var bool
      */
     private $hierarchical = false;
 
     /**
      * Is multiselect?
+     *
      * @var bool
      */
     private $multiSelect = true;
 
     /**
      * Type of facet
+     *
      * @var string
      */
     private $type;
 
     /**
      * Weight of facet
+     *
      * @var int
      */
     private $weight = 0;
 
     /**
      * Get alias
+     *
      * @return string
      */
     public function getAlias(): string
@@ -83,6 +94,7 @@ class FacetConfig
 
     /**
      * Get facetField
+     *
      * @return string
      */
     public function getFacetField(): string
@@ -114,6 +126,7 @@ class FacetConfig
 
     /**
      * Get field
+     *
      * @return string
      */
     public function getField(): string
@@ -127,6 +140,7 @@ class FacetConfig
 
     /**
      * Get filterField
+     *
      * @return string
      */
     public function getFilterField(): string
@@ -149,10 +163,12 @@ class FacetConfig
                     $this->filterField = $this->getField();
                     break;
                 default:
-                    throw new InvalidArgumentException(sprintf(
-                        'Facet type not configured for facet %s',
-                        $this->getField()
-                    ));
+                    throw new InvalidArgumentException(
+                        sprintf(
+                            'Facet type not configured for facet %s',
+                            $this->getField()
+                        )
+                    );
             }
         }
 
@@ -161,6 +177,7 @@ class FacetConfig
 
     /**
      * Get name
+     *
      * @return string
      */
     public function getName(): string
@@ -170,6 +187,7 @@ class FacetConfig
 
     /**
      * Get type
+     *
      * @return string
      */
     public function getType(): string
@@ -179,6 +197,7 @@ class FacetConfig
 
     /**
      * Get weight
+     *
      * @return int
      */
     public function getWeight(): int
@@ -188,6 +207,7 @@ class FacetConfig
 
     /**
      * Get hierarchical
+     *
      * @return bool
      */
     public function isHierarchical(): bool
@@ -197,6 +217,7 @@ class FacetConfig
 
     /**
      * Get multiSelect
+     *
      * @return bool
      */
     public function isMultiSelect(): bool
@@ -206,7 +227,9 @@ class FacetConfig
 
     /**
      * Set alias
+     *
      * @param string $alias
+     *
      * @return FacetConfig
      */
     public function setAlias(string $alias): FacetConfig
@@ -218,7 +241,9 @@ class FacetConfig
 
     /**
      * Set facetField
+     *
      * @param string $facetField
+     *
      * @return FacetConfig
      */
     public function setFacetField(string $facetField): FacetConfig
@@ -230,7 +255,9 @@ class FacetConfig
 
     /**
      * Set field
+     *
      * @param string $field
+     *
      * @return FacetConfig
      */
     public function setField(string $field): FacetConfig
@@ -242,7 +269,9 @@ class FacetConfig
 
     /**
      * Set filterField
+     *
      * @param string $filterField
+     *
      * @return FacetConfig
      */
     public function setFilterField(string $filterField): FacetConfig
@@ -254,7 +283,9 @@ class FacetConfig
 
     /**
      * Set hierarchical
+     *
      * @param bool $hierarchical
+     *
      * @return FacetConfig
      */
     public function setHierarchical(bool $hierarchical): FacetConfig
@@ -266,7 +297,9 @@ class FacetConfig
 
     /**
      * Set multiSelect
+     *
      * @param bool $multiSelect
+     *
      * @return FacetConfig
      */
     public function setMultiSelect(bool $multiSelect): FacetConfig
@@ -278,7 +311,9 @@ class FacetConfig
 
     /**
      * Set name
+     *
      * @param string $name
+     *
      * @return FacetConfig
      */
     public function setName(string $name): FacetConfig
@@ -290,7 +325,9 @@ class FacetConfig
 
     /**
      * Set type
+     *
      * @param string $type
+     *
      * @return FacetConfig
      */
     public function setType(string $type): FacetConfig
@@ -306,7 +343,9 @@ class FacetConfig
 
     /**
      * Set weight
+     *
      * @param int $weight
+     *
      * @return FacetConfig
      */
     public function setWeight(int $weight): FacetConfig

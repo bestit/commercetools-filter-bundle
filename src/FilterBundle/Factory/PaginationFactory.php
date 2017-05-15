@@ -8,16 +8,19 @@ use Kilte\Pagination\Pagination as Paginator;
 
 /**
  * Factory for pagination data
- * @author chowanski <chowanski@bestit-online.de>
- * @package BestIt\Commercetools\FilterBundle
+ *
+ * @author     chowanski <chowanski@bestit-online.de>
+ * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Factory
  */
 class PaginationFactory
 {
     /**
      * Create sorting collection by context
+     *
      * @param Context $context
      * @param int $totalItems
+     *
      * @return Pagination
      */
     public function create(Context $context, int $totalItems): Pagination
