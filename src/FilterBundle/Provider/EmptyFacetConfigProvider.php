@@ -1,17 +1,17 @@
 <?php
 
-namespace BestIt\Commercetools\FilterBundle\Factory;
+namespace BestIt\Commercetools\FilterBundle\Provider;
 
 use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
 
 /**
- * Factory for facets config collection
+ * Provider for facets config collection
  *
  * @author     chowanski <chowanski@bestit-online.de>
  * @package    BestIt\Commercetools\FilterBundle
- * @subpackage Factory
+ * @subpackage Provider
  */
-class FacetConfigCollectionFactory implements FacetConfigCollectionFactoryInterface
+class EmptyFacetConfigProvider implements FacetConfigProviderInterface
 {
     /**
      * Create facet config collection

@@ -42,7 +42,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->scalarNode('config_provider_id')
             ->info('Used config provider')
-            ->defaultValue('best_it_commercetools_filter.factory.facet_config_collection_factory')
+            ->defaultValue('best_it_commercetools_filter.provider.empty_facet_config_provider')
             ->end()
             ->end()
             ->append($this->getSortingNode())

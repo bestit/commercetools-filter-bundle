@@ -2,13 +2,13 @@
 
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
-use BestIt\Commercetools\FilterBundle\Factory\FacetConfigCollectionFactory;
-use BestIt\Commercetools\FilterBundle\Factory\FacetConfigCollectionFactoryInterface;
+use BestIt\Commercetools\FilterBundle\Provider\EmptyFacetConfigProvider;
+use BestIt\Commercetools\FilterBundle\Provider\FacetConfigProviderInterface;
 use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test for facet config collection factory
+ * Test for facet config collection provider
  *
  * @author     chowanski <chowanski@bestit-online.de>
  * @category   Tests\Unit
@@ -16,12 +16,12 @@ use PHPUnit\Framework\TestCase;
  * @subpackage Factory
  * @version    $id$
  */
-class FacetConfigCollectionFactoryTest extends TestCase
+class EmptyFacetConfigProviderTest extends TestCase
 {
     /**
      * The factory
      *
-     * @var FacetConfigCollectionFactory
+     * @var EmptyFacetConfigProvider
      */
     private $fixture;
 
@@ -30,7 +30,7 @@ class FacetConfigCollectionFactoryTest extends TestCase
      */
     public function setUp()
     {
-        $this->fixture = new FacetConfigCollectionFactory();
+        $this->fixture = new EmptyFacetConfigProvider();
     }
 
     /**
@@ -40,7 +40,7 @@ class FacetConfigCollectionFactoryTest extends TestCase
      */
     public function testImplementInterface()
     {
-        static::assertInstanceOf(FacetConfigCollectionFactoryInterface::class, $this->fixture);
+        static::assertInstanceOf(FacetConfigProviderInterface::class, $this->fixture);
     }
 
     /**

@@ -96,13 +96,13 @@ best_it_commercetools_filter:
     translation_domain: app
     
     # Optional product normalizer (service id / implement interface)
-    product_normalizer_id: bh.app.normalizer.product_normalizer
+    product_normalizer_id: app.normalizer.product_normalizer
     
     # Client service id of commerce tools sdk client
-    client_id: bh.app.commercetools.client                                          # Required
+    client_id: app.commercetools.client                                             # Required
     
     # Optional facets factory config provider (service id / implement interface)
-    config_provider_id: bh_app.factory.facet_config_collection_factory
+    config_provider_id: app.provider.facet_config_provider
     
     # Optional facet config
     facet:
@@ -233,5 +233,5 @@ _EmptyProductNormalizer_ will be use if you don't fill the _product_normalizer_i
 
 ### Config Provider id
 
-You can add you own filter config provider. Just implement the _FacetConfigCollectionFactoryInterface_ and add your service id to _config_provider_id_ (@ config.yml).
+You can add you own filter config provider. Just implement the _FacetConfigProviderInterface_ and add your service id to _config_provider_id_ (@ config.yml).
 The filter bundle default provider will be use if you don't fill the _config_provider_id_ Parameter (@ config.yml), which returns no filters.
