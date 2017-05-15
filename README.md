@@ -235,3 +235,58 @@ _EmptyProductNormalizer_ will be use if you don't fill the _product_normalizer_i
 
 You can add you own filter config provider. Just implement the _FacetConfigProviderInterface_ and add your service id to _config_provider_id_ (@ config.yml).
 The filter bundle default provider will be use if you don't fill the _config_provider_id_ Parameter (@ config.yml), which returns no filters.
+
+### Events ###
+
+#### Request events ####
+You can modify the commercetools client request with the filter and suggest post events. Check all events @ _SuggestEvent_ and _FilterEvent_ class.
+ 
+Example usage: Extend request
+```
+// FilterRequestSubscriber.php
+
+class FilterRequestSubscriber implements EventSubscriberInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            SuggestEvent::PRODUCTS_REQUEST_POST => 'onProductsFilterRequest',
+            FilterEvent::PRODUCTS_REQUEST_POST => 'onProductsSuggestRequest'
+        ];
+    }
+
+    /**
+     * On products request for filter
+     * @param ProductProjectionSearchRequestEvent $event
+     */
+    public function onProductsFilterRequest(ProductProjectionSearchRequestEvent $event)
+    {
+        $request = $event->getRequest();
+
+        $request
+            ->expand('masterVariant.attributes[*].value')
+            ->expand('productType');
+
+        $event->setRequest($request);
+    }
+
+    /**
+     * On products request for suggest
+     * @param ProductProjectionSearchRequestEvent $event
+     */
+    public function onProductsSuggestRequest(ProductProjectionSearchRequestEvent $event)
+    {
+        $request = $event->getRequest();
+
+        $request
+            ->expand('categories[*]')
+            ->expand('masterVariant.attributes[*].value[*].value')
+            ->expand('productType');
+
+        $event->setRequest($request);
+    }
+}
+```

@@ -5,6 +5,8 @@ namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Builder;
 use BestIt\Commercetools\FilterBundle\Builder\FacetBuilder;
 use BestIt\Commercetools\FilterBundle\Builder\RequestBuilder;
 use BestIt\Commercetools\FilterBundle\Enum\FacetType;
+use BestIt\Commercetools\FilterBundle\Event\Request\ProductProjectionSearchRequestEvent;
+use BestIt\Commercetools\FilterBundle\FilterEvent;
 use BestIt\Commercetools\FilterBundle\Model\Config;
 use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
@@ -15,6 +17,8 @@ use Commercetools\Core\Client;
 use Commercetools\Core\Request\Products\ProductProjectionSearchRequest;
 use Commercetools\Core\Response\PagedSearchResponse;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Test for request builder
@@ -37,7 +41,7 @@ class RequestBuilderTest extends TestCase
     /**
      * The client
      *
-     * @var Client
+     * @var Client|PHPUnit_Framework_MockObject_MockObject
      */
     private $client;
 
@@ -49,13 +53,21 @@ class RequestBuilderTest extends TestCase
     private $facetConfigCollection;
 
     /**
+     * The event dispatcher
+     *
+     * @var EventDispatcherInterface|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $eventDispatcher;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()
     {
         $this->fixture = new RequestBuilder(
             $this->client = $this->createMock(Client::class),
-            $this->facetConfigCollection = new FacetConfigCollection()
+            $this->facetConfigCollection = new FacetConfigCollection(),
+            $this->eventDispatcher = static::createMock(EventDispatcherInterface::class)
         );
     }
 
@@ -92,9 +104,15 @@ class RequestBuilderTest extends TestCase
         $request = ProductProjectionSearchRequest::of()
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
             ->limit($context->getConfig()->getItemsPerPage())
-            ->sort('name asc')
-            ->expand('masterVariant.attributes[*].value')
-            ->expand('productType');
+            ->sort('name asc');
+
+        $this->eventDispatcher
+            ->expects(static::once())
+            ->method('dispatch')
+            ->with(
+                static::equalTo(FilterEvent::PRODUCTS_REQUEST_POST),
+                static::isInstanceOf(ProductProjectionSearchRequestEvent::class)
+            );
 
         $this->client
             ->expects(self::once())
@@ -151,13 +169,19 @@ class RequestBuilderTest extends TestCase
         $request = ProductProjectionSearchRequest::of()
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
             ->limit($context->getConfig()->getItemsPerPage())
-            ->sort('name asc')
-            ->expand('masterVariant.attributes[*].value')
-            ->expand('productType');
+            ->sort('name asc');
 
         $builder = new FacetBuilder($this->facetConfigCollection);
         $resolvedValues = $builder->resolve($context->getQuery()['filter']);
         $request = $builder->build($request, $resolvedValues);
+
+        $this->eventDispatcher
+            ->expects(static::once())
+            ->method('dispatch')
+            ->with(
+                static::equalTo(FilterEvent::PRODUCTS_REQUEST_POST),
+                static::isInstanceOf(ProductProjectionSearchRequestEvent::class)
+            );
 
         $this->client
             ->expects(self::once())
