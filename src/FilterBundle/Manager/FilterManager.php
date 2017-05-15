@@ -18,7 +18,7 @@ use Symfony\Component\Intl\Exception\NotImplementedException;
  * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Manager
  */
-class FilterManager
+class FilterManager implements FilterManagerInterface
 {
     /**
      * Factory for creating a context object
@@ -110,12 +110,7 @@ class FilterManager
     }
 
     /**
-     * Perform a listing request
-     *
-     * @param Request $request
-     * @param Category $category
-     *
-     * @return Result
+     * {@inheritdoc}
      */
     public function listing(Request $request, Category $category): Result
     {
@@ -130,12 +125,7 @@ class FilterManager
     }
 
     /**
-     * Perform a search request
-     *
-     * @param Request $request
-     * @param string $search
-     *
-     * @return Result
+     * {@inheritdoc}
      */
     public function search(Request $request, string $search = null): Result
     {

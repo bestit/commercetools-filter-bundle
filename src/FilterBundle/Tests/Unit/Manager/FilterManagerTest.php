@@ -7,6 +7,7 @@ use BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder;
 use BestIt\Commercetools\FilterBundle\Factory\ContextFactory;
 use BestIt\Commercetools\FilterBundle\Factory\SortingFactory;
 use BestIt\Commercetools\FilterBundle\Manager\FilterManager;
+use BestIt\Commercetools\FilterBundle\Manager\FilterManagerInterface;
 use BestIt\Commercetools\FilterBundle\Model\Config;
 use BestIt\Commercetools\FilterBundle\Model\Context;
 use BestIt\Commercetools\FilterBundle\Model\Result;
@@ -176,5 +177,15 @@ class FilterManagerTest extends TestCase
         $result = $this->fixture->search($request, $search);
         static::assertInstanceOf(Result::class, $result);
         static::assertEquals($sortingCollection, $result->getSorting());
+    }
+
+    /**
+     * Test that service implement interface
+     *
+     * @return void
+     */
+    public function testImplementInterface()
+    {
+        static::assertInstanceOf(FilterManagerInterface::class, $this->fixture);
     }
 }
