@@ -30,6 +30,7 @@ class BestItCommercetoolsFilterExtension extends Extension
         // Set alias services
         $container->setAlias('best_it_commercetools_filter.normalizer.product', $config['product_normalizer_id']);
         $container->setAlias('best_it_commercetools_filter.request.client', $config['client_id']);
+        $container->setAlias('best_it_commercetools_filter.generator.url', $config['url_generator_id']);
 
         // Set config factory
         $container

@@ -18,6 +18,7 @@ services:
       class: BestIt\Commercetools\FilterBundle\Factory\ContextFactory
       arguments:
           - '@best_it_commercetools_filter.model.config'
+          - '@best_it_commercetools_filter.generator.url'
 
   best_it_commercetools_filter.factory.pagination_factory:
       class: BestIt\Commercetools\FilterBundle\Factory\PaginationFactory
@@ -62,3 +63,7 @@ services:
           - '@best_it_commercetools_filter.factory.pagination_factory'
           - '@form.factory'
           - '@best_it_commercetools_filter.factory.facet_collection_factory'
+
+  best_it_commercetools_filter.generator.default_filter_url_generator:
+      class: BestIt\Commercetools\FilterBundle\Generator\DefaultFilterUrlGenerator
+      arguments: ['@router']

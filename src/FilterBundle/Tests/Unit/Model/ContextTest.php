@@ -109,4 +109,17 @@ class ContextTest extends TestCase
         self::assertEquals($this->fixture, $this->fixture->setView($value));
         self::assertEquals($value, $this->fixture->getView());
     }
+
+    /**
+     * Test setter / getter for base url property
+     *
+     * @return void
+     */
+    public function testSetAndGetBaseUrl()
+    {
+        $value = 'http://foo';
+
+        self::assertEquals($this->fixture, $this->fixture->setBaseUrl($value));
+        self::assertEquals($value, $this->fixture->getBaseUrl());
+    }
 }

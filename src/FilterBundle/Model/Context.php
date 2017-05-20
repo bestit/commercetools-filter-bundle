@@ -52,6 +52,8 @@ class Context
      * The current route (object)
      *
      * @var string|object
+     *
+     * @deprecated Will be removed. Use property 'baseUrl'
      */
     private $route;
 
@@ -68,6 +70,13 @@ class Context
      * @var string|null
      */
     private $search;
+
+    /**
+     * Generated base url
+     *
+     * @var string
+     */
+    private $baseUrl;
 
     /**
      * Context constructor
@@ -128,6 +137,8 @@ class Context
      * Get route
      *
      * @return object|string
+     *
+     * @deprecated Will be removed. Use property 'baseUrl'
      */
     public function getRoute()
     {
@@ -222,6 +233,8 @@ class Context
      * @param object|string $route
      *
      * @return Context
+     *
+     * @deprecated Will be removed. Use property 'baseUrl'
      */
     public function setRoute($route)
     {
@@ -268,6 +281,30 @@ class Context
     public function setView(string $view): Context
     {
         $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * Get baseUrl
+     *
+     * @return string
+     */
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
+    }
+
+    /**
+     * Set baseUrl
+     *
+     * @param string $baseUrl
+     *
+     * @return Context
+     */
+    public function setBaseUrl(string $baseUrl): Context
+    {
+        $this->baseUrl = $baseUrl;
 
         return $this;
     }

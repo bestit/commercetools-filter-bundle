@@ -3,6 +3,7 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
 use BestIt\Commercetools\FilterBundle\Factory\ContextFactory;
+use BestIt\Commercetools\FilterBundle\Generator\FilterUrlGeneratorInterface;
 use BestIt\Commercetools\FilterBundle\Model\Config;
 use BestIt\Commercetools\FilterBundle\Model\Context;
 use Commercetools\Core\Model\Category\Category;
@@ -35,6 +36,13 @@ class ContextFactoryTest extends TestCase
     private $config;
 
     /**
+     * The filter url generator
+     *
+     * @var FilterUrlGeneratorInterface
+     */
+    private $filterUrlGenerator;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()
@@ -63,7 +71,10 @@ class ContextFactoryTest extends TestCase
             ]
         );
 
-        $this->fixture = new ContextFactory($this->config);
+        $this->fixture = new ContextFactory(
+            $this->config,
+            $this->filterUrlGenerator = $this->createMock(FilterUrlGeneratorInterface::class)
+        );
     }
 
     /**
@@ -76,6 +87,12 @@ class ContextFactoryTest extends TestCase
         $request = new Request();
         $category = new Category();
 
+        $this->filterUrlGenerator
+            ->expects(static::once())
+            ->method('generateByCategory')
+            ->with($request, $category)
+            ->willReturn('foo-route');
+
         $context = new Context(
             [
                 'page' => 1,
@@ -83,6 +100,7 @@ class ContextFactoryTest extends TestCase
                 'query' => [],
                 'config' => $this->config,
                 'route' => $category,
+                'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
                 'category' => $category
             ]
@@ -101,6 +119,12 @@ class ContextFactoryTest extends TestCase
         $request = new Request(['p' => 4, 'v' => 'list']);
         $category = new Category();
 
+        $this->filterUrlGenerator
+            ->expects(static::once())
+            ->method('generateByCategory')
+            ->with($request, $category)
+            ->willReturn('foo-route');
+
         $context = new Context(
             [
                 'page' => 4,
@@ -108,6 +132,7 @@ class ContextFactoryTest extends TestCase
                 'query' => ['p' => 4, 'v' => 'list'],
                 'config' => $this->config,
                 'route' => $category,
+                'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
                 'category' => $category
             ]
@@ -126,6 +151,12 @@ class ContextFactoryTest extends TestCase
         $request = new Request();
         $search = 'foobar';
 
+        $this->filterUrlGenerator
+            ->expects(static::once())
+            ->method('generateBySearch')
+            ->with($request, $search)
+            ->willReturn('foo-route');
+
         $context = new Context(
             [
                 'page' => 1,
@@ -133,6 +164,7 @@ class ContextFactoryTest extends TestCase
                 'query' => [],
                 'config' => $this->config,
                 'route' => 'search_index',
+                'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
                 'search' => $search
             ]
@@ -151,6 +183,12 @@ class ContextFactoryTest extends TestCase
         $request = new Request(['p' => 4, 'v' => 'list']);
         $search = 'foobar';
 
+        $this->filterUrlGenerator
+            ->expects(static::once())
+            ->method('generateBySearch')
+            ->with($request, $search)
+            ->willReturn('foo-route');
+
         $context = new Context(
             [
                 'page' => 4,
@@ -158,6 +196,7 @@ class ContextFactoryTest extends TestCase
                 'query' => ['p' => 4, 'v' => 'list'],
                 'config' => $this->config,
                 'route' => 'search_index',
+                'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
                 'search' => $search
             ]
@@ -176,6 +215,12 @@ class ContextFactoryTest extends TestCase
         $request = new Request(['p' => 4, 'v' => 'list']);
         $search = null;
 
+        $this->filterUrlGenerator
+            ->expects(static::once())
+            ->method('generateBySearch')
+            ->with($request, $search)
+            ->willReturn('foo-route');
+
         $context = new Context(
             [
                 'page' => 4,
@@ -183,6 +228,7 @@ class ContextFactoryTest extends TestCase
                 'query' => ['p' => 4, 'v' => 'list'],
                 'config' => $this->config,
                 'route' => 'search_index',
+                'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
                 'search' => null
             ]

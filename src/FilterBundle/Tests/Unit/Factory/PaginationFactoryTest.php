@@ -49,6 +49,7 @@ class PaginationFactoryTest extends TestCase
         $context = (new Context())
             ->setPage(4)
             ->setRoute('home_index')
+            ->setBaseUrl('http://foo')
             ->setConfig($config);
 
         $result = $this->fixture->create($context, 130);
