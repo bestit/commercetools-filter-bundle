@@ -7,7 +7,6 @@ use BestIt\Commercetools\FilterBundle\Model\Facet;
 use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -83,7 +82,8 @@ class FilterType extends AbstractType
         if ($reset = $context->getConfig()->getFacet()['reset']) {
             $builder->add('reset', ResetType::class, [
                 'translation_domain' => $context->getConfig()->getTranslationDomain(),
-                'label' => $reset
+                'label' => $reset,
+                'baseUrl' => $context->getBaseUrl()
             ]);
         }
 

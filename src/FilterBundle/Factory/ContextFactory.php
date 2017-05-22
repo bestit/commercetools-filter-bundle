@@ -2,6 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Factory;
 
+use BestIt\Commercetools\FilterBundle\Generator\FilterUrlGeneratorInterface;
 use BestIt\Commercetools\FilterBundle\Model\Config;
 use BestIt\Commercetools\FilterBundle\Model\Context;
 use Commercetools\Core\Model\Category\Category;
@@ -24,13 +25,23 @@ class ContextFactory
     private $config;
 
     /**
+     * The filter url generator
+     *
+     * @var FilterUrlGeneratorInterface
+     */
+    private $filterUrlGenerator;
+
+    /**
      * ContextFactory constructor.
      *
      * @param Config $config
+     * @param FilterUrlGeneratorInterface $filterUrlGenerator
      */
-    public function __construct(Config $config)
+    public function __construct(Config $config, FilterUrlGeneratorInterface $filterUrlGenerator)
     {
-        $this->setConfig($config);
+        $this
+            ->setConfig($config)
+            ->setFilterUrlGenerator($filterUrlGenerator);
     }
 
     /**
@@ -53,6 +64,7 @@ class ContextFactory
                 'query' => $request->query->all(),
                 'config' => $config,
                 'route' => $category,
+                'baseUrl' => $this->getFilterUrlGenerator()->generateByCategory($request, $category),
                 'category' => $category
             ]
         );
@@ -80,11 +92,36 @@ class ContextFactory
                 'query' => $request->query->all(),
                 'config' => $config,
                 'route' => 'search_index',
+                'baseUrl' => $this->getFilterUrlGenerator()->generateBySearch($request, $search),
                 'search' => $search
             ]
         );
 
         return $context;
+    }
+
+    /**
+     * Get filterUrlGenerator
+     *
+     * @return FilterUrlGeneratorInterface
+     */
+    private function getFilterUrlGenerator(): FilterUrlGeneratorInterface
+    {
+        return $this->filterUrlGenerator;
+    }
+
+    /**
+     * Set filterUrlGenerator
+     *
+     * @param FilterUrlGeneratorInterface $filterUrlGenerator
+     *
+     * @return ContextFactory
+     */
+    private function setFilterUrlGenerator(FilterUrlGeneratorInterface $filterUrlGenerator): ContextFactory
+    {
+        $this->filterUrlGenerator = $filterUrlGenerator;
+
+        return $this;
     }
 
     /**

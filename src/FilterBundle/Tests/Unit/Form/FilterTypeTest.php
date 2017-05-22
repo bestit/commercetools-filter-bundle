@@ -5,6 +5,7 @@ namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Form;
 use BestIt\Commercetools\FilterBundle\Enum\FacetType as EnumFacetType;
 use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Form\MinMaxRangeType;
+use BestIt\Commercetools\FilterBundle\Form\ResetType;
 use BestIt\Commercetools\FilterBundle\Form\TermType;
 use BestIt\Commercetools\FilterBundle\Model\Config;
 use BestIt\Commercetools\FilterBundle\Model\Context;
@@ -15,7 +16,6 @@ use BestIt\Commercetools\FilterBundle\Model\RangeCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
 use BestIt\Commercetools\FilterBundle\Model\TermCollection;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -134,7 +134,8 @@ class FilterTypeTest extends TestCase
                     ResetType::class,
                     [
                         'translation_domain' => 'messages',
-                        'label' => 'reset'
+                        'label' => 'reset',
+                        'baseUrl' => 'http://foo'
                     ]
                 ],
                 [
@@ -149,6 +150,7 @@ class FilterTypeTest extends TestCase
 
         $this->fixture->buildForm($builder, ['facets' => $facetCollection, 'context' => new Context(
             [
+                'baseUrl' => 'http://foo',
                 'config' => new Config(
                     [
                         'translationDomain' => 'messages',

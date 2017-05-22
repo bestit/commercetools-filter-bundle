@@ -5,22 +5,7 @@ It still uses the [commmercetools/php-sdk](https://github.com/commercetools/comm
 
 ## Installation
 
-### Step 1: Add repository
-
-Open composer.json and add the repository:
-
-```
-# composer.json
-
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "https://bitbucket.org/best-it/commercetools-filter-bundle.git"
-        }
-    ],
-```
-
-### Step 2: Download the Bundle
+### Step 1: Download the Bundle
 
 Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
@@ -33,7 +18,7 @@ This command requires you to have Composer installed globally, as explained
 in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
 of the Composer documentation.
 
-### Step 3: Enable the Bundle
+### Step 2: Enable the Bundle
 
 Then, enable the bundle by adding it to the list of registered bundles
 in the `app/AppKernel.php` file of your project:
@@ -60,7 +45,7 @@ class AppKernel extends Kernel
 }
 ```
 
-### Step 4: Configure the Bundle
+### Step 3: Configure the Bundle
 
 #### Minimum configuration (only _all_ required fields)
 ```
@@ -103,6 +88,9 @@ best_it_commercetools_filter:
     
     # Optional facets factory config provider (service id / implement interface)
     config_provider_id: app.provider.facet_config_provider
+    
+    # Optional generator for filter urls
+    url_generator_id: app.generator.url_generator
     
     # Optional facet config
     facet:
@@ -235,6 +223,11 @@ _EmptyProductNormalizer_ will be use if you don't fill the _product_normalizer_i
 
 You can add you own filter config provider. Just implement the _FacetConfigProviderInterface_ and add your service id to _config_provider_id_ (@ config.yml).
 The filter bundle default provider will be use if you don't fill the _config_provider_id_ Parameter (@ config.yml), which returns no filters.
+
+### Url generator
+
+The filter bundle need to create urls, but the route names can vary between projects. So you can add your own url generator for creating the correct urls with the _url_generator_id_ parameter.
+The generator need to implement the FilterUrlGeneratorInterface. The bundle will use his own default generator if you do not fill the field.
 
 ### Events ###
 
