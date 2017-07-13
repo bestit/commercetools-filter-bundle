@@ -30,6 +30,7 @@ services:
       class: BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory
       arguments:
           - '@best_it_commercetools_filter.model.facet_config_collection'
+          - '@best_it_commercetools_filter.helper.enum_attribute_helper'
 
   best_it_commercetools_filter.provider.empty_facet_config_provider:
       class: BestIt\Commercetools\FilterBundle\Provider\EmptyFacetConfigProvider
@@ -67,3 +68,7 @@ services:
   best_it_commercetools_filter.generator.default_filter_url_generator:
       class: BestIt\Commercetools\FilterBundle\Generator\DefaultFilterUrlGenerator
       arguments: ['@router']
+
+  best_it_commercetools_filter.helper.enum_attribute_helper:
+      class: BestIt\Commercetools\FilterBundle\Helper\EnumAttributeHelper
+      arguments: ['@best_it_commercetools_filter.request.client']

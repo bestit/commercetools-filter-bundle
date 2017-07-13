@@ -50,7 +50,7 @@ class TermCollection implements IteratorAggregate
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->getTerms());
+        return new ArrayIterator($this->toArray());
     }
 
     /**
@@ -58,7 +58,7 @@ class TermCollection implements IteratorAggregate
      *
      * @return Term[]
      */
-    public function getTerms(): array
+    public function toArray(): array
     {
         $termsSorted = $this->terms;
         usort(

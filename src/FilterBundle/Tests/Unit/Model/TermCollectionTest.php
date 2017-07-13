@@ -44,7 +44,7 @@ class TermCollectionTest extends TestCase
         $value = new Term();
 
         self::assertEquals($this->fixture, $this->fixture->addTerm($value));
-        self::assertEquals(1, count($this->fixture->getTerms()));
+        self::assertEquals(1, count($this->fixture->toArray()));
     }
 
     /**
@@ -94,8 +94,8 @@ class TermCollectionTest extends TestCase
         $this->fixture->addTerm((new Term())->setTitle('aFirst'));
         $this->fixture->addTerm((new Term())->setTitle('gMiddle'));
 
-        self::assertEquals('aFirst', $this->fixture->getTerms()[0]->getTitle());
-        self::assertEquals('gMiddle', $this->fixture->getTerms()[1]->getTitle());
-        self::assertEquals('yLast', $this->fixture->getTerms()[2]->getTitle());
+        self::assertEquals('aFirst', $this->fixture->toArray()[0]->getTitle());
+        self::assertEquals('gMiddle', $this->fixture->toArray()[1]->getTitle());
+        self::assertEquals('yLast', $this->fixture->toArray()[2]->getTitle());
     }
 }

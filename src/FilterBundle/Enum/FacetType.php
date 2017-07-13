@@ -35,6 +35,13 @@ class FacetType
     const ENUM = 'enum';
 
     /**
+     * Facet enum type
+     *
+     * @var string
+     */
+    const LENUM = 'lenum';
+
+    /**
      * Facet category type
      *
      * @var string
