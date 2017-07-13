@@ -1,0 +1,59 @@
+{
+    "id": "7b0d5152-5e3d-4f31-be97-140216f3116c",
+    "version": 3,
+    "name": "Test",
+    "description": "Test",
+    "classifier": "Complex",
+    "attributes": [
+        {
+            "name": "LENUM",
+            "label": {
+                "de": "LENUM"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "lenum",
+                "values": [
+                    {
+                        "key": "Key1",
+                        "label": {
+                            "de": "Wert1"
+                        }
+                    },
+                    {
+                        "key": "Key2",
+                        "label": {
+                            "de": "Wert2"
+                        }
+                    }
+                ]
+            },
+            "attributeConstraint": "None",
+            "isSearchable": true,
+            "inputHint": "SingleLine",
+            "displayGroup": "Other"
+        },
+        {
+            "name": "ENUM",
+            "label": {
+                "de": "ENUM"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "enum",
+                "values": [
+                    {
+                        "key": "Key3",
+                        "label": "Wert3"
+                    }
+                ]
+            },
+            "attributeConstraint": "None",
+            "isSearchable": true,
+            "inputHint": "SingleLine",
+            "displayGroup": "Other"
+        }
+    ],
+    "createdAt": "2017-07-13T11:40:17.980Z",
+    "lastModifiedAt": "2017-07-13T11:41:32.349Z"
+}

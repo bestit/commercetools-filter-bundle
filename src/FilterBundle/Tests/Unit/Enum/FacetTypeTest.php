@@ -39,6 +39,16 @@ class FacetTypeTest extends TestCase
     }
 
     /**
+     * Test lenum value
+     *
+     * @return void
+     */
+    public function testLenumValue()
+    {
+        static::assertEquals('lenum', FacetType::LENUM);
+        static::assertTrue(FacetType::isValid('lenum'));
+    }
+    /**
      * Test localized text value
      *
      * @return void

@@ -108,6 +108,7 @@ class FacetConfig
                     $this->facetField = sprintf('variants.attributes.de.%s', $this->getField());
                     break;
                 case FacetType::ENUM:
+                case FacetType::LENUM:
                     $this->facetField = sprintf('variants.attributes.%s.key', $this->getField());
                     break;
                 case FacetType::CATEGORY:
@@ -154,6 +155,7 @@ class FacetConfig
                     $this->filterField = sprintf('variants.attributes.de.%s', $this->getField());
                     break;
                 case FacetType::ENUM:
+                case FacetType::LENUM:
                     $this->filterField = sprintf('variants.attributes.%s.key', $this->getField());
                     break;
                 case FacetType::CATEGORY:

@@ -45,6 +45,7 @@ class FacetConfigTest extends TestCase
             FacetType::RANGE => 'foo:range(0 to *)',
             FacetType::CATEGORY => 'categories.id',
             FacetType::ENUM => 'variants.attributes.foo.key',
+            FacetType::LENUM => 'variants.attributes.foo.key',
             FacetType::LOCALIZED_TEXT => 'variants.attributes.de.foo'
         ];
 
@@ -80,6 +81,7 @@ class FacetConfigTest extends TestCase
             FacetType::RANGE => 'foo',
             FacetType::CATEGORY => 'categories.id',
             FacetType::ENUM => 'variants.attributes.foo.key',
+            FacetType::LENUM => 'variants.attributes.foo.key',
             FacetType::LOCALIZED_TEXT => 'variants.attributes.de.foo'
         ];
 
