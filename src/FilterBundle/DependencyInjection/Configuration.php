@@ -69,10 +69,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-            ->scalarNode('query_key')
-            ->info('The view key for sorting')
-            ->defaultValue('view')
-            ->end()
             ->scalarNode('default')
             ->info('Default view type (eg. grid, list)')
             ->defaultValue('list')
@@ -127,10 +123,6 @@ class Configuration implements ConfigurationInterface
             ->info('Neighbours at pagination')
             ->defaultValue(1)
             ->end()
-            ->scalarNode('query_key')
-            ->info('The query key for current page')
-            ->defaultValue('page')
-            ->end()
             ->end();
 
         return $node;
@@ -148,10 +140,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->isRequired()
             ->children()
-            ->scalarNode('query_key')
-            ->info('The query key for sorting')
-            ->defaultValue('sort')
-            ->end()
             ->scalarNode('default')
             ->info('The default sort')
             ->isRequired()

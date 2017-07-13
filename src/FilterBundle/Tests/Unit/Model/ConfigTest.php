@@ -84,32 +84,6 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * Test setter / getter for pageQueryKey property
-     *
-     * @return void
-     */
-    public function testSetAndGetPageQueryKey()
-    {
-        $value = 'page';
-
-        self::assertEquals($this->fixture, $this->fixture->setPageQueryKey($value));
-        self::assertEquals($value, $this->fixture->getPageQueryKey());
-    }
-
-    /**
-     * Test setter / getter for sortQueryKey property
-     *
-     * @return void
-     */
-    public function testSetAndGetSortQueryKey()
-    {
-        $value = 'sort';
-
-        self::assertEquals($this->fixture, $this->fixture->setSortQueryKey($value));
-        self::assertEquals($value, $this->fixture->getSortQueryKey());
-    }
-
-    /**
      * Test setter / getter for sortings property
      *
      * @return void
@@ -120,19 +94,6 @@ class ConfigTest extends TestCase
 
         self::assertEquals($this->fixture, $this->fixture->setSortings($value));
         self::assertEquals($value, $this->fixture->getSortings());
-    }
-
-    /**
-     * Test setter / getter for viewQueryKey property
-     *
-     * @return void
-     */
-    public function testSetAndGetViewQueryKey()
-    {
-        $value = 'view';
-
-        self::assertEquals($this->fixture, $this->fixture->setViewQueryKey($value));
-        self::assertEquals($value, $this->fixture->getViewQueryKey());
     }
 
     /**

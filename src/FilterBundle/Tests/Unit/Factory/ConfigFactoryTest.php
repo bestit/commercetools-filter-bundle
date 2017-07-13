@@ -43,16 +43,13 @@ class ConfigFactoryTest extends TestCase
             'pagination' => [
                 'products_per_page' => 23,
                 'neighbours' => 4,
-                'query_key' => 'page',
             ],
             'sorting' => [
-                'query_key' => 'sort',
                 'choices' => $sortingConfigData,
                 'default' => 'price_asc'
             ],
             'view' => [
                 'default' => 'grid',
-                'query_key' => 'view',
             ],
             'facet' => [
                 'reset' => 'reset',
@@ -65,10 +62,7 @@ class ConfigFactoryTest extends TestCase
 
         static::assertInstanceOf(Config::class, $resolvedConfig);
         static::assertEquals('price_asc', $resolvedConfig->getDefaultSorting());
-        static::assertEquals('sort', $resolvedConfig->getSortQueryKey());
         static::assertEquals('grid', $resolvedConfig->getDefaultView());
-        static::assertEquals('view', $resolvedConfig->getViewQueryKey());
-        static::assertEquals('page', $resolvedConfig->getPageQueryKey());
         static::assertEquals(4, $resolvedConfig->getNeighbours());
         static::assertEquals(23, $resolvedConfig->getItemsPerPage());
         static::assertEquals($sortingConfigData, $resolvedConfig->getSortings());

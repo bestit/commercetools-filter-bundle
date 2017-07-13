@@ -39,26 +39,6 @@ class Config
      */
     private $neighbours;
 
-    /**+
-     * The page query key
-     * @var string
-     */
-    private $pageQueryKey;
-
-    /**
-     * The sort query key
-     *
-     * @var string
-     */
-    private $sortQueryKey;
-
-    /**
-     * The view query key
-     *
-     * @var string
-     */
-    private $viewQueryKey;
-
     /**
      * Available sortings
      *
@@ -87,6 +67,7 @@ class Config
      */
     public function __construct(array $values = [])
     {
+
         foreach ($values as $key => $value) {
             $setter = sprintf('set%s', ucfirst($key));
             if (property_exists($this, $key) && method_exists($this, $setter)) {
@@ -136,26 +117,6 @@ class Config
     }
 
     /**
-     * Get pageQueryKey
-     *
-     * @return string
-     */
-    public function getPageQueryKey(): string
-    {
-        return $this->pageQueryKey;
-    }
-
-    /**
-     * Get sortQueryKey
-     *
-     * @return string
-     */
-    public function getSortQueryKey(): string
-    {
-        return $this->sortQueryKey;
-    }
-
-    /**
      * Get sortings
      *
      * @return array
@@ -163,16 +124,6 @@ class Config
     public function getSortings(): array
     {
         return $this->sortings;
-    }
-
-    /**
-     * Get viewQueryKey
-     *
-     * @return string
-     */
-    public function getViewQueryKey(): string
-    {
-        return $this->viewQueryKey;
     }
 
     /**
@@ -232,34 +183,6 @@ class Config
     }
 
     /**
-     * Set pageQueryKey
-     *
-     * @param string $pageQueryKey
-     *
-     * @return Config
-     */
-    public function setPageQueryKey(string $pageQueryKey): Config
-    {
-        $this->pageQueryKey = $pageQueryKey;
-
-        return $this;
-    }
-
-    /**
-     * Set sortQueryKey
-     *
-     * @param string $sortQueryKey
-     *
-     * @return Config
-     */
-    public function setSortQueryKey(string $sortQueryKey): Config
-    {
-        $this->sortQueryKey = $sortQueryKey;
-
-        return $this;
-    }
-
-    /**
      * Set sortings
      *
      * @param array $sortings
@@ -269,20 +192,6 @@ class Config
     public function setSortings(array $sortings): Config
     {
         $this->sortings = $sortings;
-
-        return $this;
-    }
-
-    /**
-     * Set viewQueryKey
-     *
-     * @param string $viewQueryKey
-     *
-     * @return Config
-     */
-    public function setViewQueryKey(string $viewQueryKey): Config
-    {
-        $this->viewQueryKey = $viewQueryKey;
 
         return $this;
     }

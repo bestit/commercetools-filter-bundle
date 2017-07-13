@@ -2,6 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Factory;
 
+use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Generator\FilterUrlGeneratorInterface;
 use BestIt\Commercetools\FilterBundle\Model\Config;
 use BestIt\Commercetools\FilterBundle\Model\Context;
@@ -56,11 +57,28 @@ class ContextFactory
     {
         $config = $this->getConfig();
 
+        $filter = $request->get('filter', []);
+
+        $page = 1;
+        if (array_key_exists(FilterType::FIELDNAME_PAGE, $filter) && $filter[FilterType::FIELDNAME_PAGE] !== '') {
+            $page = $filter[FilterType::FIELDNAME_PAGE];
+        }
+
+        $view = $this->getConfig()->getDefaultView();
+        if (array_key_exists(FilterType::FIELDNAME_VIEW, $filter) && $filter[FilterType::FIELDNAME_VIEW] !== '') {
+            $view = $filter[FilterType::FIELDNAME_VIEW];
+        }
+
+        $sorting = $this->getConfig()->getDefaultSorting();
+        if (array_key_exists(FilterType::FIELDNAME_SORTING, $filter) && $filter[FilterType::FIELDNAME_SORTING] !== '') {
+            $sorting = $filter[FilterType::FIELDNAME_SORTING];
+        }
+
         $context = new Context(
             [
-                'page' => $request->query->getInt($config->getPageQueryKey(), 1),
-                'view' => $request->query->get($config->getViewQueryKey(), $config->getDefaultView()),
-                'sorting' => $request->query->get($config->getSortQueryKey(), $config->getDefaultSorting()),
+                'page' => (int) $page,
+                'view' => (string) $view,
+                'sorting' => (string) $sorting,
                 'query' => $request->query->all(),
                 'config' => $config,
                 'route' => $category,
@@ -84,11 +102,28 @@ class ContextFactory
     {
         $config = $this->getConfig();
 
+        $filter = $request->get('filter', []);
+
+        $page = 1;
+        if (array_key_exists(FilterType::FIELDNAME_PAGE, $filter) && $filter[FilterType::FIELDNAME_PAGE] !== '') {
+            $page = $filter[FilterType::FIELDNAME_PAGE];
+        }
+
+        $view = $this->getConfig()->getDefaultView();
+        if (array_key_exists(FilterType::FIELDNAME_VIEW, $filter) && $filter[FilterType::FIELDNAME_VIEW] !== '') {
+            $view = $filter[FilterType::FIELDNAME_VIEW];
+        }
+
+        $sorting = $this->getConfig()->getDefaultSorting();
+        if (array_key_exists(FilterType::FIELDNAME_SORTING, $filter) && $filter[FilterType::FIELDNAME_SORTING] !== '') {
+            $sorting = $filter[FilterType::FIELDNAME_SORTING];
+        }
+
         $context = new Context(
             [
-                'page' => $request->query->getInt($config->getPageQueryKey(), 1),
-                'view' => $request->query->get($config->getViewQueryKey(), $config->getDefaultView()),
-                'sorting' => $request->query->get($config->getSortQueryKey(), $config->getDefaultSorting()),
+                'page' => (int) $page,
+                'view' => (string) $view,
+                'sorting' => (string) $sorting,
                 'query' => $request->query->all(),
                 'config' => $config,
                 'route' => 'search_index',

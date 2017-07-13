@@ -16,6 +16,7 @@ use BestIt\Commercetools\FilterBundle\Model\RangeCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
 use BestIt\Commercetools\FilterBundle\Model\TermCollection;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -99,7 +100,7 @@ class FilterTypeTest extends TestCase
 
         $builder = $this->createMock(FormBuilderInterface::class);
         $builder
-            ->expects(self::exactly(4))
+            ->expects(self::exactly(7))
             ->method('add')
             ->withConsecutive(
                 [
@@ -145,6 +146,18 @@ class FilterTypeTest extends TestCase
                         'translation_domain' => 'messages',
                         'label' => 'submit'
                     ]
+                ],
+                [
+                    FilterType::FIELDNAME_VIEW,
+                    HiddenType::class
+                ],
+                [
+                    FilterType::FIELDNAME_PAGE,
+                    HiddenType::class
+                ],
+                [
+                    FilterType::FIELDNAME_SORTING,
+                    HiddenType::class
                 ]
             );
 
