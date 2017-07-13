@@ -1,3 +1,7 @@
+## [3.2.1] - 2017-07-13
+### Added
+- Adding functionality for form labels for (l)enums @kellner
+
 ## [3.2.0] - 2017-05-22
 ### Added
 - Add FilterUrlGeneratorInterface @chowanski
