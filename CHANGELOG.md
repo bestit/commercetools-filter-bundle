@@ -1,4 +1,4 @@
-## [Unreleased]
+## [4.0.0] - 2017-07-14
 ### Added
 - Adding improved functions for sorting, pagination and views. @bestit-tkellner
 
