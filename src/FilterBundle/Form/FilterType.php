@@ -7,6 +7,7 @@ use BestIt\Commercetools\FilterBundle\Model\Facet;
 use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +21,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FilterType extends AbstractType
 {
+    /**
+     * @var string FIELDNAME_VIEW Fieldname for view parameter.
+     */
+    const FIELDNAME_VIEW = 'view';
+    /**
+     * @var string FIELDNAME_PAGE Fieldname for page parameter.
+     */
+    const FIELDNAME_PAGE = 'page';
+    /**
+     * @var string FIELDNAME_SORT Fieldname for sorting parameter.
+     */
+    const FIELDNAME_SORTING = 'sort';
+
     /**
      * {@inheritdoc}
      */
@@ -41,7 +55,7 @@ class FilterType extends AbstractType
             switch ($facet->getType()) {
                 case 'terms':
                     if ($facet->getTerms()->count() === 0) {
-                        continue;
+                        continue 2;
                     }
 
                     $choices = [];
@@ -93,6 +107,11 @@ class FilterType extends AbstractType
                 'label' => $submit
             ]);
         }
+
+        // Add hidden fields for views, pagination and sorting.
+        $builder->add(self::FIELDNAME_VIEW, HiddenType::class);
+        $builder->add(self::FIELDNAME_PAGE, HiddenType::class);
+        $builder->add(self::FIELDNAME_SORTING, HiddenType::class);
     }
 
     /**

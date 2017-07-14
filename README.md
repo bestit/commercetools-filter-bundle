@@ -110,24 +110,14 @@ best_it_commercetools_filter:
         # Neighbours at pagination 1 => "1 2 3" | 2 => "1 2 3 4 5"
         neighbours: 1
         
-        # Query key name
-        query_key: page
-        
     # Optional view settings
     view:
     
-        # Query key name
-        query_key: view
-        
         # Default value
         default: list
         
     # Sorting. At least one sorting options must exist
     sorting:                                                                        # Required
-        
-        # Optional query key name
-        query_key: sort
-        
         # Default sorting to use if no sorting is selected
         default: name_asc                                                           # Required
         

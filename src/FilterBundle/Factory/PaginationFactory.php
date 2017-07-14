@@ -40,8 +40,7 @@ class PaginationFactory
             'previousPages' => [],
             'nextPages' => [],
             'route' => $context->getRoute(),
-            'baseUrl' => $context->getBaseUrl(),
-            'pageQueryKey' => $context->getConfig()->getPageQueryKey()
+            'baseUrl' => $context->getBaseUrl()
         ];
 
         foreach ($pagination->build() as $page => $type) {

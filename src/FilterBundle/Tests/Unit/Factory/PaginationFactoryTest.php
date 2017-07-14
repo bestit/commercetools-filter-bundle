@@ -43,8 +43,7 @@ class PaginationFactoryTest extends TestCase
     {
         $config = (new Config())
             ->setItemsPerPage(20)
-            ->setNeighbours(2)
-            ->setPageQueryKey('p');
+            ->setNeighbours(2);
 
         $context = (new Context())
             ->setPage(4)

@@ -3,6 +3,7 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
 use BestIt\Commercetools\FilterBundle\Factory\ContextFactory;
+use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Generator\FilterUrlGeneratorInterface;
 use BestIt\Commercetools\FilterBundle\Model\Config;
 use BestIt\Commercetools\FilterBundle\Model\Context;
@@ -52,8 +53,6 @@ class ContextFactoryTest extends TestCase
                 'defaultView' => 'grid',
                 'defaultSorting' => 'name_asc',
                 'neighbours' => 3,
-                'pageQueryKey' => 'p',
-                'sortQueryKey' => 's',
                 'itemsPerPage' => 30,
                 'viewQueryKey' => 'v',
                 'sortings' => [
@@ -116,7 +115,12 @@ class ContextFactoryTest extends TestCase
      */
     public function testCreateFromCategoryWithQuery()
     {
-        $request = new Request(['p' => 4, 'v' => 'list']);
+        $request = new Request([
+            'filter' => [
+                FilterType::FIELDNAME_PAGE => 4,
+                FilterType::FIELDNAME_VIEW => 'list'
+            ]
+        ]);
         $category = new Category();
 
         $this->filterUrlGenerator
@@ -129,7 +133,12 @@ class ContextFactoryTest extends TestCase
             [
                 'page' => 4,
                 'view' => 'list',
-                'query' => ['p' => 4, 'v' => 'list'],
+                'query' => [
+                    'filter' => [
+                        FilterType::FIELDNAME_PAGE => 4,
+                        FilterType::FIELDNAME_VIEW => 'list'
+                    ]
+                ],
                 'config' => $this->config,
                 'route' => $category,
                 'baseUrl' => 'foo-route',
@@ -180,7 +189,12 @@ class ContextFactoryTest extends TestCase
      */
     public function testCreateFromSearchWithQuery()
     {
-        $request = new Request(['p' => 4, 'v' => 'list']);
+        $request = new Request([
+            'filter' => [
+                FilterType::FIELDNAME_PAGE => 4,
+                FilterType::FIELDNAME_VIEW => 'list'
+            ]
+        ]);
         $search = 'foobar';
 
         $this->filterUrlGenerator
@@ -193,7 +207,12 @@ class ContextFactoryTest extends TestCase
             [
                 'page' => 4,
                 'view' => 'list',
-                'query' => ['p' => 4, 'v' => 'list'],
+                'query' => [
+                    'filter' => [
+                        FilterType::FIELDNAME_PAGE => 4,
+                        FilterType::FIELDNAME_VIEW => 'list'
+                    ]
+                ],
                 'config' => $this->config,
                 'route' => 'search_index',
                 'baseUrl' => 'foo-route',
@@ -212,7 +231,12 @@ class ContextFactoryTest extends TestCase
      */
     public function testCreateFromSearchWithoutCategory()
     {
-        $request = new Request(['p' => 4, 'v' => 'list']);
+        $request = new Request([
+            'filter' => [
+                FilterType::FIELDNAME_PAGE => 4,
+                FilterType::FIELDNAME_VIEW => 'list'
+            ]
+        ]);
         $search = null;
 
         $this->filterUrlGenerator
@@ -225,7 +249,12 @@ class ContextFactoryTest extends TestCase
             [
                 'page' => 4,
                 'view' => 'list',
-                'query' => ['p' => 4, 'v' => 'list'],
+                'query' => [
+                    'filter' => [
+                        FilterType::FIELDNAME_PAGE => 4,
+                        FilterType::FIELDNAME_VIEW => 'list'
+                    ]
+                ],
                 'config' => $this->config,
                 'route' => 'search_index',
                 'baseUrl' => 'foo-route',
