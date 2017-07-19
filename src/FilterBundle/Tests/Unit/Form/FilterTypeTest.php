@@ -60,7 +60,7 @@ class FilterTypeTest extends TestCase
         $facetCollection->addFacet(
             (new Facet())
                 ->setType(EnumFacetType::TERM)
-                ->setConfig(new FacetConfig())
+                ->setConfig((new FacetConfig())->setShowCount(true))
         );
 
         // Facet with terms
@@ -72,6 +72,7 @@ class FilterTypeTest extends TestCase
                 ->setMultiSelect(true)
                 ->setName('FooBar')
                 ->setAlias('foo.bar')
+                ->setShowCount(true)
         );
 
         $textFacet->setTerms(

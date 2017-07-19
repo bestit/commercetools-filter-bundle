@@ -76,8 +76,18 @@ class FilterType extends AbstractType
                         'choice_value' => function ($term) {
                             return $term instanceof Term ? $term->getTerm() : null;
                         },
-                        'choice_label' => function (Term $term) {
-                            return $term instanceof Term ? $term->getTitle() : null;
+                        'choice_label' => function (Term $term) use ($facet) {
+                            $label = null;
+
+                            if ($term instanceof Term) {
+                                $label = $term->getTitle();
+                            }
+
+                            if ($facet->getConfig()->isShowCount()) {
+                                $label .= ' (' . $term->getCount() . ')';
+                            }
+
+                            return $label;
                         }
                     ]);
                     break;

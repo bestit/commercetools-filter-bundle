@@ -78,6 +78,12 @@ class FacetConfig
     private $weight = 0;
 
     /**
+     * Show term count in label
+     * @var bool
+     */
+    private $showCount = false;
+
+    /**
      * Get alias
      *
      * @return string
@@ -137,6 +143,29 @@ class FacetConfig
         }
 
         return $this->field;
+    }
+
+    /**
+     * Getter for ShowCount.
+     *
+     * @return bool
+     */
+    public function isShowCount(): bool
+    {
+        return $this->showCount;
+    }
+
+    /**
+     * Setter for ShowCount.
+     *
+     * @param bool $showCount
+     *
+     * @return FacetConfig
+     */
+    public function setShowCount(bool $showCount): FacetConfig
+    {
+        $this->showCount = $showCount;
+        return $this;
     }
 
     /**
