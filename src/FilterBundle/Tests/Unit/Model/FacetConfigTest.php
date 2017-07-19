@@ -224,4 +224,16 @@ class FacetConfigTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->fixture->setType('foo');
     }
+
+    /**
+     * Test setter / getter for weight property
+     *
+     * @return void
+     */
+    public function testSetAndIsShow()
+    {
+        self::assertFalse($this->fixture->isShowCount());
+        self::assertEquals($this->fixture, $this->fixture->setShowCount(true));
+        self::assertTrue($this->fixture->isShowCount());
+    }
 }
