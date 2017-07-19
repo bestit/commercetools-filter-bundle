@@ -1,4 +1,4 @@
-## [Unreleased]
+## [4.1.0] - 2017-07-19
 ### Added
 - Adding config option to add term count to label. @bestit-tkellner
 
