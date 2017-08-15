@@ -71,4 +71,4 @@ services:
 
   best_it_commercetools_filter.helper.enum_attribute_helper:
       class: BestIt\Commercetools\FilterBundle\Helper\EnumAttributeHelper
-      arguments: ['@best_it_commercetools_filter.request.client']
+      arguments: ['@best_it_commercetools_filter.request.client', '@cache.app', '%best_it_commercetools_filter.cache_life_time%']
