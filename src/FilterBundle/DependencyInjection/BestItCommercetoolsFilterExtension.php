@@ -32,6 +32,9 @@ class BestItCommercetoolsFilterExtension extends Extension
         $container->setAlias('best_it_commercetools_filter.request.client', $config['client_id']);
         $container->setAlias('best_it_commercetools_filter.generator.url', $config['url_generator_id']);
 
+        // Set parameters
+        $container->setParameter('best_it_commercetools_filter.cache_life_time', $config['cache_life_time']);
+
         // Set config factory
         $container
             ->register('best_it_commercetools_filter.model.facet_config_collection', FacetConfigCollection::class)

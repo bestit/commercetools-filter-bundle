@@ -77,74 +77,63 @@ best_it_commercetools_filter:
 # Maximum configuration for "BestItCommercetoolsFilterBundle"
 best_it_commercetools_filter:
 
-    # Optional used translation domain (default "messages")
-    translation_domain: app
-    
-    # Optional product normalizer (service id / implement interface)
-    product_normalizer_id: app.normalizer.product_normalizer
-    
+    # Used translation domain (default "messages")
+    translation_domain:   messages
+
+    # Product normalizer (service id / implement interface)
+    product_normalizer_id: best_it_commercetools_filter.normalizer.empty_product_normalizer
+
     # Client service id of commerce tools sdk client
-    client_id: app.commercetools.client                                             # Required
-    
+    client_id:            ~ # Required
+
     # Optional facets factory config provider (service id / implement interface)
-    config_provider_id: app.provider.facet_config_provider
-    
-    # Optional generator for filter urls
-    url_generator_id: app.generator.url_generator
-    
-    # Optional facet config
-    facet:
-    
-        # Translation label for reset button OR false for disable button
-        reset: button_filter_reset
-        
-        # Translation label for submit button OR false for disable button
-        submit: false
-    
-    # Optional pagination settings
-    pagination:
-        
-        # Products per page
-        products_per_page: 20
-        
-        # Neighbours at pagination 1 => "1 2 3" | 2 => "1 2 3 4 5"
-        neighbours: 1
-        
-    # Optional view settings
-    view:
-    
-        # Default value
-        default: list
-        
-    # Sorting. At least one sorting options must exist
-    sorting:                                                                        # Required
-        # Default sorting to use if no sorting is selected
-        default: name_asc                                                           # Required
-        
-        # This is an array with all available sortings.
-        choices:
-            price_asc:
-            
-                # Translation key
-                translation: sorting_price_asc                                      # Required
-                
+    config_provider_id:   best_it_commercetools_filter.provider.empty_facet_config_provider
+
+    # Generator for filter urls
+    url_generator_id:     best_it_commercetools_filter.generator.default_filter_url_generator
+
+    # Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.
+    cache_life_time:      86400
+    sorting:              # Required
+
+        # The default sort
+        default:              ~ # Required
+
+        # Define the sorting id, the translation key and sort query. This is an array with all available sortings.
+        choices:              # Required
+
+            # Prototype
+            key:
+
                 # Api query for sdk
-                query: 'price asc'                                                  # Required
-            price_desc:
-                translation: sorting_price_desc
-                query: 'price desc'
-            name_asc:
-                translation: sorting_name_asc
-                query: 'name.de asc'
-            name_desc:
-                translation: sorting_name_desc
-                query: 'name.de desc'
-            created_at_asc:
-                translation: sorting_created_at_asc
-                query: 'createdAt asc'
-            created_at_desc:
-                translation: sorting_created_at_desc
-                query: 'createdAt desc'
+                query:                ~ # Required
+
+                # Translation key
+                translation:          ~ # Required
+
+    # Pagination settings
+    pagination:
+
+        # Products per page
+        products_per_page:    20
+
+        # Neighbours at pagination 1 => "1 2 3" | 2 => "1 2 3 4 5"
+        neighbours:           1
+
+    # View settings
+    view:
+
+        # Default view type (eg. grid, list)
+        default:              list
+
+    # Facet config
+    facet:
+
+        # Translation key for reset button or false for disable reset button
+        reset:                reset
+
+        # Translation key for reset button or false for disable submit button
+        submit:               submit
 ```
 
 ## Usage
