@@ -1,4 +1,7 @@
 ## [Unreleased]
+
+## [5.0.0] - 2017-08-17
+### Added
 - Added caching for enum attributes.
 
 ## [4.1.0] - 2017-07-19
