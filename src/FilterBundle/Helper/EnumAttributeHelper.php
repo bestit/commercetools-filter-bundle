@@ -85,6 +85,8 @@ class EnumAttributeHelper
     public function getLabels(string $attributeName): array
     {
         if (!array_key_exists($attributeName, $this->labels)) {
+            $this->labels[$attributeName] = [];
+
             $cacheItem = $this->cacheItemPool->getItem(self::CACHE_KEY . '-' . md5($attributeName));
 
             if ($cacheItem->isHit()) {
