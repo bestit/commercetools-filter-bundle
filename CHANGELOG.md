@@ -1,5 +1,6 @@
 ## [Unreleased]
 - Added caching for enum attributes.
+- Added bugfix for undefined index.
 
 ## [4.1.0] - 2017-07-19
 ### Added
