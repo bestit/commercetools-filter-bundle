@@ -15,7 +15,7 @@
   "require": {
     "php": "^7.0",
     "symfony/symfony": "^3.1",
-    "commercetools/php-sdk": "^1.2.1",
+    "commercetools/php-sdk": "^1.2.1 || ^2.0",
     "amstaffix/pagination": "^1.1@dev"
   },
   "require-dev": {
