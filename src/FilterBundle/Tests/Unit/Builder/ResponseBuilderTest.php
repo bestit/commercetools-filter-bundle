@@ -7,9 +7,9 @@ use BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder;
 use BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory;
 use BestIt\Commercetools\FilterBundle\Factory\PaginationFactory;
 use BestIt\Commercetools\FilterBundle\Form\FilterType;
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
-use BestIt\Commercetools\FilterBundle\Model\Pagination;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
+use BestIt\Commercetools\FilterBundle\Model\Pagination\Pagination;
 use Commercetools\Core\Model\Product\FacetResultCollection;
 use Commercetools\Core\Model\Product\ProductProjection;
 use Commercetools\Core\Model\Product\ProductProjectionCollection;
@@ -85,7 +85,7 @@ class ResponseBuilderTest extends TestCase
      */
     public function testBuild()
     {
-        $context = new Context(
+        $context = new SearchContext(
             [
                 'query' => [
                     'filter' => [

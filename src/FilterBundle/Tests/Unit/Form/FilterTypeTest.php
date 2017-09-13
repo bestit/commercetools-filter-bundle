@@ -7,14 +7,14 @@ use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Form\MinMaxRangeType;
 use BestIt\Commercetools\FilterBundle\Form\ResetType;
 use BestIt\Commercetools\FilterBundle\Form\TermType;
-use BestIt\Commercetools\FilterBundle\Model\Config;
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\Facet;
-use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
-use BestIt\Commercetools\FilterBundle\Model\RangeCollection;
-use BestIt\Commercetools\FilterBundle\Model\Term;
-use BestIt\Commercetools\FilterBundle\Model\TermCollection;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Facet\Facet;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Facet\RangeCollection;
+use BestIt\Commercetools\FilterBundle\Model\Term\Term;
+use BestIt\Commercetools\FilterBundle\Model\Term\TermCollection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -162,10 +162,10 @@ class FilterTypeTest extends TestCase
                 ]
             );
 
-        $this->fixture->buildForm($builder, ['facets' => $facetCollection, 'context' => new Context(
+        $this->fixture->buildForm($builder, ['facets' => $facetCollection, 'context' => new SearchContext(
             [
                 'baseUrl' => 'http://foo',
-                'config' => new Config(
+                'config' => new SearchConfig(
                     [
                         'translationDomain' => 'messages',
                         'facet' => [
@@ -214,7 +214,7 @@ class FilterTypeTest extends TestCase
                 ],
                 [
                     self::equalTo('context'),
-                    self::equalTo([Context::class])
+                    self::equalTo([SearchContext::class])
                 ]
             );
 

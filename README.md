@@ -35,7 +35,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new new BestIt\Commercetools\FilterBundle\BestItCommercetoolsFilterBundle(),
+            new BestIt\Commercetools\FilterBundle\BestItCommercetoolsFilterBundle(),
         );
 
         // ...
@@ -95,8 +95,7 @@ best_it_commercetools_filter:
     # Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.
     cache_life_time:      86400
  
-    # Mark matching variants with "isMatchingVariant".
-    mark_matching_variants: false
+    # Sorting. At least one sorting options must exist
     sorting:              # Required
 
         # The default sort
@@ -137,6 +136,34 @@ best_it_commercetools_filter:
 
         # Translation key for reset button or false for disable submit button
         submit:               submit
+    
+    # Suggest config
+    suggest:
+        
+        # Use fuzzy suggest (default: true)
+        enable_fuzzy:         false
+        
+        # The fuzziness level is quantified in terms of the Damerau-Levenshtein distance.
+        # If null, the platform selects level based on the length of the searched text 
+        # Default: null
+        fuzzy_level:          2
+        
+        # Mark matching variants with "isMatchingVariant". (default: false)
+        match_variants: true
+        
+    # Search config
+    search:
+        
+        # Use fuzzy search (default: true)
+        enable_fuzzy:         false
+             
+        # The fuzziness level is quantified in terms of the Damerau-Levenshtein distance.
+        # If null, the platform selects level based on the length of the searched text
+        # Default: null
+        fuzzy_level:          2
+                   
+        # Mark matching variants with "isMatchingVariant". (default: false)
+        match_variants: true
 ```
 
 ## Usage

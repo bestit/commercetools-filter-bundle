@@ -4,8 +4,8 @@ namespace BestIt\Commercetools\FilterBundle\Builder;
 
 use BestIt\Commercetools\FilterBundle\Form\Transformer\PriceMaxDataTransformer;
 use BestIt\Commercetools\FilterBundle\Form\Transformer\PriceMinDataTransformer;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
 use Commercetools\Core\Model\Product\Search\Facet;
 use Commercetools\Core\Model\Product\Search\Filter;
 use Commercetools\Core\Model\Product\Search\FilterSubtree;

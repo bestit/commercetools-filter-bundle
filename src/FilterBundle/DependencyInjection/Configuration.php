@@ -26,40 +26,38 @@ class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder();
 
         $builder->root('best_it_commercetools_filter')
-            ->children()
-            ->scalarNode('translation_domain')
-            ->info('Used translation domain (default "messages")')
-            ->defaultValue('messages')
-            ->end()
-            ->scalarNode('product_normalizer_id')
-            ->info('Product normalizer (service id / implement interface)')
-            ->defaultValue('best_it_commercetools_filter.normalizer.empty_product_normalizer')
-            ->end()
-            ->scalarNode('client_id')
-            ->info('Client service id of commerce tools sdk client')
-            ->isRequired()
-            ->cannotBeEmpty()
-            ->end()
-            ->scalarNode('config_provider_id')
-            ->info('Optional facets factory config provider (service id / implement interface)')
-            ->defaultValue('best_it_commercetools_filter.provider.empty_facet_config_provider')
-            ->end()
-            ->scalarNode('url_generator_id')
-            ->info('Generator for filter urls')
-            ->defaultValue('best_it_commercetools_filter.generator.default_filter_url_generator')
-            ->end()
-            ->scalarNode('cache_life_time')
-            ->info('Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.')
-            ->defaultValue(86400)
-            ->end()
-            ->scalarNode('mark_matching_variants')
-            ->info('Mark matching variants with "isMatchingVariant".')
-            ->defaultValue(false)
-            ->end()
-            ->end()
+                ->children()
+                    ->scalarNode('translation_domain')
+                        ->info('Used translation domain (default "messages")')
+                        ->defaultValue('messages')
+                    ->end()
+                    ->scalarNode('product_normalizer_id')
+                        ->info('Product normalizer (service id / implement interface)')
+                        ->defaultValue('best_it_commercetools_filter.normalizer.empty_product_normalizer')
+                    ->end()
+                    ->scalarNode('client_id')
+                        ->info('Client service id of commerce tools sdk client')
+                        ->isRequired()
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->scalarNode('config_provider_id')
+                        ->info('Optional facets factory config provider (service id / implement interface)')
+                        ->defaultValue('best_it_commercetools_filter.provider.empty_facet_config_provider')
+                    ->end()
+                    ->scalarNode('url_generator_id')
+                        ->info('Generator for filter urls')
+                        ->defaultValue('best_it_commercetools_filter.generator.default_filter_url_generator')
+                    ->end()
+                    ->scalarNode('cache_life_time')
+                        ->info('Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.')
+                        ->defaultValue(86400)
+                    ->end()
+                ->end()
             ->append($this->getSortingNode())
             ->append($this->getPaginationNode())
             ->append($this->getViewNode())
+            ->append($this->getSuggestNode())
+            ->append($this->getSearchNode())
             ->append($this->getFacetsNode());
 
         return $builder;
@@ -78,10 +76,78 @@ class Configuration implements ConfigurationInterface
             ->info('View settings')
             ->addDefaultsIfNotSet()
             ->children()
-            ->scalarNode('default')
-            ->info('Default view type (eg. grid, list)')
-            ->defaultValue('list')
-            ->end()
+                ->scalarNode('default')
+                    ->info('Default view type (eg. grid, list)')
+                    ->defaultValue('list')
+                ->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
+     * Add the config for suggest
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getSuggestNode(): ArrayNodeDefinition
+    {
+        $node = (new TreeBuilder())->root('suggest');
+
+        $node
+            ->info('Suggest settings')
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('enable_fuzzy')
+                    ->defaultTrue()
+                    ->info('Use fuzzy for suggest')
+                ->end()
+                ->scalarNode('fuzzy_level')
+                    ->defaultNull()
+                    ->info('Use fuzzy level for suggest')
+                    ->validate()
+                        ->ifTrue(function ($value) { return !is_int($value) && $value !== null; })
+                        ->thenInvalid('Configuration value must be either int or null.')
+                    ->end()
+                ->end()
+                ->booleanNode('match_variants')
+                    ->info('Mark matching variants with "isMatchingVariant".')
+                    ->defaultFalse()
+                ->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
+     * Add the config for search
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getSearchNode(): ArrayNodeDefinition
+    {
+        $node = (new TreeBuilder())->root('search');
+
+        $node
+            ->info('Search settings')
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('enable_fuzzy')
+                    ->defaultTrue()
+                    ->info('Use fuzzy for search')
+                ->end()
+                ->scalarNode('fuzzy_level')
+                    ->defaultNull()
+                    ->info('Use fuzzy level for search')
+                    ->validate()
+                        ->ifTrue(function ($value) { return !is_int($value) && $value !== null; })
+                        ->thenInvalid('Configuration value must be either int or null.')
+                    ->end()
+                ->end()
+                ->booleanNode('match_variants')
+                    ->info('Mark matching variants with "isMatchingVariant".')
+                    ->defaultFalse()
+                ->end()
             ->end();
 
         return $node;
@@ -100,14 +166,14 @@ class Configuration implements ConfigurationInterface
             ->info('Facet config')
             ->addDefaultsIfNotSet()
             ->children()
-            ->scalarNode('reset')
-            ->info('Translation key for reset button or false for disable reset button')
-            ->defaultValue('reset')
-            ->end()
-            ->scalarNode('submit')
-            ->info('Translation key for reset button or false for disable submit button')
-            ->defaultValue('submit')
-            ->end()
+                ->scalarNode('reset')
+                    ->info('Translation key for reset button or false for disable reset button')
+                    ->defaultValue('reset')
+                ->end()
+                ->scalarNode('submit')
+                    ->info('Translation key for reset button or false for disable submit button')
+                    ->defaultValue('submit')
+                ->end()
             ->end();
 
         return $node;
@@ -126,14 +192,14 @@ class Configuration implements ConfigurationInterface
             ->info('Pagination settings')
             ->addDefaultsIfNotSet()
             ->children()
-            ->scalarNode('products_per_page')
-            ->info('Products per page')
-            ->defaultValue(20)
-            ->end()
-            ->scalarNode('neighbours')
-            ->info('Neighbours at pagination 1 => "1 2 3" | 2 => "1 2 3 4 5"')
-            ->defaultValue(1)
-            ->end()
+                ->scalarNode('products_per_page')
+                    ->info('Products per page')
+                    ->defaultValue(20)
+                ->end()
+                ->scalarNode('neighbours')
+                    ->info('Neighbours at pagination 1 => "1 2 3" | 2 => "1 2 3 4 5"')
+                    ->defaultValue(1)
+                ->end()
             ->end();
 
         return $node;
@@ -151,32 +217,32 @@ class Configuration implements ConfigurationInterface
         $node
             ->isRequired()
             ->children()
-            ->scalarNode('default')
-            ->info('The default sort')
-            ->isRequired()
-            ->cannotBeEmpty()
-            ->end()
-            ->arrayNode('choices')
-            ->info('Define the sorting id, the translation key and sort query. This is an array with all available sortings.')
-            ->normalizeKeys(false)
-            ->requiresAtLeastOneElement()
-            ->isRequired()
-            ->useAttributeAsKey('key')
-            ->prototype('array')
-            ->children()
-            ->scalarNode('query')
-            ->info('Api query for sdk')
-            ->isRequired()
-            ->cannotBeEmpty()
-            ->end()
-            ->scalarNode('translation')
-            ->info('Translation key')
-            ->isRequired()
-            ->cannotBeEmpty()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
+                ->scalarNode('default')
+                    ->info('The default sort')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->arrayNode('choices')
+                    ->info('Define the sorting id, the translation key and sort query. This is an array with all available sortings.')
+                    ->normalizeKeys(false)
+                    ->requiresAtLeastOneElement()
+                    ->isRequired()
+                    ->useAttributeAsKey('key')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('query')
+                                ->info('Api query for sdk')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                            ->end()
+                            ->scalarNode('translation')
+                                ->info('Translation key')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $node;

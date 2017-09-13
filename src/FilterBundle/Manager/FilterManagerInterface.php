@@ -2,7 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Manager;
 
-use BestIt\Commercetools\FilterBundle\Model\Result;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchResult;
 use Commercetools\Core\Model\Category\Category;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,9 +21,9 @@ interface FilterManagerInterface
      * @param Request $request
      * @param Category $category
      *
-     * @return Result
+     * @return SearchResult
      */
-    public function listing(Request $request, Category $category): Result;
+    public function listing(Request $request, Category $category): SearchResult;
 
     /**
      * Perform a search request
@@ -31,7 +31,7 @@ interface FilterManagerInterface
      * @param Request $request
      * @param string $search
      *
-     * @return Result
+     * @return SearchResult
      */
-    public function search(Request $request, string $search = null): Result;
+    public function search(Request $request, string $search = null): SearchResult;
 }

@@ -4,12 +4,11 @@ namespace BestIt\Commercetools\FilterBundle\Manager;
 
 use BestIt\Commercetools\FilterBundle\Builder\RequestBuilder;
 use BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder;
-use BestIt\Commercetools\FilterBundle\Factory\ContextFactory;
+use BestIt\Commercetools\FilterBundle\Factory\SearchContextFactory;
 use BestIt\Commercetools\FilterBundle\Factory\SortingFactory;
-use BestIt\Commercetools\FilterBundle\Model\Result;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchResult;
 use Commercetools\Core\Model\Category\Category;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Intl\Exception\NotImplementedException;
 
 /**
  * Manager for filter products
@@ -23,7 +22,7 @@ class FilterManager implements FilterManagerInterface
     /**
      * Factory for creating a context object
      *
-     * @var ContextFactory
+     * @var SearchContextFactory
      */
     private $contextFactory;
 
@@ -51,13 +50,13 @@ class FilterManager implements FilterManagerInterface
     /**
      * FilterManager constructor.
      *
-     * @param ContextFactory $contextFactory
+     * @param SearchContextFactory $contextFactory
      * @param SortingFactory $sortingFactory
      * @param RequestBuilder $requestBuilder
      * @param ResponseBuilder $responseBuilder
      */
     public function __construct(
-        ContextFactory $contextFactory,
+        SearchContextFactory $contextFactory,
         SortingFactory $sortingFactory,
         RequestBuilder $requestBuilder,
         ResponseBuilder $responseBuilder
@@ -72,9 +71,9 @@ class FilterManager implements FilterManagerInterface
     /**
      * Get contextFactory
      *
-     * @return ContextFactory
+     * @return SearchContextFactory
      */
-    private function getContextFactory(): ContextFactory
+    private function getContextFactory(): SearchContextFactory
     {
         return $this->contextFactory;
     }
@@ -112,7 +111,7 @@ class FilterManager implements FilterManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function listing(Request $request, Category $category): Result
+    public function listing(Request $request, Category $category): SearchResult
     {
         $context = $this->getContextFactory()->createFromCategory($request, $category);
         $sorting = $this->getSortingFactory()->create($context);
@@ -127,7 +126,7 @@ class FilterManager implements FilterManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function search(Request $request, string $search = null): Result
+    public function search(Request $request, string $search = null): SearchResult
     {
         $context = $this->getContextFactory()->createFromSearch($request, $search);
         $sorting = $this->getSortingFactory()->create($context);
@@ -142,11 +141,11 @@ class FilterManager implements FilterManagerInterface
     /**
      * Set contextFactory
      *
-     * @param ContextFactory $contextFactory
+     * @param SearchContextFactory $contextFactory
      *
      * @return FilterManager
      */
-    private function setContextFactory(ContextFactory $contextFactory): FilterManager
+    private function setContextFactory(SearchContextFactory $contextFactory): FilterManager
     {
         $this->contextFactory = $contextFactory;
 

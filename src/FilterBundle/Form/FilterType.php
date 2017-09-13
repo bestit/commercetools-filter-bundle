@@ -2,10 +2,10 @@
 
 namespace BestIt\Commercetools\FilterBundle\Form;
 
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\Facet;
-use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
-use BestIt\Commercetools\FilterBundle\Model\Term;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Facet\Facet;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
+use BestIt\Commercetools\FilterBundle\Model\Term\Term;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -42,7 +42,7 @@ class FilterType extends AbstractType
         /**
          * Context object
          *
-         * @var Context $context
+         * @var SearchContext $context
          */
         $context = $options['context'];
 
@@ -139,6 +139,6 @@ class FilterType extends AbstractType
 
         $resolver->setRequired(['facets', 'context']);
         $resolver->setAllowedTypes('facets', [FacetCollection::class]);
-        $resolver->setAllowedTypes('context', [Context::class]);
+        $resolver->setAllowedTypes('context', [SearchContext::class]);
     }
 }

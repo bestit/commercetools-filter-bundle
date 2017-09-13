@@ -5,12 +5,12 @@ namespace BestIt\Commercetools\FilterBundle\Factory;
 use BestIt\Commercetools\FilterBundle\Enum\FacetType;
 use BestIt\Commercetools\FilterBundle\Helper\EnumAttributeHelper;
 use BestIt\Commercetools\FilterBundle\Helper\FacetConfigCollectionAwareTrait;
-use BestIt\Commercetools\FilterBundle\Model\Facet;
-use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
-use BestIt\Commercetools\FilterBundle\Model\RangeCollection;
-use BestIt\Commercetools\FilterBundle\Model\Term;
-use BestIt\Commercetools\FilterBundle\Model\TermCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\Facet;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\RangeCollection;
+use BestIt\Commercetools\FilterBundle\Model\Term\Term;
+use BestIt\Commercetools\FilterBundle\Model\Term\TermCollection;
 use Commercetools\Core\Model\Product\FacetResultCollection;
 
 /**

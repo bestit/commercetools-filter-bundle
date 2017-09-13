@@ -2,9 +2,9 @@
 
 namespace BestIt\Commercetools\FilterBundle\Factory;
 
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\Sorting;
-use BestIt\Commercetools\FilterBundle\Model\SortingCollection;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Sorting\Sorting;
+use BestIt\Commercetools\FilterBundle\Model\Sorting\SortingCollection;
 
 /**
  * Factory for sorting data
@@ -18,11 +18,11 @@ class SortingFactory
     /**
      * Create sorting collection by context
      *
-     * @param Context $context
+     * @param SearchContext $context
      *
      * @return SortingCollection
      */
-    public function create(Context $context): SortingCollection
+    public function create(SearchContext $context): SortingCollection
     {
         $collection = new SortingCollection();
         foreach ($context->getConfig()->getSortings() as $key => $item) {

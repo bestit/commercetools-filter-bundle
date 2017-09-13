@@ -2,11 +2,11 @@
 
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
-use BestIt\Commercetools\FilterBundle\Factory\ContextFactory;
+use BestIt\Commercetools\FilterBundle\Factory\SearchContextFactory;
 use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Generator\FilterUrlGeneratorInterface;
-use BestIt\Commercetools\FilterBundle\Model\Config;
-use BestIt\Commercetools\FilterBundle\Model\Context;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
 use Commercetools\Core\Model\Category\Category;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,14 +25,14 @@ class ContextFactoryTest extends TestCase
     /**
      * The context factory
      *
-     * @var ContextFactory
+     * @var SearchContextFactory
      */
     private $fixture;
 
     /**
      * The config array
      *
-     * @var Config
+     * @var SearchConfig
      */
     private $config;
 
@@ -48,7 +48,7 @@ class ContextFactoryTest extends TestCase
      */
     public function setUp()
     {
-        $this->config = new Config(
+        $this->config = new SearchConfig(
             [
                 'defaultView' => 'grid',
                 'defaultSorting' => 'name_asc',
@@ -70,7 +70,7 @@ class ContextFactoryTest extends TestCase
             ]
         );
 
-        $this->fixture = new ContextFactory(
+        $this->fixture = new SearchContextFactory(
             $this->config,
             $this->filterUrlGenerator = $this->createMock(FilterUrlGeneratorInterface::class)
         );
@@ -92,7 +92,7 @@ class ContextFactoryTest extends TestCase
             ->with($request, $category)
             ->willReturn('foo-route');
 
-        $context = new Context(
+        $context = new SearchContext(
             [
                 'page' => 1,
                 'view' => 'grid',
@@ -129,7 +129,7 @@ class ContextFactoryTest extends TestCase
             ->with($request, $category)
             ->willReturn('foo-route');
 
-        $context = new Context(
+        $context = new SearchContext(
             [
                 'page' => 4,
                 'view' => 'list',
@@ -166,7 +166,7 @@ class ContextFactoryTest extends TestCase
             ->with($request, $search)
             ->willReturn('foo-route');
 
-        $context = new Context(
+        $context = new SearchContext(
             [
                 'page' => 1,
                 'view' => 'grid',
@@ -203,7 +203,7 @@ class ContextFactoryTest extends TestCase
             ->with($request, $search)
             ->willReturn('foo-route');
 
-        $context = new Context(
+        $context = new SearchContext(
             [
                 'page' => 4,
                 'view' => 'list',
@@ -245,7 +245,7 @@ class ContextFactoryTest extends TestCase
             ->with($request, $search)
             ->willReturn('foo-route');
 
-        $context = new Context(
+        $context = new SearchContext(
             [
                 'page' => 4,
                 'view' => 'list',

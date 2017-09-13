@@ -7,9 +7,15 @@ use BestIt\Commercetools\FilterBundle\Event\Request\ProductsSuggestRequestEvent;
 use BestIt\Commercetools\FilterBundle\Exception\ApiException;
 use BestIt\Commercetools\FilterBundle\Manager\SuggestManager;
 use BestIt\Commercetools\FilterBundle\Manager\SuggestManagerInterface;
+use BestIt\Commercetools\FilterBundle\Model\Fuzzy\FuzzyConfig;
+use BestIt\Commercetools\FilterBundle\Model\Suggest\KeywordsResult;
+use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestConfig;
+use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestResult;
 use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
 use BestIt\Commercetools\FilterBundle\SuggestEvent;
 use Commercetools\Core\Client;
+use Commercetools\Core\Config;
+use Commercetools\Core\Model\Common\Context;
 use Commercetools\Core\Model\Common\LocalizedString;
 use Commercetools\Core\Model\Product\LocalizedSuggestionCollection;
 use Commercetools\Core\Model\Product\ProductProjection;
@@ -65,6 +71,11 @@ class SuggestManagerTest extends TestCase
     private $eventDispatcher;
 
     /**
+     * @var SuggestConfig|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $config;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()
@@ -73,7 +84,7 @@ class SuggestManagerTest extends TestCase
             $this->client = static::createMock(Client::class),
             $this->productNormalizer = static::createMock(ProductNormalizerInterface::class),
             $this->eventDispatcher = static::createMock(EventDispatcherInterface::class),
-            true
+            $this->config = new SuggestConfig()
         );
     }
 
@@ -88,6 +99,7 @@ class SuggestManagerTest extends TestCase
         $max = 10;
 
         $request = ProductsSuggestRequest::ofKeywords(LocalizedString::ofLangAndText('de', $keyword));
+        $request->addKeyword('en', $keyword);
         $request->fuzzy(true);
         $request->limit($max);
 
@@ -98,6 +110,8 @@ class SuggestManagerTest extends TestCase
                 static::equalTo(SuggestEvent::KEYWORDS_REQUEST_POST),
                 static::isInstanceOf(ProductsSuggestRequestEvent::class)
             );
+
+        $this->config->getFuzzyConfig()->setIsActive(true);
 
         $suggestResult = new SuggestionResult();
         $localizedSuggestionCollection = new LocalizedSuggestionCollection();
@@ -122,14 +136,25 @@ class SuggestManagerTest extends TestCase
 
         $this->client
             ->expects(static::once())
+            ->method('getConfig')
+            ->willReturn($clientConfig = new Config());
+
+        $clientConfig->setContext($context = new Context());
+        $context->setLanguages(['de', 'en']);
+
+        $this->client
+            ->expects(static::once())
             ->method('execute')
             ->with(static::equalTo($request))
             ->willReturn($response);
 
+        $result = $this->fixture->getKeywords($keyword, $max);
+        static::assertInstanceOf(KeywordsResult::class, $result);
         static::assertEquals([
             'foo' => 'foo',
             'bar' => 'bar'
-        ], $this->fixture->getKeywords($keyword, $max));
+        ], $result->getKeywords());
+        static::assertInstanceOf(ApiResponseInterface::class, $result->getHttpResponse());
     }
 
     /**
@@ -140,6 +165,11 @@ class SuggestManagerTest extends TestCase
     public function testGetKeywordsThrowException()
     {
         $this->expectException(ApiException::class);
+
+        $this->client
+            ->expects(static::once())
+            ->method('getConfig')
+            ->willReturn($clientConfig = new Config());
 
         $this->client
             ->expects(static::once())
@@ -176,7 +206,8 @@ class SuggestManagerTest extends TestCase
 
         $request = ProductProjectionSearchRequest::of();
         $request->addParam('text.de', $keyword);
-        $request->fuzzy(true);
+        $request->addParam('text.en', $keyword);
+        $request->fuzzy(4);
         $request->limit($max);
         $request->markMatchingVariants(true);
 
@@ -187,6 +218,10 @@ class SuggestManagerTest extends TestCase
                 static::equalTo(SuggestEvent::PRODUCTS_REQUEST_POST),
                 static::isInstanceOf(ProductProjectionSearchRequestEvent::class)
             );
+
+        $this->config->getFuzzyConfig()->setIsActive(true);
+        $this->config->getFuzzyConfig()->setLevel(4);
+        $this->config->setMatchVariants(true);
 
         $productProjectionCollection = new ProductProjectionCollection();
 
@@ -210,14 +245,22 @@ class SuggestManagerTest extends TestCase
 
         $this->client
             ->expects(static::once())
+            ->method('getConfig')
+            ->willReturn($clientConfig = new Config());
+
+        $clientConfig->setContext($context = new Context());
+        $context->setLanguages(['de', 'en']);
+
+        $this->client
+            ->expects(static::once())
             ->method('execute')
             ->with(static::equalTo($request))
             ->willReturn($response);
 
-        static::assertEquals([
-            ['foo' => 'bar'],
-            ['bar' => 'foo']
-        ], $this->fixture->getProducts($keyword, $max));
+        $result = $this->fixture->getProducts($keyword, $max);
+        static::assertInstanceOf(SuggestResult::class, $result);
+        static::assertEquals([['foo' => 'bar'], ['bar' => 'foo']], $result->getProducts());
+        static::assertInstanceOf(ApiResponseInterface::class, $result->getHttpResponse());
     }
 
     /**
@@ -228,6 +271,14 @@ class SuggestManagerTest extends TestCase
     public function testGetProductsThrowException()
     {
         $this->expectException(ApiException::class);
+
+        $this->client
+            ->expects(static::once())
+            ->method('getConfig')
+            ->willReturn($clientConfig = new Config());
+
+        $clientConfig->setContext($context = new Context());
+        $context->setLanguages(['de', 'en']);
 
         $this->client
             ->expects(static::once())
