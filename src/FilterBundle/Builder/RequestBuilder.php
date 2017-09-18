@@ -40,67 +40,37 @@ class RequestBuilder
     private $eventDispatcher;
 
     /**
+     * The collection
+     *
+     * @var FacetConfigCollection or null
+     */
+    private $facetConfigCollection;
+
+    /**
+     * Mark matching variant?
+     *
+     * @var bool $markMatchingVariant
+     */
+    private $markMatchingVariant;
+
+    /**
      * RequestManager constructor.
      *
      * @param Client $client
      * @param FacetConfigCollection $facetConfigCollection
      * @param EventDispatcherInterface $eventDispatcher
+     * @param bool $markMatchingVariant Mark matching variants?
      */
     public function __construct(
         Client $client,
         FacetConfigCollection $facetConfigCollection,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        bool $markMatchingVariant
     ) {
-        $this
-            ->setClient($client)
-            ->setEventDispatcher($eventDispatcher)
-            ->setFacetConfigCollection($facetConfigCollection);
-    }
-
-    /**
-     * Get eventDispatcher
-     *
-     * @return EventDispatcherInterface
-     */
-    private function getEventDispatcher(): EventDispatcherInterface
-    {
-        return $this->eventDispatcher;
-    }
-
-    /**
-     * Set eventDispatcher
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @return RequestBuilder
-     */
-    private function setEventDispatcher(EventDispatcherInterface $eventDispatcher): RequestBuilder
-    {
-        $this->eventDispatcher = $eventDispatcher;
-        return $this;
-    }
-
-    /**
-     * Get client
-     *
-     * @return Client
-     */
-    private function getClient(): Client
-    {
-        return $this->client;
-    }
-
-    /**
-     * Set client
-     *
-     * @param Client $client
-     *
-     * @return RequestBuilder
-     */
-    private function setClient(Client $client): RequestBuilder
-    {
         $this->client = $client;
-        return $this;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->facetConfigCollection = $facetConfigCollection;
+        $this->markMatchingVariant = $markMatchingVariant;
     }
 
     /**
@@ -129,7 +99,8 @@ class RequestBuilder
         $request = ProductProjectionSearchRequest::of()
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
             ->limit($context->getConfig()->getItemsPerPage())
-            ->sort($sorting->getActive()->getQuery());
+            ->sort($sorting->getActive()->getQuery())
+            ->markMatchingVariants($this->markMatchingVariant);
 
         // Filter to category if exists
         if ($category = $context->getCategory()) {
@@ -143,19 +114,19 @@ class RequestBuilder
             $request->fuzzy(true);
         }
 
-        $builder = new FacetBuilder($this->getFacetConfigCollection());
+        $builder = new FacetBuilder($this->facetConfigCollection);
         $resolvedValues = $builder->resolve($this->decode($context->getQuery()));
         $request = $builder->build($request, $resolvedValues);
 
         $event = new ProductProjectionSearchRequestEvent($request);
-        $this->getEventDispatcher()->dispatch(FilterEvent::PRODUCTS_REQUEST_POST, $event);
+        $this->eventDispatcher->dispatch(FilterEvent::PRODUCTS_REQUEST_POST, $event);
 
         /**
          * Commercetools response
          *
          * @var PagedSearchResponse $result
          */
-        $result = $this->getClient()->execute($event->getRequest());
+        $result = $this->client->execute($event->getRequest());
 
         return $result;
     }

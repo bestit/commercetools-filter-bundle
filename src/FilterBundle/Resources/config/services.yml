@@ -49,6 +49,7 @@ services:
           - '@best_it_commercetools_filter.request.client'
           - '@best_it_commercetools_filter.normalizer.product'
           - '@event_dispatcher'
+          - '%best_it_commercetools_filter.mark_matching_variants%'
 
   best_it_commercetools_filter.builder.request_builder:
       class: BestIt\Commercetools\FilterBundle\Builder\RequestBuilder
@@ -56,6 +57,7 @@ services:
           - '@best_it_commercetools_filter.request.client'
           - '@best_it_commercetools_filter.model.facet_config_collection'
           - '@event_dispatcher'
+          - '%best_it_commercetools_filter.mark_matching_variants%'
 
   best_it_commercetools_filter.builder.response_builder:
       class: BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder

@@ -67,7 +67,8 @@ class RequestBuilderTest extends TestCase
         $this->fixture = new RequestBuilder(
             $this->client = $this->createMock(Client::class),
             $this->facetConfigCollection = new FacetConfigCollection(),
-            $this->eventDispatcher = static::createMock(EventDispatcherInterface::class)
+            $this->eventDispatcher = static::createMock(EventDispatcherInterface::class),
+            true
         );
     }
 
@@ -104,7 +105,8 @@ class RequestBuilderTest extends TestCase
         $request = ProductProjectionSearchRequest::of()
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
             ->limit($context->getConfig()->getItemsPerPage())
-            ->sort('name asc');
+            ->sort('name asc')
+            ->markMatchingVariants(true);
 
         $this->eventDispatcher
             ->expects(static::once())
@@ -169,7 +171,8 @@ class RequestBuilderTest extends TestCase
         $request = ProductProjectionSearchRequest::of()
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
             ->limit($context->getConfig()->getItemsPerPage())
-            ->sort('name asc');
+            ->sort('name asc')
+            ->markMatchingVariants(true);
 
         $builder = new FacetBuilder($this->facetConfigCollection);
         $resolvedValues = $builder->resolve($context->getQuery()['filter']);

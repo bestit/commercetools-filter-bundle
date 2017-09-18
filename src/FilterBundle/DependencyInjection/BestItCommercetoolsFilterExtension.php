@@ -34,6 +34,10 @@ class BestItCommercetoolsFilterExtension extends Extension
 
         // Set parameters
         $container->setParameter('best_it_commercetools_filter.cache_life_time', $config['cache_life_time']);
+        $container->setParameter(
+            'best_it_commercetools_filter.mark_matching_variants',
+            $config['mark_matching_variants']
+        );
 
         // Set config factory
         $container
