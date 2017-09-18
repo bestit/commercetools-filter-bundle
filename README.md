@@ -94,6 +94,9 @@ best_it_commercetools_filter:
 
     # Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.
     cache_life_time:      86400
+ 
+    # Mark matching variants with "isMatchingVariant".
+    mark_matching_variants: false
     sorting:              # Required
 
         # The default sort

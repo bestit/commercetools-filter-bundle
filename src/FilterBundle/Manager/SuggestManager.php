@@ -46,91 +46,30 @@ class SuggestManager implements SuggestManagerInterface
     private $eventDispatcher;
 
     /**
+     * Mark matching variant?
+     *
+     * @var bool $markMatchingVariant
+     */
+    private $markMatchingVariant;
+
+    /**
      * SuggestManager constructor.
      *
      * @param Client $client
      * @param ProductNormalizerInterface $productNormalizer
      * @param EventDispatcherInterface $eventDispatcher
+     * @param bool $markMatchingVariant Mark matching variants?
      */
     public function __construct(
         Client $client,
         ProductNormalizerInterface $productNormalizer,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        bool $markMatchingVariant
     ) {
-        $this
-            ->setClient($client)
-            ->setProductNormalizer($productNormalizer)
-            ->setEventDispatcher($eventDispatcher);
-    }
-
-    /**
-     * Get eventDispatcher
-     *
-     * @return EventDispatcherInterface
-     */
-    private function getEventDispatcher(): EventDispatcherInterface
-    {
-        return $this->eventDispatcher;
-    }
-
-    /**
-     * Set eventDispatcher
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @return SuggestManager
-     */
-    private function setEventDispatcher(EventDispatcherInterface $eventDispatcher): SuggestManager
-    {
-        $this->eventDispatcher = $eventDispatcher;
-        return $this;
-    }
-
-    /**
-     * Get productNormalizer
-     *
-     * @return ProductNormalizerInterface
-     */
-    private function getProductNormalizer(): ProductNormalizerInterface
-    {
-        return $this->productNormalizer;
-    }
-
-    /**
-     * Set productNormalizer
-     *
-     * @param ProductNormalizerInterface $productNormalizer
-     *
-     * @return SuggestManager
-     */
-    private function setProductNormalizer(ProductNormalizerInterface $productNormalizer): SuggestManager
-    {
-        $this->productNormalizer = $productNormalizer;
-        return $this;
-    }
-
-
-    /**
-     * Get client
-     *
-     * @return Client
-     */
-    private function getClient(): Client
-    {
-        return $this->client;
-    }
-
-    /**
-     * Set client
-     *
-     * @param Client $client
-     *
-     * @return SuggestManager
-     */
-    private function setClient(Client $client): SuggestManager
-    {
         $this->client = $client;
-        return $this;
+        $this->productNormalizer = $productNormalizer;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->markMatchingVariant = $markMatchingVariant;
     }
 
     /**
@@ -144,9 +83,9 @@ class SuggestManager implements SuggestManagerInterface
         $request->limit($max);
 
         $event = new ProductsSuggestRequestEvent($request);
-        $this->getEventDispatcher()->dispatch(SuggestEvent::KEYWORDS_REQUEST_POST, $event);
+        $this->eventDispatcher->dispatch(SuggestEvent::KEYWORDS_REQUEST_POST, $event);
 
-        $response = $this->getClient()->execute($event->getRequest());
+        $response = $this->client->execute($event->getRequest());
 
         if ($response->isError() && $response instanceof ErrorResponse) {
             throw new ApiException($response->getMessage(), $response->getStatusCode());
@@ -176,11 +115,12 @@ class SuggestManager implements SuggestManagerInterface
         $request->addParam('text.de', $keyword);
         $request->fuzzy(true);
         $request->limit($max);
+        $request->markMatchingVariants($this->markMatchingVariant);
 
         $event = new ProductProjectionSearchRequestEvent($request);
-        $this->getEventDispatcher()->dispatch(SuggestEvent::PRODUCTS_REQUEST_POST, $event);
+        $this->eventDispatcher->dispatch(SuggestEvent::PRODUCTS_REQUEST_POST, $event);
 
-        $response = $this->getClient()->execute($event->getRequest());
+        $response = $this->client->execute($event->getRequest());
 
         if ($response->isError() && $response instanceof ErrorResponse) {
             throw new ApiException($response->getMessage(), $response->getStatusCode());
@@ -188,7 +128,7 @@ class SuggestManager implements SuggestManagerInterface
 
         $products = [];
         foreach ($response->toObject() as $product) {
-            $products[] = $this->getProductNormalizer()->normalize($product);
+            $products[] = $this->productNormalizer->normalize($product);
         }
 
         return $products;

@@ -1,4 +1,5 @@
 ## [Unreleased]
+- Add config flag to mark matching variants.
 
 ## [5.0.1] - 2017-08-24
 ### Bugfix

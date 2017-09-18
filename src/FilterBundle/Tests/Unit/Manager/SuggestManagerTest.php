@@ -72,7 +72,8 @@ class SuggestManagerTest extends TestCase
         $this->fixture = new SuggestManager(
             $this->client = static::createMock(Client::class),
             $this->productNormalizer = static::createMock(ProductNormalizerInterface::class),
-            $this->eventDispatcher = static::createMock(EventDispatcherInterface::class)
+            $this->eventDispatcher = static::createMock(EventDispatcherInterface::class),
+            true
         );
     }
 
@@ -177,6 +178,7 @@ class SuggestManagerTest extends TestCase
         $request->addParam('text.de', $keyword);
         $request->fuzzy(true);
         $request->limit($max);
+        $request->markMatchingVariants(true);
 
         $this->eventDispatcher
             ->expects(static::once())
