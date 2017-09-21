@@ -5,9 +5,10 @@ namespace BestIt\Commercetools\FilterBundle\Builder;
 use BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory;
 use BestIt\Commercetools\FilterBundle\Factory\PaginationFactory;
 use BestIt\Commercetools\FilterBundle\Form\FilterType;
-use BestIt\Commercetools\FilterBundle\Model\Context;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchResult;
 use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
-use BestIt\Commercetools\FilterBundle\Model\Result;
+use BestIt\Commercetools\FilterBundle\Model\Search\SuggestResult;
 use Commercetools\Core\Response\PagedSearchResponse;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -72,12 +73,12 @@ class ResponseBuilder
     /**
      * Build response
      *
-     * @param Context $context
+     * @param SearchContext $context
      * @param PagedSearchResponse $pagedSearchResponse
      *
-     * @return Result
+     * @return SearchResult
      */
-    public function build(Context $context, PagedSearchResponse $pagedSearchResponse): Result
+    public function build(SearchContext $context, PagedSearchResponse $pagedSearchResponse): SearchResult
     {
         $totalProducts = $pagedSearchResponse->getTotal();
         $facets = $pagedSearchResponse->getFacets();
@@ -103,12 +104,13 @@ class ResponseBuilder
             $products[] = $this->getProductNormalizer()->normalize($product);
         }
 
-        $result = (new Result())
+        $result = (new SearchResult())
             ->setContext($context)
             ->setProducts($products)
             ->setTotalProducts($totalProducts)
             ->setPagination($pagination)
-            ->setForm($form->createView());
+            ->setForm($form->createView())
+            ->setHttpResponse($pagedSearchResponse);
 
         return $result;
     }

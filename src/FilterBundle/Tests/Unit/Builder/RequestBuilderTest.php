@@ -7,12 +7,12 @@ use BestIt\Commercetools\FilterBundle\Builder\RequestBuilder;
 use BestIt\Commercetools\FilterBundle\Enum\FacetType;
 use BestIt\Commercetools\FilterBundle\Event\Request\ProductProjectionSearchRequestEvent;
 use BestIt\Commercetools\FilterBundle\FilterEvent;
-use BestIt\Commercetools\FilterBundle\Model\Config;
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
-use BestIt\Commercetools\FilterBundle\Model\Sorting;
-use BestIt\Commercetools\FilterBundle\Model\SortingCollection;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Sorting\Sorting;
+use BestIt\Commercetools\FilterBundle\Model\Sorting\SortingCollection;
 use Commercetools\Core\Client;
 use Commercetools\Core\Request\Products\ProductProjectionSearchRequest;
 use Commercetools\Core\Response\PagedSearchResponse;
@@ -67,8 +67,7 @@ class RequestBuilderTest extends TestCase
         $this->fixture = new RequestBuilder(
             $this->client = $this->createMock(Client::class),
             $this->facetConfigCollection = new FacetConfigCollection(),
-            $this->eventDispatcher = static::createMock(EventDispatcherInterface::class),
-            true
+            $this->eventDispatcher = static::createMock(EventDispatcherInterface::class)
         );
     }
 
@@ -79,11 +78,12 @@ class RequestBuilderTest extends TestCase
      */
     public function testDefaultBuild()
     {
-        $context = new Context(
+        $context = new SearchContext(
             [
-                'config' => $config = new Config(
+                'config' => $config = new SearchConfig(
                     [
-                        'itemsPerPage' => 20
+                        'itemsPerPage' => 20,
+                        'matchVariants' => true
                     ]
                 ),
                 'page' => 1,
@@ -132,9 +132,9 @@ class RequestBuilderTest extends TestCase
      */
     public function testFacetBuild()
     {
-        $context = new Context(
+        $context = new SearchContext(
             [
-                'config' => $config = new Config(
+                'config' => $config = new SearchConfig(
                     [
                         'itemsPerPage' => 20
                     ]
@@ -172,7 +172,7 @@ class RequestBuilderTest extends TestCase
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
             ->limit($context->getConfig()->getItemsPerPage())
             ->sort('name asc')
-            ->markMatchingVariants(true);
+            ->markMatchingVariants(false);
 
         $builder = new FacetBuilder($this->facetConfigCollection);
         $resolvedValues = $builder->resolve($context->getQuery()['filter']);

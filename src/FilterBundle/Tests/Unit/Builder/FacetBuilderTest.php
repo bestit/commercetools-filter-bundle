@@ -4,8 +4,8 @@ namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Builder;
 
 use BestIt\Commercetools\FilterBundle\Builder\FacetBuilder;
 use BestIt\Commercetools\FilterBundle\Enum\FacetType;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
 use Commercetools\Core\Request\Products\ProductProjectionSearchRequest;
 use PHPUnit\Framework\TestCase;
 

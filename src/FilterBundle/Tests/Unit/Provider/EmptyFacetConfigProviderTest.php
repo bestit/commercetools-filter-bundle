@@ -4,7 +4,7 @@ namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
 use BestIt\Commercetools\FilterBundle\Provider\EmptyFacetConfigProvider;
 use BestIt\Commercetools\FilterBundle\Provider\FacetConfigProviderInterface;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
 use PHPUnit\Framework\TestCase;
 
 /**

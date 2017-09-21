@@ -2,7 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Provider;
 
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
 
 /**
  * Provider interface for facets config collection

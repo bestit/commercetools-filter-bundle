@@ -1,4 +1,14 @@
 ## [Unreleased]
+### Added
+- Added fuzzy config for search and suggest / with optional fuzzy level @chowanski
+- All Result classes now also contain the origin commercetools response @chowanski
+- Add config class for suggest
+
+### Changed
+- FilterManagerInterface now return a SearchResult instead of old Result class (Breaking Change!) @chowanski
+- Suggest and Keywords return a result class (KeywordsResult / SuggestResult) instead of array (Breaking Change!) @chowanski
+- Hard localization in search for 'de' removed / now all languages of the commercetools client will be used for full-text keywords (Breaking Change!) @chowanski
+- Models refactored and have subdirectories (Breaking Change!) @chowanski
 
 ## [5.1.0] - 2017-09-18
 ### Added

@@ -5,9 +5,9 @@ namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 use BestIt\Commercetools\FilterBundle\Enum\FacetType;
 use BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory;
 use BestIt\Commercetools\FilterBundle\Helper\EnumAttributeHelper;
-use BestIt\Commercetools\FilterBundle\Model\FacetCollection;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfig;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
 use Commercetools\Core\Model\Product\FacetResultCollection;
 use PHPUnit\Framework\TestCase;
 

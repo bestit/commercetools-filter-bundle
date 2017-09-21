@@ -1,7 +1,11 @@
 services:
-  best_it_commercetools_filter.model.config:
-      class: BestIt\Commercetools\FilterBundle\Model\Config
-      factory: 'best_it_commercetools_filter.factory.config_factory:create'
+  best_it_commercetools_filter.model_search.search_config:
+      class: BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig
+      factory: 'best_it_commercetools_filter.factory.search_config_factory:create'
+
+  best_it_commercetools_filter.model_suggest.suggest_config:
+      class: BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestConfig
+      factory: 'best_it_commercetools_filter.factory.suggest_config_factory:create'
 
   best_it_commercetools_filter.normalizer.array_product_normalizer:
       class: BestIt\Commercetools\FilterBundle\Normalizer\ArrayProductNormalizer
@@ -9,15 +13,20 @@ services:
   best_it_commercetools_filter.normalizer.empty_product_normalizer:
       class: BestIt\Commercetools\FilterBundle\Normalizer\EmptyProductNormalizer
 
-  best_it_commercetools_filter.factory.config_factory:
-      class: BestIt\Commercetools\FilterBundle\Factory\ConfigFactory
+  best_it_commercetools_filter.factory.search_config_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\SearchConfigFactory
       arguments:
           - '%best_it_commercetools_filter.config%'
 
-  best_it_commercetools_filter.factory.context_factory:
-      class: BestIt\Commercetools\FilterBundle\Factory\ContextFactory
+  best_it_commercetools_filter.factory.suggest_config_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\SuggestConfigFactory
       arguments:
-          - '@best_it_commercetools_filter.model.config'
+          - '%best_it_commercetools_filter.config%'
+
+  best_it_commercetools_filter.factory.search_context_factory:
+      class: BestIt\Commercetools\FilterBundle\Factory\SearchContextFactory
+      arguments:
+          - '@best_it_commercetools_filter.model_search.search_config'
           - '@best_it_commercetools_filter.generator.url'
 
   best_it_commercetools_filter.factory.pagination_factory:
@@ -38,7 +47,7 @@ services:
   best_it_commercetools_filter.manager.filter_manager:
       class: BestIt\Commercetools\FilterBundle\Manager\FilterManager
       arguments:
-          - '@best_it_commercetools_filter.factory.context_factory'
+          - '@best_it_commercetools_filter.factory.search_context_factory'
           - '@best_it_commercetools_filter.factory.sorting_factory'
           - '@best_it_commercetools_filter.builder.request_builder'
           - '@best_it_commercetools_filter.builder.response_builder'
@@ -49,7 +58,7 @@ services:
           - '@best_it_commercetools_filter.request.client'
           - '@best_it_commercetools_filter.normalizer.product'
           - '@event_dispatcher'
-          - '%best_it_commercetools_filter.mark_matching_variants%'
+          - '@best_it_commercetools_filter.model_suggest.suggest_config'
 
   best_it_commercetools_filter.builder.request_builder:
       class: BestIt\Commercetools\FilterBundle\Builder\RequestBuilder
@@ -57,7 +66,6 @@ services:
           - '@best_it_commercetools_filter.request.client'
           - '@best_it_commercetools_filter.model.facet_config_collection'
           - '@event_dispatcher'
-          - '%best_it_commercetools_filter.mark_matching_variants%'
 
   best_it_commercetools_filter.builder.response_builder:
       class: BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder

@@ -4,10 +4,9 @@ namespace BestIt\Commercetools\FilterBundle\Builder;
 
 use BestIt\Commercetools\FilterBundle\Event\Request\ProductProjectionSearchRequestEvent;
 use BestIt\Commercetools\FilterBundle\FilterEvent;
-use BestIt\Commercetools\FilterBundle\Helper\FacetConfigCollectionAwareTrait;
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
-use BestIt\Commercetools\FilterBundle\Model\SortingCollection;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Sorting\SortingCollection;
 use Commercetools\Core\Client;
 use Commercetools\Core\Model\Product\Search\Filter;
 use Commercetools\Core\Request\Products\ProductProjectionSearchRequest;
@@ -23,8 +22,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class RequestBuilder
 {
-    use FacetConfigCollectionAwareTrait;
-
     /**
      * The client for executing
      *
@@ -47,30 +44,20 @@ class RequestBuilder
     private $facetConfigCollection;
 
     /**
-     * Mark matching variant?
-     *
-     * @var bool $markMatchingVariant
-     */
-    private $markMatchingVariant;
-
-    /**
      * RequestManager constructor.
      *
      * @param Client $client
      * @param FacetConfigCollection $facetConfigCollection
      * @param EventDispatcherInterface $eventDispatcher
-     * @param bool $markMatchingVariant Mark matching variants?
      */
     public function __construct(
         Client $client,
         FacetConfigCollection $facetConfigCollection,
-        EventDispatcherInterface $eventDispatcher,
-        bool $markMatchingVariant
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->client = $client;
         $this->eventDispatcher = $eventDispatcher;
         $this->facetConfigCollection = $facetConfigCollection;
-        $this->markMatchingVariant = $markMatchingVariant;
     }
 
     /**
@@ -89,18 +76,18 @@ class RequestBuilder
     /**
      * Execute request
      *
-     * @param Context $context
+     * @param SearchContext $context
      * @param SortingCollection $sorting
      *
      * @return PagedSearchResponse
      */
-    public function execute(Context $context, SortingCollection $sorting): PagedSearchResponse
+    public function execute(SearchContext $context, SortingCollection $sorting): PagedSearchResponse
     {
         $request = ProductProjectionSearchRequest::of()
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
             ->limit($context->getConfig()->getItemsPerPage())
             ->sort($sorting->getActive()->getQuery())
-            ->markMatchingVariants($this->markMatchingVariant);
+            ->markMatchingVariants($context->getConfig()->isMatchVariants());
 
         // Filter to category if exists
         if ($category = $context->getCategory()) {
@@ -110,8 +97,16 @@ class RequestBuilder
 
         // Filter to search value if exists
         if ($search = $context->getSearch()) {
-            $request->addParam('text.de', $search);
-            $request->fuzzy(true);
+            foreach ($this->client->getConfig()->getContext()->getLanguages() as $language) {
+                $request->addParam(sprintf('text.%s', $language), $search);
+            }
+
+            // Fuzzy
+            $fuzzyConfig = $context->getConfig()->getFuzzyConfig();
+            $request->fuzzy($fuzzyConfig->isActive());
+            if ($fuzzyConfig->isActive() && $fuzzyConfig->getLevel() !== null) {
+                $request->fuzzy($fuzzyConfig->getLevel());
+            }
         }
 
         $builder = new FacetBuilder($this->facetConfigCollection);

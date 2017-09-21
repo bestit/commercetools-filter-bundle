@@ -4,14 +4,14 @@ namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Manager;
 
 use BestIt\Commercetools\FilterBundle\Builder\RequestBuilder;
 use BestIt\Commercetools\FilterBundle\Builder\ResponseBuilder;
-use BestIt\Commercetools\FilterBundle\Factory\ContextFactory;
+use BestIt\Commercetools\FilterBundle\Factory\SearchContextFactory;
 use BestIt\Commercetools\FilterBundle\Factory\SortingFactory;
 use BestIt\Commercetools\FilterBundle\Manager\FilterManager;
 use BestIt\Commercetools\FilterBundle\Manager\FilterManagerInterface;
-use BestIt\Commercetools\FilterBundle\Model\Config;
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\Result;
-use BestIt\Commercetools\FilterBundle\Model\SortingCollection;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchResult;
+use BestIt\Commercetools\FilterBundle\Model\Sorting\SortingCollection;
 use Commercetools\Core\Model\Category\Category;
 use Commercetools\Core\Response\PagedSearchResponse;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +38,7 @@ class FilterManagerTest extends TestCase
     /**
      * Factory for creating a context object
      *
-     * @var ContextFactory
+     * @var SearchContextFactory
      */
     private $contextFactory;
 
@@ -69,7 +69,7 @@ class FilterManagerTest extends TestCase
     public function setUp()
     {
         $this->fixture = new FilterManager(
-            $this->contextFactory = static::createMock(ContextFactory::class),
+            $this->contextFactory = static::createMock(SearchContextFactory::class),
             $this->sortingFactory = static::createMock(SortingFactory::class),
             $this->requestBuilder = static::createMock(RequestBuilder::class),
             $this->responseBuilder = static::createMock(ResponseBuilder::class)
@@ -93,10 +93,10 @@ class FilterManagerTest extends TestCase
             ->method('createFromCategory')
             ->with(self::equalTo($request))
             ->willReturn(
-                $context = new Context(
+                $context = new SearchContext(
                     [
                         'page' => 1,
-                        'config' => new Config(
+                        'config' => new SearchConfig(
                             [
                                 'itemsPerPage' => 20
                             ]
@@ -121,10 +121,10 @@ class FilterManagerTest extends TestCase
             ->expects(self::once())
             ->method('build')
             ->with(self::equalTo($context), self::equalTo($rawResponse))
-            ->willReturn($response = new Result());
+            ->willReturn($response = new SearchResult());
 
         $result = $this->fixture->listing($request, $category);
-        static::assertInstanceOf(Result::class, $result);
+        static::assertInstanceOf(SearchResult::class, $result);
         static::assertEquals($sortingCollection, $result->getSorting());
     }
 
@@ -144,10 +144,10 @@ class FilterManagerTest extends TestCase
             ->method('createFromSearch')
             ->with(self::equalTo($request), self::equalTo($search))
             ->willReturn(
-                $context = new Context(
+                $context = new SearchContext(
                     [
                         'page' => 1,
-                        'config' => new Config(
+                        'config' => new SearchConfig(
                             [
                                 'itemsPerPage' => 20
                             ]
@@ -172,10 +172,10 @@ class FilterManagerTest extends TestCase
             ->expects(self::once())
             ->method('build')
             ->with(self::equalTo($context), self::equalTo($rawResponse))
-            ->willReturn($response = new Result());
+            ->willReturn($response = new SearchResult());
 
         $result = $this->fixture->search($request, $search);
-        static::assertInstanceOf(Result::class, $result);
+        static::assertInstanceOf(SearchResult::class, $result);
         static::assertEquals($sortingCollection, $result->getSorting());
     }
 

@@ -3,6 +3,8 @@
 namespace BestIt\Commercetools\FilterBundle\Manager;
 
 use BestIt\Commercetools\FilterBundle\Exception\ApiException;
+use BestIt\Commercetools\FilterBundle\Model\Suggest\KeywordsResult;
+use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestResult;
 
 /**
  * Interface for suggest requests
@@ -21,9 +23,9 @@ interface SuggestManagerInterface
      *
      * @throws ApiException
      *
-     * @return array
+     * @return KeywordsResult
      */
-    public function getKeywords(string $keyword, int $max): array;
+    public function getKeywords(string $keyword, int $max): KeywordsResult;
 
     /**
      * Get products by keyword
@@ -33,7 +35,7 @@ interface SuggestManagerInterface
      *
      * @throws ApiException
      *
-     * @return array
+     * @return SuggestResult
      */
-    public function getProducts(string $keyword, int $max): array;
+    public function getProducts(string $keyword, int $max): SuggestResult;
 }

@@ -3,7 +3,7 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Manager;
 
 use BestIt\Commercetools\FilterBundle\Helper\FacetConfigCollectionAwareTrait;
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
 use PHPUnit\Framework\TestCase;
 
 /**

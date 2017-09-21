@@ -2,8 +2,8 @@
 
 namespace BestIt\Commercetools\FilterBundle\Factory;
 
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\Pagination;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Pagination\Pagination;
 use Kilte\Pagination\Pagination as Paginator;
 
 /**
@@ -18,12 +18,12 @@ class PaginationFactory
     /**
      * Create sorting collection by context
      *
-     * @param Context $context
+     * @param SearchContext $context
      * @param int $totalItems
      *
      * @return Pagination
      */
-    public function create(Context $context, int $totalItems): Pagination
+    public function create(SearchContext $context, int $totalItems): Pagination
     {
         $pagination = new Paginator(
             $totalItems,

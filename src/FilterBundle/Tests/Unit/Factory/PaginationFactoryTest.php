@@ -3,9 +3,9 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
 use BestIt\Commercetools\FilterBundle\Factory\PaginationFactory;
-use BestIt\Commercetools\FilterBundle\Model\Config;
-use BestIt\Commercetools\FilterBundle\Model\Context;
-use BestIt\Commercetools\FilterBundle\Model\Pagination;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Model\Pagination\Pagination;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -41,11 +41,11 @@ class PaginationFactoryTest extends TestCase
      */
     public function testCreate()
     {
-        $config = (new Config())
+        $config = (new SearchConfig())
             ->setItemsPerPage(20)
             ->setNeighbours(2);
 
-        $context = (new Context())
+        $context = (new SearchContext())
             ->setPage(4)
             ->setRoute('home_index')
             ->setBaseUrl('http://foo')

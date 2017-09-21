@@ -2,7 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Helper;
 
-use BestIt\Commercetools\FilterBundle\Model\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
 
 /**
  * Helper aware trait for facet config collection

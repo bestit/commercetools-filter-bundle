@@ -5,10 +5,12 @@ namespace BestIt\Commercetools\FilterBundle\Manager;
 use BestIt\Commercetools\FilterBundle\Event\Request\ProductProjectionSearchRequestEvent;
 use BestIt\Commercetools\FilterBundle\Event\Request\ProductsSuggestRequestEvent;
 use BestIt\Commercetools\FilterBundle\Exception\ApiException;
+use BestIt\Commercetools\FilterBundle\Model\Suggest\KeywordsResult;
+use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestConfig;
+use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestResult;
 use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
 use BestIt\Commercetools\FilterBundle\SuggestEvent;
 use Commercetools\Core\Client;
-use Commercetools\Core\Model\Common\LocalizedString;
 use Commercetools\Core\Model\Product\SuggestionResult;
 use Commercetools\Core\Request\Products\ProductProjectionSearchRequest;
 use Commercetools\Core\Request\Products\ProductsSuggestRequest;
@@ -46,11 +48,11 @@ class SuggestManager implements SuggestManagerInterface
     private $eventDispatcher;
 
     /**
-     * Mark matching variant?
+     * The suggest config
      *
-     * @var bool $markMatchingVariant
+     * @var SuggestConfig
      */
-    private $markMatchingVariant;
+    private $config;
 
     /**
      * SuggestManager constructor.
@@ -58,29 +60,40 @@ class SuggestManager implements SuggestManagerInterface
      * @param Client $client
      * @param ProductNormalizerInterface $productNormalizer
      * @param EventDispatcherInterface $eventDispatcher
-     * @param bool $markMatchingVariant Mark matching variants?
+     * @param SuggestConfig $config
      */
     public function __construct(
         Client $client,
         ProductNormalizerInterface $productNormalizer,
         EventDispatcherInterface $eventDispatcher,
-        bool $markMatchingVariant
+        SuggestConfig $config
     ) {
         $this->client = $client;
         $this->productNormalizer = $productNormalizer;
         $this->eventDispatcher = $eventDispatcher;
-        $this->markMatchingVariant = $markMatchingVariant;
+        $this->config = $config;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getKeywords(string $keyword, int $max): array
+    public function getKeywords(string $keyword, int $max): KeywordsResult
     {
         $collection = [];
-        $request = ProductsSuggestRequest::ofKeywords(LocalizedString::ofLangAndText('de', $keyword));
-        $request->fuzzy(true);
+        $request = new ProductsSuggestRequest();
+        foreach ($this->client->getConfig()->getContext()->getLanguages() as $language) {
+            $request->addKeyword($language, $keyword);
+        }
+
         $request->limit($max);
+        $request->fuzzy(false);
+
+        // Fuzzy
+        $fuzzyConfig = $this->config->getFuzzyConfig();
+        $request->fuzzy($fuzzyConfig->isActive());
+        if ($fuzzyConfig->isActive() && $fuzzyConfig->getLevel() !== null) {
+            $request->fuzzy($fuzzyConfig->getLevel());
+        }
 
         $event = new ProductsSuggestRequestEvent($request);
         $this->eventDispatcher->dispatch(SuggestEvent::KEYWORDS_REQUEST_POST, $event);
@@ -98,24 +111,40 @@ class SuggestManager implements SuggestManagerInterface
          */
         $suggests = $response->toObject();
         foreach ($suggests->getSearchKeywords() as $keywordCollection) {
-            foreach ($keywordCollection as $keyword) {
-                $collection[$keyword->getText()] = $keyword->getText();
+            foreach ($keywordCollection as $keywordItem) {
+                $collection[$keywordItem->getText()] = $keywordItem->getText();
             }
         }
 
-        return $collection;
+        $result = new KeywordsResult();
+        $result->setKeywords($collection);
+        $result->setHttpResponse($response);
+
+        return $result;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getProducts(string $keyword, int $max): array
+    public function getProducts(string $keyword, int $max): SuggestResult
     {
         $request = ProductProjectionSearchRequest::of();
-        $request->addParam('text.de', $keyword);
-        $request->fuzzy(true);
+        foreach ($this->client->getConfig()->getContext()->getLanguages() as $language) {
+            $request->addParam(sprintf('text.%s', $language), $keyword);
+        }
+
         $request->limit($max);
-        $request->markMatchingVariants($this->markMatchingVariant);
+        $request->fuzzy(false);
+
+        // Fuzzy
+        $fuzzyConfig = $this->config->getFuzzyConfig();
+        $request->fuzzy($fuzzyConfig->isActive());
+        if ($fuzzyConfig->isActive() && $fuzzyConfig->getLevel() !== null) {
+            $request->fuzzy($fuzzyConfig->getLevel());
+        }
+
+        // Match variants
+        $request->markMatchingVariants($this->config->isMatchVariants());
 
         $event = new ProductProjectionSearchRequestEvent($request);
         $this->eventDispatcher->dispatch(SuggestEvent::PRODUCTS_REQUEST_POST, $event);
@@ -131,6 +160,10 @@ class SuggestManager implements SuggestManagerInterface
             $products[] = $this->productNormalizer->normalize($product);
         }
 
-        return $products;
+        $result = new SuggestResult();
+        $result->setProducts($products);
+        $result->setHttpResponse($response);
+
+        return $result;
     }
 }

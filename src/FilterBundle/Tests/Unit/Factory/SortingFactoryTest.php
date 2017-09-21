@@ -3,8 +3,8 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
 use BestIt\Commercetools\FilterBundle\Factory\SortingFactory;
-use BestIt\Commercetools\FilterBundle\Model\Config;
-use BestIt\Commercetools\FilterBundle\Model\Context;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,9 +40,9 @@ class SortingFactoryTest extends TestCase
      */
     public function testCreateWithActiveSort()
     {
-        $context = new Context(
+        $context = new SearchContext(
             [
-                'config' => new Config(
+                'config' => new SearchConfig(
                     [
                         'sortings' => [
                             'name_asc' => [
@@ -80,9 +80,9 @@ class SortingFactoryTest extends TestCase
      */
     public function testCreateWithAllValues()
     {
-        $context = new Context(
+        $context = new SearchContext(
             [
-                'config' => new Config(
+                'config' => new SearchConfig(
                     [
                         'sortings' => [
                             'name_asc' => [
@@ -120,9 +120,9 @@ class SortingFactoryTest extends TestCase
      */
     public function testCreateWithDefaultValues()
     {
-        $context = new Context(
+        $context = new SearchContext(
             [
-                'config' => new Config(
+                'config' => new SearchConfig(
                     [
                         'sortings' => [
                             'name_asc' => [
