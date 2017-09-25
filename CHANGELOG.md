@@ -1,4 +1,4 @@
-## [Unreleased]
+## [6.0.0] - 2017-09-25
 ### Added
 - Added fuzzy config for search and suggest / with optional fuzzy level @chowanski
 - All Result classes now also contain the origin commercetools response @chowanski

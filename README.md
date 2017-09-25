@@ -149,7 +149,7 @@ best_it_commercetools_filter:
         fuzzy_level:          2
         
         # Mark matching variants with "isMatchingVariant". (default: false)
-        match_variants: true
+        match_variants:       true
         
     # Search config
     search:
@@ -163,7 +163,7 @@ best_it_commercetools_filter:
         fuzzy_level:          2
                    
         # Mark matching variants with "isMatchingVariant". (default: false)
-        match_variants: true
+        match_variants:       true
 ```
 
 ## Usage
