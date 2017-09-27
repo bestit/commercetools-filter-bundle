@@ -109,4 +109,17 @@ class SortingTest extends TestCase
         self::assertEquals($this->fixture, $this->fixture->setQuery($value));
         self::assertEquals($value, $this->fixture->getQuery());
     }
+
+    /**
+     * Test setter / getter for query property with null
+     *
+     * @return void
+     */
+    public function testSetAndGetQueryNull()
+    {
+        $value = null;
+
+        self::assertEquals($this->fixture, $this->fixture->setQuery($value));
+        self::assertEquals($value, $this->fixture->getQuery());
+    }
 }

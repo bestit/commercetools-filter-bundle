@@ -1,3 +1,7 @@
+## Unreleased
+### Changed
+- Sorting query can be null for "no-sorting" / "relevance sorting" @chowanski
+
 ## [6.0.0] - 2017-09-25
 ### Added
 - Added fuzzy config for search and suggest / with optional fuzzy level @chowanski
