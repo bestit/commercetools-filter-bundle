@@ -2,9 +2,8 @@
 
 namespace BestIt\Commercetools\FilterBundle\Factory;
 
-use BestIt\Commercetools\FilterBundle\Enum\FacetType;
-use BestIt\Commercetools\FilterBundle\Helper\EnumAttributeHelper;
-use BestIt\Commercetools\FilterBundle\Helper\FacetConfigCollectionAwareTrait;
+use BestIt\Commercetools\FilterBundle\Event\Facet\TermEvent;
+use BestIt\Commercetools\FilterBundle\FilterEvent;
 use BestIt\Commercetools\FilterBundle\Model\Facet\Facet;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
@@ -12,6 +11,7 @@ use BestIt\Commercetools\FilterBundle\Model\Facet\RangeCollection;
 use BestIt\Commercetools\FilterBundle\Model\Term\Term;
 use BestIt\Commercetools\FilterBundle\Model\Term\TermCollection;
 use Commercetools\Core\Model\Product\FacetResultCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Factory for facets
@@ -22,22 +22,30 @@ use Commercetools\Core\Model\Product\FacetResultCollection;
  */
 class FacetCollectionFactory
 {
-    use FacetConfigCollectionAwareTrait;
+    /**
+     * The collection
+     *
+     * @var FacetConfigCollection
+     */
+    private $facetConfigCollection;
 
-    private $enumAttributeHelper;
+    /**
+     * The event dispatcher
+     *
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     /**
      * FacetCollectionFactory constructor.
      *
      * @param FacetConfigCollection $facetConfigCollection
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(
-        FacetConfigCollection $facetConfigCollection,
-        EnumAttributeHelper $enumAttributeHelper
-    ) {
-        $this
-            ->setFacetConfigCollection($facetConfigCollection)
-            ->setEnumAttributeHelper($enumAttributeHelper);
+    public function __construct(FacetConfigCollection $facetConfigCollection, EventDispatcherInterface $eventDispatcher)
+    {
+        $this->facetConfigCollection = $facetConfigCollection;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -52,7 +60,7 @@ class FacetCollectionFactory
         $result = $resultCollection->toArray();
 
         $collection = new FacetCollection();
-        foreach ($this->getFacetConfigCollection()->all() as $config) {
+        foreach ($this->facetConfigCollection as $config) {
             if (!isset($result[$config->getAlias()])) {
                 continue;
             }
@@ -61,27 +69,14 @@ class FacetCollectionFactory
 
             $termsCollection = new TermCollection();
             if (isset($facet['terms'])) {
-                $labels = [];
-                if (count($facet['terms']) > 0
-                    && in_array($config->getType(), [FacetType::ENUM, FacetType::LENUM], true)) {
-                    $labels = $this->getEnumAttributeHelper()->getLabels($config->getField());
-                }
-
                 foreach ($facet['terms'] as $term) {
-                    if (array_key_exists($term['term'], $labels)
-                        && in_array($config->getType(), [FacetType::ENUM, FacetType::LENUM], true)
-                    ) {
-                        $label = $labels[$term['term']];
-                    } else {
-                        $label = $term['term'] ?? null;
-                    }
-
-                    $termsCollection->addTerm(
-                        (new Term())
-                            ->setTitle($label)
-                            ->setCount($term['count'])
-                            ->setTerm($term['term'] ?? null)
+                    $event = new TermEvent(
+                        $config,
+                        new Term($term['count'], $term['term'] ?? null, $term['term'] ?? null)
                     );
+
+                    $this->eventDispatcher->dispatch(FilterEvent::FACET_TERM_COLLECT, $event);
+                    $termsCollection->addTerm($event->getTerm());
                 }
             }
 
@@ -103,29 +98,5 @@ class FacetCollectionFactory
         }
 
         return $collection;
-    }
-
-    /**
-     * Getter for EnumAttributeHelper.
-     *
-     * @return EnumAttributeHelper
-     */
-    private function getEnumAttributeHelper(): EnumAttributeHelper
-    {
-        return $this->enumAttributeHelper;
-    }
-
-    /**
-     * Setter for EnumAttributeHelper.
-     *
-     * @param EnumAttributeHelper $enumAttributeHelper Used enum attribute helper.
-     *
-     * @return $this
-     */
-    private function setEnumAttributeHelper(EnumAttributeHelper $enumAttributeHelper): self
-    {
-        $this->enumAttributeHelper = $enumAttributeHelper;
-
-        return $this;
     }
 }

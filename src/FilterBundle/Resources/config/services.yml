@@ -39,7 +39,7 @@ services:
       class: BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory
       arguments:
           - '@best_it_commercetools_filter.model.facet_config_collection'
-          - '@best_it_commercetools_filter.helper.enum_attribute_helper'
+          - '@event_dispatcher'
 
   best_it_commercetools_filter.provider.empty_facet_config_provider:
       class: BestIt\Commercetools\FilterBundle\Provider\EmptyFacetConfigProvider
@@ -79,6 +79,35 @@ services:
       class: BestIt\Commercetools\FilterBundle\Generator\DefaultFilterUrlGenerator
       arguments: ['@router']
 
-  best_it_commercetools_filter.helper.enum_attribute_helper:
-      class: BestIt\Commercetools\FilterBundle\Helper\EnumAttributeHelper
-      arguments: ['@best_it_commercetools_filter.request.client', '@cache.app', '%best_it_commercetools_filter.cache_life_time%']
+  best_it_commercetools_filter.listener_term.enum_attribute_listener:
+      class: BestIt\Commercetools\FilterBundle\Listener\Term\EnumAttributeListener
+      arguments:
+          - '@best_it_commercetools_filter.normalizer.enum'
+      tags:
+          - { name: kernel.event_subscriber }
+
+  best_it_commercetools_filter.normalizer_term.enum_attribute_normalizer:
+      class: BestIt\Commercetools\FilterBundle\Normalizer\Term\EnumAttributeNormalizer
+      arguments:
+          - '@best_it_commercetools_filter.request.client'
+          - '@best_it_commercetools_filter.normalizer.enum.cache'
+          - '%best_it_commercetools_filter.config.enum_normalizer.cache_life_time%'
+          - '@best_it_commercetools_filter.commercetools.commons.helper.query_helper'
+
+  best_it_commercetools_filter.listener_term.category_listener:
+      class: BestIt\Commercetools\FilterBundle\Listener\Term\CategoryListener
+      arguments:
+          - '@best_it_commercetools_filter.normalizer.category'
+      tags:
+          - { name: kernel.event_subscriber }
+
+  best_it_commercetools_filter.normalizer_term.category_normalizer:
+      class: BestIt\Commercetools\FilterBundle\Normalizer\Term\CategoryNormalizer
+      arguments:
+          - '@best_it_commercetools_filter.request.client'
+          - '@best_it_commercetools_filter.normalizer.category.cache'
+          - '%best_it_commercetools_filter.config.category_normalizer.cache_life_time%'
+          - '@best_it_commercetools_filter.commercetools.commons.helper.query_helper'
+
+  best_it_commercetools_filter.commercetools.commons.helper.query_helper:
+      class: Commercetools\Commons\Helper\QueryHelper

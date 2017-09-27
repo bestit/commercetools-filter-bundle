@@ -2,6 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Model\Term;
 
+use BestIt\Commercetools\FilterBundle\Event\Facet\TermEvent;
 use BestIt\Commercetools\FilterBundle\Model\Pagination\Pagination;
 use BestIt\Commercetools\FilterBundle\Model\Term\Term;
 use PHPUnit\Framework\TestCase;
@@ -30,6 +31,20 @@ class TermTest extends TestCase
     public function setUp()
     {
         $this->fixture = new Term();
+    }
+
+    /**
+     * Test setter / getter for title property
+     *
+     * @return void
+     */
+    public function testConstructor()
+    {
+        $term = new Term(45, 'foo-term', 'bar-label');
+
+        self::assertEquals('bar-label', $term->getTitle());
+        self::assertEquals(45, $term->getCount());
+        self::assertEquals('foo-term', $term->getTerm());
     }
 
     /**

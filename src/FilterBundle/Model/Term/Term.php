@@ -23,7 +23,7 @@ class Term
      *
      * @var int
      */
-    private $count = 0;
+    private $count;
 
     /**
      * The title
@@ -31,6 +31,20 @@ class Term
      * @var string|null
      */
     private $title;
+
+    /**
+     * Term constructor.
+     *
+     * @param int $count
+     * @param null|string $term
+     * @param null|string $title
+     */
+    public function __construct(int $count = 0, string $term = null, string $title = null)
+    {
+        $this->term = $term;
+        $this->count = $count;
+        $this->title = $title;
+    }
 
     /**
      * Matched results

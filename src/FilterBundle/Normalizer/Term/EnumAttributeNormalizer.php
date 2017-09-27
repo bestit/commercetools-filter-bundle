@@ -1,7 +1,11 @@
 <?php
 
-namespace BestIt\Commercetools\FilterBundle\Helper;
+namespace BestIt\Commercetools\FilterBundle\Normalizer\Term;
 
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Term\Term;
+use BestIt\Commercetools\FilterBundle\Normalizer\TermNormalizerInterface;
+use Commercetools\Commons\Helper\QueryHelper;
 use Commercetools\Core\Client;
 use Commercetools\Core\Error\ApiException;
 use Commercetools\Core\Model\ProductType\AttributeDefinition;
@@ -10,22 +14,21 @@ use Commercetools\Core\Model\ProductType\ProductTypeCollection;
 use Commercetools\Core\Model\ProductType\EnumType;
 use Commercetools\Core\Model\ProductType\LocalizedEnumType;
 use Commercetools\Core\Request\ProductTypes\ProductTypeQueryRequest;
-use Commercetools\Core\Response\PagedQueryResponse;
 use Exception;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Helper to get (localized) labels for (l)enum attributes.
  *
- * @package BestIt\Commercetools\FilterBundle\Helper
+ * @package BestIt\Commercetools\FilterBundle\Normalizer\Term
  * @author Tim Kellner <tim.kellner@bestit-online.de>
  */
-class EnumAttributeHelper
+class EnumAttributeNormalizer implements TermNormalizerInterface
 {
     /**
      * @var string CACHE_KEY
      */
-    const CACHE_KEY = 'bestit.commercetools.filter_bundle.helper.enum_attribute_helper';
+    const CACHE_KEY = 'best_it_commercetools_filter.normalizer_term.enum_attribute_normalizer';
 
     /**
      * Cache to prevent unnecessary
@@ -45,6 +48,13 @@ class EnumAttributeHelper
     private $client;
 
     /**
+     * The query helper
+     *
+     * @var QueryHelper
+     */
+    private $queryHelper;
+
+    /**
      * List of loaded labels.
      *
      * @var array[string[]] $labels
@@ -59,18 +69,41 @@ class EnumAttributeHelper
     private $productTypes;
 
     /**
-     * EnumAttributeHelper constructor.
+     * EnumAttributeNormalizer constructor.
      *
-     * @param Client $client CommerceTools client.
+     * @param Client $client
+     * @param CacheItemPoolInterface $cacheItemPool
+     * @param int $cacheTime
+     * @param QueryHelper $queryHelper
      */
     public function __construct(
         Client $client,
         CacheItemPoolInterface $cacheItemPool,
-        int $cacheTime
+        int $cacheTime,
+        QueryHelper $queryHelper
     ) {
         $this->client = $client;
         $this->cacheItemPool = $cacheItemPool;
         $this->cacheTime = $cacheTime;
+        $this->queryHelper = $queryHelper;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function normalize(FacetConfig $config, Term $term): Term
+    {
+        // Collect labels if not already cached
+        if (!array_key_exists($config->getField(), $this->labels)) {
+            $this->labels[$config->getField()] = $this->getLabels($config->getField());
+        }
+
+        // Set label if exists
+        if (array_key_exists($term->getTitle(), $this->labels[$config->getField()])) {
+            $term->setTitle($this->labels[$config->getField()][$term->getTitle()]);
+        }
+
+        return $term;
     }
 
     /**
@@ -82,7 +115,7 @@ class EnumAttributeHelper
      * @throws Exception
      * @throws ApiException
      */
-    public function getLabels(string $attributeName): array
+    private function getLabels(string $attributeName): array
     {
         if (!array_key_exists($attributeName, $this->labels)) {
             $this->labels[$attributeName] = [];
@@ -136,22 +169,8 @@ class EnumAttributeHelper
         if (!is_array($this->productTypes)) {
             $this->productTypes = [];
 
-            do {
-                $productTypeRequest = ProductTypeQueryRequest::of();
-                $productTypeRequest->limit(500);
-
-                $response = $this->client->execute($productTypeRequest);
-
-                if ($response instanceof PagedQueryResponse) {
-                    $productTypeCollection = $response->toObject();
-
-                    if ($productTypeCollection instanceof ProductTypeCollection) {
-                        foreach ($productTypeCollection as $productType) {
-                            $this->productTypes[] = $productType;
-                        }
-                    }
-                }
-            } while ($response->getTotal() > ($response->getOffset() + $response->getCount()));
+            $request = ProductTypeQueryRequest::of();
+            $this->productTypes = iterator_to_array($this->queryHelper->getAll($this->client, $request));
         }
 
         return $this->productTypes;
