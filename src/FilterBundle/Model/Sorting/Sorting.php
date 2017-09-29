@@ -26,9 +26,9 @@ class Sorting
     private $label;
 
     /**
-     * The query for this sorting
+     * The query for this sorting or null
      *
-     * @var string
+     * @var string|null
      */
     private $query;
 
@@ -51,9 +51,9 @@ class Sorting
      *
      * @param string $key
      * @param string $label
-     * @param string $query
+     * @param string|null $query
      */
-    public function __construct(string $key, string $label, string $query)
+    public function __construct(string $key, string $label, string $query = null)
     {
         $this
             ->setKey($key)
@@ -84,9 +84,9 @@ class Sorting
     /**
      * Get query
      *
-     * @return string
+     * @return string|null
      */
-    public function getQuery(): string
+    public function getQuery()
     {
         return $this->query;
     }
@@ -170,11 +170,11 @@ class Sorting
     /**
      * Set query
      *
-     * @param string $query
+     * @param string|null $query
      *
      * @return Sorting
      */
-    public function setQuery(string $query): Sorting
+    public function setQuery(string $query = null): Sorting
     {
         $this->query = $query;
 

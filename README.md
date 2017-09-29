@@ -107,8 +107,8 @@ best_it_commercetools_filter:
             # Prototype
             key:
 
-                # Api query for sdk
-                query:                ~ # Required
+                # Api query for sdk (default: null for relevance sorting) 
+                query:                ~
 
                 # Translation key
                 translation:          ~ # Required

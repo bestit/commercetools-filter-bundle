@@ -86,8 +86,11 @@ class RequestBuilder
         $request = ProductProjectionSearchRequest::of()
             ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
             ->limit($context->getConfig()->getItemsPerPage())
-            ->sort($sorting->getActive()->getQuery())
             ->markMatchingVariants($context->getConfig()->isMatchVariants());
+
+        if (($activeSorting = $sorting->getActive()) !== null) {
+            $request->sort($activeSorting->getQuery());
+        }
 
         // Filter to category if exists
         if ($category = $context->getCategory()) {

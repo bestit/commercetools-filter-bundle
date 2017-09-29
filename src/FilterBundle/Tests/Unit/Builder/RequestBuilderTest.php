@@ -194,4 +194,73 @@ class RequestBuilderTest extends TestCase
 
         static::assertEquals($response, $this->fixture->execute($context, $sortingCollection));
     }
+
+    /**
+     * Test build function without sorting
+     *
+     * @return void
+     */
+    public function testNoSorting()
+    {
+        $context = new SearchContext(
+            [
+                'config' => $config = new SearchConfig(
+                    [
+                        'itemsPerPage' => 20
+                    ]
+                ),
+                'page' => 1,
+                'query' => [
+                    'foo' => 'bar',
+                    'filter' => [
+                        'foobar' => 'bestit'
+                    ]
+                ],
+            ]
+        );
+
+        $sortingCollection = new SortingCollection(
+            [
+                new Sorting('name_desc', 'name_desc', 'name desc'),
+                $active = new Sorting('name_asc', 'name_asc', null),
+                $default = new Sorting('price_asc', 'price_asc', 'price asc'),
+            ]
+        );
+
+        $sortingCollection->setActive($active);
+        $sortingCollection->setDefault($default);
+
+        $this->facetConfigCollection->add(
+            $facetConfig = (new FacetConfig())
+                ->setName('foobar')
+                ->setField('foobar')
+                ->setAlias('foobar')
+                ->setType(FacetType::TEXT)
+        );
+
+        $request = ProductProjectionSearchRequest::of()
+            ->offset(($context->getPage() - 1) * $context->getConfig()->getItemsPerPage())
+            ->limit($context->getConfig()->getItemsPerPage())
+            ->markMatchingVariants(false);
+
+        $builder = new FacetBuilder($this->facetConfigCollection);
+        $resolvedValues = $builder->resolve($context->getQuery()['filter']);
+        $request = $builder->build($request, $resolvedValues);
+
+        $this->eventDispatcher
+            ->expects(static::once())
+            ->method('dispatch')
+            ->with(
+                static::equalTo(FilterEvent::PRODUCTS_REQUEST_POST),
+                static::isInstanceOf(ProductProjectionSearchRequestEvent::class)
+            );
+
+        $this->client
+            ->expects(self::once())
+            ->method('execute')
+            ->with(self::equalTo($request))
+            ->willReturn($response = $this->createMock(PagedSearchResponse::class));
+
+        static::assertEquals($response, $this->fixture->execute($context, $sortingCollection));
+    }
 }
