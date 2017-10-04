@@ -77,10 +77,10 @@ class FilterTypeTest extends TestCase
 
         $textFacet->setTerms(
             (new TermCollection())
-                ->addTerm((new Term))// Term without title
-                ->addTerm(($cTerm = (new Term)->setTitle('cccFooBar')->setCount(12)->setTerm('cccFooBar')))
-                ->addTerm(($aTerm = (new Term)->setTitle('aaaFooBar')->setCount(45)->setTerm('aaaFooBar')))
-                ->addTerm(($bTerm = (new Term)->setTitle('bbbFooBar')->setCount(16)->setTerm('bbbFooBar')))
+                ->addTerm(new Term(0))// Term without title
+                ->addTerm($cTerm = new Term(12, 'cccFooBar', 'cccFooBar'))
+                ->addTerm($aTerm = new Term(45, 'aaaFooBar', 'aaaFooBar'))
+                ->addTerm($bTerm = new Term(16, 'bbbFooBar', 'bbbFooBar'))
         );
 
         $facetCollection->addFacet($textFacet);

@@ -2,6 +2,9 @@
 
 namespace BestIt\Commercetools\FilterBundle\Model\Facet;
 
+use ArrayIterator;
+use IteratorAggregate;
+
 /**
  * Collection for facet config
  *
@@ -9,7 +12,7 @@ namespace BestIt\Commercetools\FilterBundle\Model\Facet;
  * @package    BestIt\Commercetools\FilterBundle
  * @subpackage Model\Facet
  */
-class FacetConfigCollection
+class FacetConfigCollection implements IteratorAggregate
 {
     /**
      * Array of configs
@@ -76,5 +79,13 @@ class FacetConfigCollection
         }
 
         return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->all());
     }
 }

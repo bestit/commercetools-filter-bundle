@@ -1,6 +1,15 @@
 ## Unreleased
+### Added
+- Add new event for collect and manipulate facet terms (see FilterEvent.php) @chowanski
+- New interface for term manipulation: _TermNormalizerInterface_ @chowanski
+- Detailed configuration (service id, cache id, cache time, state) for enum term normalization @chowanski
+- Detailed configuration (service id, cache id, cache time, state) for category term normalization @chowanski
+
 ### Changed
 - Sorting query can be null for "no-sorting" / "relevance sorting" @chowanski
+
+### Deprecated
+- Global cache time from config (can now defined for each service separate) @chowanski
 
 ## [6.0.0] - 2017-09-25
 ### Added

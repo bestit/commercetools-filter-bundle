@@ -93,6 +93,7 @@ best_it_commercetools_filter:
     url_generator_id:     best_it_commercetools_filter.generator.default_filter_url_generator
 
     # Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.
+    # DEPRECATED: Do not use. Switch to enum_normalizer
     cache_life_time:      86400
  
     # Sorting. At least one sorting options must exist
@@ -164,6 +165,40 @@ best_it_commercetools_filter:
                    
         # Mark matching variants with "isMatchingVariant". (default: false)
         match_variants:       true
+        
+    # Enum Normalizer
+    # CommerceTools only returns enum keys. We have to normalize it.
+    # This bundle ships one standard way - but you can define your own normalizer as well
+    enum_normalizer:
+    
+        # Switch this normalizer on / off (default: true)
+        enable: false
+        
+        # You can define your own normalizer service (default: see id below)
+        normalizer_id: best_it_commercetools_filter.normalizer_term.enum_attribute_normalizer
+        
+        # You can define your own cache pool (default: see id below)
+        cache_id: cache.app
+        
+        # Time in seconds (default: 86400)
+        cache_life_time: 60
+        
+    # Category Normalizer
+    # CommerceTools only returns category id's. We have to normalize it.
+    # This bundle ships one standard way - but you can define your own normalizer as well
+    category_normalizer:
+    
+        # Switch this normalizer on / off (default: true)
+        enable: false
+        
+        # You can define your own normalizer service (default: see id below)
+        normalizer_id: best_it_commercetools_filter.normalizer_term.category_normalizer
+        
+        # You can define your own cache pool (default: see id below)
+        cache_id: cache.app
+        
+        # Time in seconds (default: 86400)
+        cache_life_time: 60        
 ```
 
 ## Usage
@@ -227,6 +262,15 @@ own if you implement the _ProductNormalizerInterface_ and add the service id to 
 * EmptyProductNormalizer: Just return the _ProductProjection_ without normalization
 
 _EmptyProductNormalizer_ will be use if you don't fill the _product_normalizer_id_ Parameter (@ config.yml).
+
+### Term Normalizer
+There are cases where you have to normalize facet terms. Commercetools only ships enum keys and categories id for example, which aren't enough for your frontend.
+This bundle contains two default normalizers:
+
+* CategoryNormalizer: Converts category id's to there real name
+* EnumAttributeNormalizer: Converts enum keys to there label
+
+But you can define your own TermNormalizer as well. Just implement the _TermNormalizerInterface_ and set the service id in your config.
 
 ### Config Provider id
 

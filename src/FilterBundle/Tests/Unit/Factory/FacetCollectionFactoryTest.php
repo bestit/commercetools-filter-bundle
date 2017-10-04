@@ -3,13 +3,17 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Factory;
 
 use BestIt\Commercetools\FilterBundle\Enum\FacetType;
+use BestIt\Commercetools\FilterBundle\Event\Facet\TermEvent;
 use BestIt\Commercetools\FilterBundle\Factory\FacetCollectionFactory;
-use BestIt\Commercetools\FilterBundle\Helper\EnumAttributeHelper;
+use BestIt\Commercetools\FilterBundle\FilterEvent;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Term\Term;
 use Commercetools\Core\Model\Product\FacetResultCollection;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Test for facet collection factory
@@ -30,74 +34,28 @@ class FacetCollectionFactoryTest extends TestCase
     private $fixture;
 
     /**
-     * Create a test fixture with default mocks or with overridden mocks.
+     * The facet config collection
      *
-     * @param array $mocks Array with mocks to override.
-     *
-     * @return FacetCollectionFactory
+     * @var FacetConfigCollection
      */
-    private function createFixture(array $mocks = []): FacetCollectionFactory
-    {
-        if (!array_key_exists('facetConfigCollectionMock', $mocks)
-            || !$mocks['facetConfigCollectionMock'] instanceof FacetConfigCollection
-        ) {
-            $facetConfigCollection = new FacetConfigCollection();
+    private $configCollection;
 
-            $facetConfigCollection->add(
-                (new FacetConfig())
-                    ->setName('Preis')
-                    ->setField('price')
-                    ->setAlias('price')
-                    ->setType(FacetType::RANGE)
-            );
-
-            $facetConfigCollection->add(
-                (new FacetConfig())
-                    ->setName('Hersteller')
-                    ->setField('attribute_manufacturer_name')
-                    ->setAlias('attribute_manufacturer_name')
-                    ->setType(FacetType::TEXT)
-            );
-
-            $facetConfigCollection->add(
-                (new FacetConfig())
-                    ->setName('foobar')
-                    ->setField('foobar')
-                    ->setAlias('foobar')
-                    ->setType(FacetType::TEXT)
-            );
-
-            $facetConfigCollection->add(
-                (new FacetConfig())
-                    ->setName('enum')
-                    ->setField('enum')
-                    ->setAlias('enum')
-                    ->setType(FacetType::ENUM)
-            );
-
-            $mocks['facetConfigCollectionMock'] = $facetConfigCollection;
-        }
-
-        if (!array_key_exists('enumAttributeHelperMock', $mocks)
-            || !$mocks['enumAttributeHelperMock'] instanceof EnumAttributeHelper
-        ) {
-            $mocks['enumAttributeHelperMock'] = $this->createMock(EnumAttributeHelper::class);
-        }
-
-        return new FacetCollectionFactory(
-            $mocks['facetConfigCollectionMock'],
-            $mocks['enumAttributeHelperMock']
-        );
-    }
+    /**
+     * The event dispatcher
+     *
+     * @var EventDispatcherInterface|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $eventDispatcher;
 
     /**
      * {@inheritdoc}
-     *
-     * @return void
      */
     public function setUp()
     {
-        $this->fixture = $this->createFixture();
+        $this->fixture = new FacetCollectionFactory(
+            $this->configCollection = new FacetConfigCollection(),
+            $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class)
+        );
     }
 
     /**
@@ -107,6 +65,38 @@ class FacetCollectionFactoryTest extends TestCase
      */
     public function testCreate()
     {
+        $this->configCollection->add(
+            (new FacetConfig())
+                ->setName('Preis')
+                ->setField('price')
+                ->setAlias('price')
+                ->setType(FacetType::RANGE)
+        );
+
+        $this->configCollection->add(
+            $manufacturerFacetConfig = (new FacetConfig())
+                ->setName('Hersteller')
+                ->setField('attribute_manufacturer_name')
+                ->setAlias('attribute_manufacturer_name')
+                ->setType(FacetType::TEXT)
+        );
+
+        $this->configCollection->add(
+            $dummyFacetConfig = (new FacetConfig())
+                ->setName('foobar')
+                ->setField('foobar')
+                ->setAlias('foobar')
+                ->setType(FacetType::TEXT)
+        );
+
+        $this->configCollection->add(
+            $enumFacetConfig = (new FacetConfig())
+                ->setName('enum')
+                ->setField('enum')
+                ->setAlias('enum')
+                ->setType(FacetType::ENUM)
+        );
+
         $facets = [
             'attribute_manufacturer_name' => [
                 'terms' => [
@@ -132,29 +122,48 @@ class FacetCollectionFactoryTest extends TestCase
             ]
         ];
 
+        $this->eventDispatcher
+            ->expects(static::exactly(7))
+            ->method('dispatch')
+            ->withConsecutive(
+                [
+                    FilterEvent::FACET_TERM_COLLECT,
+                    new TermEvent($manufacturerFacetConfig, new Term(200, 'Astro', 'Astro'))
+                ],
+                [
+                    FilterEvent::FACET_TERM_COLLECT,
+                    new TermEvent($manufacturerFacetConfig, new Term(78, 'Bestit', 'Bestit'))
+                ],
+                [
+                    FilterEvent::FACET_TERM_COLLECT,
+                    new TermEvent($manufacturerFacetConfig, new Term(4, 'Foobar GmbH', 'Foobar GmbH'))
+                ],
+                [
+                    FilterEvent::FACET_TERM_COLLECT,
+                    new TermEvent($dummyFacetConfig, new Term(0, 'Malcom', 'Malcom'))
+                ],
+                [
+                    FilterEvent::FACET_TERM_COLLECT,
+                    new TermEvent($dummyFacetConfig, new Term(98, 'Mustermann', 'Mustermann'))
+                ],
+                [
+                    FilterEvent::FACET_TERM_COLLECT,
+                    new TermEvent($enumFacetConfig, new Term(0, 'Key1', 'Key1'))
+                ],
+                [
+                    FilterEvent::FACET_TERM_COLLECT,
+                    new TermEvent($enumFacetConfig, new Term(42, 'Key2', 'Key2'))
+                ]
+            );
+
         $resultCollection = $this->createMock(FacetResultCollection::class);
         $resultCollection
             ->expects(self::once())
             ->method('toArray')
             ->willReturn($facets);
 
-        $value1 = 'abc';
-        $value2 = 'xyz';
 
-        $labels = [
-            'Key1' => $value1,
-            'Key2' => $value2,
-        ];
-
-        $enumAttributeHelperMock = $this->createMock(EnumAttributeHelper::class);
-        $enumAttributeHelperMock
-            ->method('getLabels')
-            ->willReturn('enum')
-            ->willReturn($labels);
-
-        $fixture = $this->createFixture(['enumAttributeHelperMock' => $enumAttributeHelperMock]);
-
-        $result = $fixture->create($resultCollection);
+        $result = $this->fixture->create($resultCollection);
 
         static::assertInstanceOf(FacetCollection::class, $result);
         static::assertCount(3, $result->getFacets());
@@ -168,12 +177,7 @@ class FacetCollectionFactoryTest extends TestCase
         static::assertEquals(78, $result->getFacets()[0]->getTerms()->toArray()[1]->getCount());
 
         // Terms
-        static::assertEquals('Bestit', $result->getFacets()[0]->getTerms()->toArray()[1]->getTitle());
-        static::assertEquals(78, $result->getFacets()[0]->getTerms()->toArray()[1]->getCount());
-
-        // Terms
-        static::assertEquals($value1, $result->getFacets()[2]->getTerms()->toArray()[0]->getTitle());
-        static::assertEquals($value2, $result->getFacets()[2]->getTerms()->toArray()[1]->getTitle());
+        static::assertEquals('Key1', $result->getFacets()[2]->getTerms()->toArray()[0]->getTitle());
     }
 
     /**
@@ -183,6 +187,22 @@ class FacetCollectionFactoryTest extends TestCase
      */
     public function testCreateIgnoreNonConfigFacets()
     {
+        $this->configCollection->add(
+            (new FacetConfig())
+                ->setName('Hersteller')
+                ->setField('attribute_manufacturer_name')
+                ->setAlias('attribute_manufacturer_name')
+                ->setType(FacetType::TEXT)
+        );
+
+        $this->configCollection->add(
+            (new FacetConfig())
+                ->setName('foobar')
+                ->setField('foobar')
+                ->setAlias('foobar')
+                ->setType(FacetType::TEXT)
+        );
+
         $facets = [
             'attribute_manufacturer_name' => [
                 'terms' => [

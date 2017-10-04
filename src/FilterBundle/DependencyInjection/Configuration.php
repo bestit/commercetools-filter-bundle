@@ -49,7 +49,7 @@ class Configuration implements ConfigurationInterface
                         ->defaultValue('best_it_commercetools_filter.generator.default_filter_url_generator')
                     ->end()
                     ->scalarNode('cache_life_time')
-                        ->info('Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.')
+                        ->info('DEPRECATED! Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.')
                         ->defaultValue(86400)
                     ->end()
                 ->end()
@@ -58,6 +58,8 @@ class Configuration implements ConfigurationInterface
             ->append($this->getViewNode())
             ->append($this->getSuggestNode())
             ->append($this->getSearchNode())
+            ->append($this->getEnumNormalizerNode())
+            ->append($this->getCategoryNormalizerNode())
             ->append($this->getFacetsNode());
 
         return $builder;
@@ -206,6 +208,74 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
+     * Add the config for enum normalization
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getEnumNormalizerNode(): ArrayNodeDefinition
+    {
+        $node = (new TreeBuilder())->root('enum_normalizer');
+
+        $node
+            ->info('Normalization for enum')
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('enable')
+                    ->info('Enable the normalization (default: true)')
+                    ->defaultTrue()
+                ->end()
+                ->scalarNode('normalizer_id')
+                    ->info('Optional Service id for own normalizer')
+                    ->defaultValue('best_it_commercetools_filter.normalizer_term.enum_attribute_normalizer')
+                ->end()
+                ->scalarNode('cache_id')
+                    ->info('Service id if for cache (default: cache.app)')
+                    ->defaultValue('cache.app')
+                ->end()
+                ->integerNode('cache_life_time')
+                    ->info('Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.')
+                    ->defaultValue(86400)
+                ->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
+     * Add the config for category normalization
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getCategoryNormalizerNode(): ArrayNodeDefinition
+    {
+        $node = (new TreeBuilder())->root('category_normalizer');
+
+        $node
+            ->info('Normalization for categories name')
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('enable')
+                    ->info('Enable the normalization (default: true)')
+                    ->defaultTrue()
+                ->end()
+                ->scalarNode('normalizer_id')
+                    ->info('Optional service id for own normalizer')
+                    ->defaultValue('best_it_commercetools_filter.normalizer_term.category_normalizer')
+                ->end()
+                ->scalarNode('cache_id')
+                    ->info('Service id if for cache (default: cache.app)')
+                    ->defaultValue('cache.app')
+                ->end()
+                ->integerNode('cache_life_time')
+                    ->info('Cache life time. Categories labels are cached to minimize CommerceTools requests.')
+                    ->defaultValue(86400)
+                ->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
      * Add the config for sorting
      *
      * @return ArrayNodeDefinition
@@ -231,7 +301,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->children()
                             ->scalarNode('query')
-                                ->info('Api query for sdk')
+                                ->info('Api query for sdk (default: null for relevance sorting) ')
                                 ->defaultNull()
                             ->end()
                             ->scalarNode('translation')

@@ -2,13 +2,15 @@
 
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Manager;
 
-use BestIt\Commercetools\FilterBundle\Helper\EnumAttributeHelper;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Term\Term;
+use BestIt\Commercetools\FilterBundle\Normalizer\Term\EnumAttributeNormalizer;
+use Commercetools\Commons\Helper\QueryHelper;
 use Commercetools\Core\Client;
 use Commercetools\Core\Model\Common\Context;
 use Commercetools\Core\Model\ProductType\ProductType;
 use Commercetools\Core\Model\ProductType\ProductTypeCollection;
 use Commercetools\Core\Request\ProductTypes\ProductTypeQueryRequest;
-use Commercetools\Core\Response\PagedQueryResponse;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -22,36 +24,43 @@ use Psr\Cache\CacheItemPoolInterface;
 class EnumAttributeHelperTest extends TestCase
 {
     /**
-     * Create a test fixture with default mocks or with overridden mocks.
+     * The ct client
      *
-     * @param array $mocks Array with mocks to override.
-     *
-     * @return EnumAttributeHelper
+     * @var Client
      */
-    private function createFixture(array $mocks = []): EnumAttributeHelper
+    private $client;
+
+    /**
+     * The cache pool
+     *
+     * @var CacheItemPoolInterface
+     */
+    private $cachePool;
+
+    /**
+     * The query helper
+     *
+     * @var QueryHelper
+     */
+    private $queryHelper;
+
+    /**
+     * The normalizer
+     *
+     * @var EnumAttributeNormalizer
+     */
+    private $fixture;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUp()
     {
-        if (!array_key_exists('clientMock', $mocks)
-            || !$mocks['clientMock'] instanceof Client
-        ) {
-            $mocks['clientMock'] = $this->createMock(Client::class);
-        }
-
-        if (!array_key_exists('cachePoolItemInterfaceMock', $mocks)
-            || !$mocks['cachePoolItemInterfaceMock'] instanceof CacheItemPoolInterface
-        ) {
-            $mocks['cachePoolItemInterfaceMock'] = $this->createMock(CacheItemPoolInterface::class);
-        }
-
-        if (!array_key_exists('cacheLifeTime', $mocks)
-            || !is_int($mocks['cacheLifeTime'])
-        ) {
-            $mocks['cacheLifeTime'] = random_int(10000, 99999);
-        }
-
-        return new EnumAttributeHelper(
-            $mocks['clientMock'],
-            $mocks['cachePoolItemInterfaceMock'],
-            $mocks['cacheLifeTime']
+        $this->fixture = new EnumAttributeNormalizer(
+            $this->client = $this->createMock(Client::class),
+            $this->cachePool = $this->createMock(CacheItemPoolInterface::class),
+            600,
+            $this->queryHelper = $this->createMock(QueryHelper::class)
         );
     }
 
@@ -62,8 +71,15 @@ class EnumAttributeHelperTest extends TestCase
      */
     public function testGetLabels()
     {
-        $attributeName1 = 'LENUM';
-        $attributeName2 = 'ENUM';
+        $facetConfig1 = new FacetConfig();
+        $facetConfig1->setField('LENUM');
+        $term1 = new Term();
+        $term1->setTitle('Key1');
+
+        $facetConfig2 = new FacetConfig();
+        $facetConfig2->setField('ENUM');
+        $term2 = new Term();
+        $term2->setTitle('Key3');
 
         $productType = ProductType::fromArray(
             json_decode(file_get_contents(__DIR__ . '/../../Fixtures/ProductTypes.json'), true)
@@ -73,22 +89,11 @@ class EnumAttributeHelperTest extends TestCase
         $productTypeCollection->setContext(Context::of()->setLocale('de')->setLanguages(['de']));
         $productTypeCollection->add($productType);
 
-        $responseMock = $this->createMock(PagedQueryResponse::class);
-        $responseMock
-            ->method('toObject')
+        $this->queryHelper
+            ->expects(static::once())
+            ->method('getAll')
+            ->with($this->client, static::isInstanceOf(ProductTypeQueryRequest::class))
             ->willReturn($productTypeCollection);
-
-        $commerceToolsClient = $this->createMock(Client::class);
-        $commerceToolsClient
-            ->method('execute')
-            ->with(self::callback(function (ProductTypeQueryRequest $args) {
-                return $args instanceof ProductTypeQueryRequest;
-            }))
-            ->willReturn($responseMock);
-
-        $cacheLifeTime = random_int(10000, 90000);
-
-        $cachePool = $this->createMock(CacheItemPoolInterface::class);
 
         $cacheItem1 = $this->createMock(CacheItemInterface::class);
         $cacheItem1
@@ -107,14 +112,14 @@ class EnumAttributeHelperTest extends TestCase
             ->method('get')
             ->willReturn($cachedLabels);
 
-        $cachePool
+        $this->cachePool
             ->method('getItem')
             ->willReturnCallback(
-                function (string $name) use ($attributeName1, $cacheItem1, $attributeName2, $cacheItem2) {
+                function (string $name) use ($cacheItem1, $cacheItem2) {
                     switch ($name) {
-                        case EnumAttributeHelper::CACHE_KEY . '-' . md5($attributeName1):
+                        case EnumAttributeNormalizer::CACHE_KEY . '-' . md5('LENUM'):
                             return $cacheItem1;
-                        case EnumAttributeHelper::CACHE_KEY . '-' . md5($attributeName2):
+                        case EnumAttributeNormalizer::CACHE_KEY . '-' . md5('ENUM'):
                             return $cacheItem2;
                     }
 
@@ -122,15 +127,7 @@ class EnumAttributeHelperTest extends TestCase
                 }
             );
 
-        $fixture = $this->createFixture(
-            [
-                'clientMock' => $commerceToolsClient,
-                'cachePoolItemInterfaceMock' => $cachePool,
-                'cacheLifeTime' => $cacheLifeTime
-            ]
-        );
-
-        self::assertEquals(['Key1' => 'Wert1', 'Key2' => 'Wert2'], $fixture->getLabels($attributeName1));
-        self::assertEquals(['Key3' => 'Wert3'], $fixture->getLabels($attributeName2));
+        self::assertEquals('Wert1', $this->fixture->normalize($facetConfig1, $term1)->getTitle());
+        self::assertEquals('Wert3', $this->fixture->normalize($facetConfig2, $term2)->getTitle());
     }
 }
