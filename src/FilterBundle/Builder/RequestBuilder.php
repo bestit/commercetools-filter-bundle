@@ -94,8 +94,7 @@ class RequestBuilder
 
         // Filter to category if exists
         if ($category = $context->getCategory()) {
-            $request->addFilter($filter = new Filter('categories.id', $category->getId()));
-            $request->addFilterQuery($filter);
+            $request->addFilterQuery(new Filter('categories.id', $category->getId()));
         }
 
         // Filter to search value if exists

@@ -267,8 +267,8 @@ _EmptyProductNormalizer_ will be use if you don't fill the _product_normalizer_i
 There are cases where you have to normalize facet terms. Commercetools only ships enum keys and categories id for example, which aren't enough for your frontend.
 This bundle contains two default normalizers:
 
-* CategoryNormalizer: Converts category id's to there real name
-* EnumAttributeNormalizer: Converts enum keys to there label
+* CategoryNormalizer: Converts category id's to their real name
+* EnumAttributeNormalizer: Converts enum keys to their label
 
 But you can define your own TermNormalizer as well. Just implement the _TermNormalizerInterface_ and set the service id in your config.
 

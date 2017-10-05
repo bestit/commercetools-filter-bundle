@@ -1,6 +1,11 @@
+## Unreleased
+### Bugfix
+- Fix wrong facet results which caused filter combinations with zero products @chowanski
+- Fix wrong facet sorting (high to low) @chowanski
+
 ## [6.1.0] - 2017-10-05
 ### Added
-- Add new event for collect and manipulate facet terms (see FilterEvent.php) @chowanski
+- Add new event to collect and manipulate facet terms (see FilterEvent.php) @chowanski
 - New interface for term manipulation: _TermNormalizerInterface_ @chowanski
 - Detailed configuration (service id, cache id, cache time, state) for enum term normalization @chowanski
 - Detailed configuration (service id, cache id, cache time, state) for category term normalization @chowanski
