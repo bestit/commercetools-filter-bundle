@@ -50,10 +50,11 @@ class SearchContextFactory
      *
      * @param Request $request
      * @param Category $category
+     * @param string $language
      *
      * @return SearchContext
      */
-    public function createFromCategory(Request $request, Category $category): SearchContext
+    public function createFromCategory(Request $request, Category $category, string $language): SearchContext
     {
         $config = $this->getConfig();
 
@@ -83,7 +84,8 @@ class SearchContextFactory
                 'config' => $config,
                 'route' => $category,
                 'baseUrl' => $this->getFilterUrlGenerator()->generateByCategory($request, $category),
-                'category' => $category
+                'category' => $category,
+                'language' => $language
             ]
         );
 
@@ -94,11 +96,12 @@ class SearchContextFactory
      * Create the context from request
      *
      * @param Request $request
+     * @param string $language
      * @param string|null $search
      *
      * @return SearchContext
      */
-    public function createFromSearch(Request $request, string $search = null): SearchContext
+    public function createFromSearch(Request $request, string $language, string $search = null): SearchContext
     {
         $config = $this->getConfig();
 
@@ -128,7 +131,8 @@ class SearchContextFactory
                 'config' => $config,
                 'route' => 'search_index',
                 'baseUrl' => $this->getFilterUrlGenerator()->generateBySearch($request, $search),
-                'search' => $search
+                'search' => $search,
+                'language' => $language
             ]
         );
 

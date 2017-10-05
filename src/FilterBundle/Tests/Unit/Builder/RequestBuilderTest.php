@@ -146,6 +146,7 @@ class RequestBuilderTest extends TestCase
                         'foobar' => 'bestit'
                     ]
                 ],
+                'language' => 'en'
             ]
         );
 
@@ -176,7 +177,8 @@ class RequestBuilderTest extends TestCase
 
         $builder = new FacetBuilder($this->facetConfigCollection);
         $resolvedValues = $builder->resolve($context->getQuery()['filter']);
-        $request = $builder->build($request, $resolvedValues);
+
+        $request = $builder->build($request, $context, $resolvedValues);
 
         $this->eventDispatcher
             ->expects(static::once())
@@ -216,6 +218,7 @@ class RequestBuilderTest extends TestCase
                         'foobar' => 'bestit'
                     ]
                 ],
+                'language' => 'en'
             ]
         );
 
@@ -245,7 +248,8 @@ class RequestBuilderTest extends TestCase
 
         $builder = new FacetBuilder($this->facetConfigCollection);
         $resolvedValues = $builder->resolve($context->getQuery()['filter']);
-        $request = $builder->build($request, $resolvedValues);
+
+        $request = $builder->build($request, $context, $resolvedValues);
 
         $this->eventDispatcher
             ->expects(static::once())

@@ -1,7 +1,14 @@
 ## Unreleased
+### Added
+- New argument for filter manager / suggest manager for defining search language @chowanski
+
+### Removed
+- Language from commercetools client will be ignored @chowanski
+
 ### Bugfix
 - Fix wrong facet results which caused filter combinations with zero products @chowanski
 - Fix wrong facet sorting (high to low) @chowanski
+- Fix wrong ltext facet definition @chowanski
 
 ## [6.1.0] - 2017-10-05
 ### Added

@@ -46,7 +46,7 @@ class FacetConfigTest extends TestCase
             FacetType::CATEGORY => 'categories.id',
             FacetType::ENUM => 'variants.attributes.foo.key',
             FacetType::LENUM => 'variants.attributes.foo.key',
-            FacetType::LOCALIZED_TEXT => 'variants.attributes.de.foo'
+            FacetType::LOCALIZED_TEXT => 'variants.attributes.foo.es'
         ];
 
         foreach ($map as $type => $query) {
@@ -54,7 +54,7 @@ class FacetConfigTest extends TestCase
             $fixture->setField('foo');
             $fixture->setType($type);
 
-            static::assertEquals($query, $fixture->getFacetField());
+            static::assertEquals($query, $fixture->getFacetField('es'));
         }
     }
 
@@ -66,7 +66,7 @@ class FacetConfigTest extends TestCase
     public function testGetFacetFieldFallbackThrowException()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->fixture->getFacetField();
+        $this->fixture->getFacetField('es');
     }
 
     /**
@@ -82,7 +82,7 @@ class FacetConfigTest extends TestCase
             FacetType::CATEGORY => 'categories.id',
             FacetType::ENUM => 'variants.attributes.foo.key',
             FacetType::LENUM => 'variants.attributes.foo.key',
-            FacetType::LOCALIZED_TEXT => 'variants.attributes.de.foo'
+            FacetType::LOCALIZED_TEXT => 'variants.attributes.foo.gb'
         ];
 
         foreach ($map as $type => $query) {
@@ -90,7 +90,7 @@ class FacetConfigTest extends TestCase
             $fixture->setField('foo');
             $fixture->setType($type);
 
-            static::assertEquals($query, $fixture->getFilterField());
+            static::assertEquals($query, $fixture->getFilterField('gb'));
         }
     }
 
@@ -117,7 +117,7 @@ class FacetConfigTest extends TestCase
         $value = 'name';
 
         self::assertEquals($this->fixture, $this->fixture->setFacetField($value));
-        self::assertEquals($value, $this->fixture->getFacetField());
+        self::assertEquals($value, $this->fixture->getFacetField('gb'));
     }
 
     /**
@@ -143,7 +143,7 @@ class FacetConfigTest extends TestCase
         $value = 'name';
 
         self::assertEquals($this->fixture, $this->fixture->setFilterField($value));
-        self::assertEquals($value, $this->fixture->getFilterField());
+        self::assertEquals($value, $this->fixture->getFilterField('es'));
     }
 
     /**

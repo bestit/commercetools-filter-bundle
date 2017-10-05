@@ -101,11 +101,12 @@ class ContextFactoryTest extends TestCase
                 'route' => $category,
                 'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
-                'category' => $category
+                'category' => $category,
+                'language' => 'en'
             ]
         );
 
-        static::assertEquals($context, $this->fixture->createFromCategory($request, $category));
+        static::assertEquals($context, $this->fixture->createFromCategory($request, $category, 'en'));
     }
 
     /**
@@ -143,11 +144,12 @@ class ContextFactoryTest extends TestCase
                 'route' => $category,
                 'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
-                'category' => $category
+                'category' => $category,
+                'language' => 'es'
             ]
         );
 
-        static::assertEquals($context, $this->fixture->createFromCategory($request, $category));
+        static::assertEquals($context, $this->fixture->createFromCategory($request, $category, 'es'));
     }
 
     /**
@@ -175,11 +177,12 @@ class ContextFactoryTest extends TestCase
                 'route' => 'search_index',
                 'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
-                'search' => $search
+                'search' => $search,
+                'language' => 'de'
             ]
         );
 
-        static::assertEquals($context, $this->fixture->createFromSearch($request, $search));
+        static::assertEquals($context, $this->fixture->createFromSearch($request, 'de', $search));
     }
 
     /**
@@ -217,11 +220,12 @@ class ContextFactoryTest extends TestCase
                 'route' => 'search_index',
                 'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
-                'search' => $search
+                'search' => $search,
+                'language' => 'es'
             ]
         );
 
-        static::assertEquals($context, $this->fixture->createFromSearch($request, $search));
+        static::assertEquals($context, $this->fixture->createFromSearch($request, 'es', $search));
     }
 
     /**
@@ -259,10 +263,11 @@ class ContextFactoryTest extends TestCase
                 'route' => 'search_index',
                 'baseUrl' => 'foo-route',
                 'sorting' => 'name_asc',
-                'search' => null
+                'search' => null,
+                'language' => 'fr'
             ]
         );
 
-        static::assertEquals($context, $this->fixture->createFromSearch($request, $search));
+        static::assertEquals($context, $this->fixture->createFromSearch($request, 'fr', $search));
     }
 }

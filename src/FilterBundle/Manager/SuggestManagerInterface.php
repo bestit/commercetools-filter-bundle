@@ -20,22 +20,20 @@ interface SuggestManagerInterface
      *
      * @param string $keyword
      * @param int $max
-     *
-     * @throws ApiException
+     * @param string $language
      *
      * @return KeywordsResult
      */
-    public function getKeywords(string $keyword, int $max): KeywordsResult;
+    public function getKeywords(string $keyword, int $max, string $language = 'de'): KeywordsResult;
 
     /**
      * Get products by keyword
      *
      * @param string $keyword
      * @param int $max
-     *
-     * @throws ApiException
+     * @param string $language
      *
      * @return SuggestResult
      */
-    public function getProducts(string $keyword, int $max): SuggestResult;
+    public function getProducts(string $keyword, int $max, string $language = 'de'): SuggestResult;
 }

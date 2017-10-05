@@ -142,7 +142,7 @@ class FilterManagerTest extends TestCase
         $this->contextFactory
             ->expects(self::once())
             ->method('createFromSearch')
-            ->with(self::equalTo($request), self::equalTo($search))
+            ->with($request, 'fr', $search)
             ->willReturn(
                 $context = new SearchContext(
                     [
@@ -151,7 +151,8 @@ class FilterManagerTest extends TestCase
                             [
                                 'itemsPerPage' => 20
                             ]
-                        )
+                        ),
+                        'language' => 'fr'
                     ]
                 )
             );
@@ -174,7 +175,7 @@ class FilterManagerTest extends TestCase
             ->with(self::equalTo($context), self::equalTo($rawResponse))
             ->willReturn($response = new SearchResult());
 
-        $result = $this->fixture->search($request, $search);
+        $result = $this->fixture->search($request, $search, 'fr');
         static::assertInstanceOf(SearchResult::class, $result);
         static::assertEquals($sortingCollection, $result->getSorting());
     }

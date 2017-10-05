@@ -75,8 +75,8 @@ class FacetCollectionTest extends TestCase
      */
     public function testSortedFacets()
     {
-        $this->fixture->addFacet((new Facet)->setConfig((new FacetConfig())->setWeight(20))->setName('Last'));
-        $this->fixture->addFacet((new Facet)->setConfig((new FacetConfig())->setWeight(3))->setName('First'));
+        $this->fixture->addFacet((new Facet)->setConfig((new FacetConfig())->setWeight(20))->setName('First'));
+        $this->fixture->addFacet((new Facet)->setConfig((new FacetConfig())->setWeight(3))->setName('Last'));
         $this->fixture->addFacet((new Facet)->setConfig((new FacetConfig())->setWeight(15))->setName('Middle'));
 
         self::assertEquals(3, count($this->fixture->getFacets()));
