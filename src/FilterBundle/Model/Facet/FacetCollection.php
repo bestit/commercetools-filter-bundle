@@ -46,7 +46,7 @@ class FacetCollection implements IteratorAggregate
         usort(
             $facetsSorted,
             function (Facet $a, Facet $b) {
-                return $a->getConfig()->getWeight() <=> $b->getConfig()->getWeight();
+                return $b->getConfig()->getWeight() <=> $a->getConfig()->getWeight();
             }
         );
 

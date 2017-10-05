@@ -111,7 +111,7 @@ class FacetBuilder
 
                 if ($facetConfig->isMultiSelect()) {
                     $request->addFilter($filter);
-                    $request->addFacet($filter);
+                    $request->addFilterFacets($filter);
                 } else {
                     $request->addFilterQuery($filter);
                 }
