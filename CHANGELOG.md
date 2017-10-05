@@ -1,4 +1,4 @@
-## Unreleased
+## [6.1.0] - 2017-10-05
 ### Added
 - Add new event for collect and manipulate facet terms (see FilterEvent.php) @chowanski
 - New interface for term manipulation: _TermNormalizerInterface_ @chowanski
