@@ -111,3 +111,10 @@ services:
 
   best_it_commercetools_filter.commercetools.commons.helper.query_helper:
       class: Commercetools\Commons\Helper\QueryHelper
+
+  best_it_commercetools_filter.form_extension.additional_filter_fields_extension:
+      class: BestIt\Commercetools\FilterBundle\Form\Extension\AdditionalFilterFieldsExtension
+      arguments:
+          - '%best_it_commercetools_filter.config%'
+      tags:
+          - { name: form.type_extension, extended_type: BestIt\Commercetools\FilterBundle\Form\FilterType }

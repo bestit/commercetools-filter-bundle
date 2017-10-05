@@ -22,17 +22,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FilterType extends AbstractType
 {
     /**
-     * @var string FIELDNAME_VIEW Fieldname for view parameter.
-     */
-    const FIELDNAME_VIEW = 'view';
-    /**
      * @var string FIELDNAME_PAGE Fieldname for page parameter.
      */
     const FIELDNAME_PAGE = 'page';
+
     /**
      * @var string FIELDNAME_SORT Fieldname for sorting parameter.
      */
     const FIELDNAME_SORTING = 'sort';
+
+    /**
+     * @var string FIELDNAME_SEARCH Fieldname for search parameter.
+     */
+    const FIELDNAME_SEARCH = 'search';
 
     /**
      * {@inheritdoc}
@@ -118,10 +120,21 @@ class FilterType extends AbstractType
             ]);
         }
 
-        // Add hidden fields for views, pagination and sorting.
-        $builder->add(self::FIELDNAME_VIEW, HiddenType::class);
-        $builder->add(self::FIELDNAME_PAGE, HiddenType::class);
-        $builder->add(self::FIELDNAME_SORTING, HiddenType::class);
+        // Add hidden fields for pagination and sorting.
+        $builder->add(self::FIELDNAME_PAGE, HiddenType::class, [
+            'empty_data' => $context->getPage()
+        ]);
+
+        $builder->add(self::FIELDNAME_SORTING, HiddenType::class, [
+            'empty_data' => $context->getSorting()
+        ]);
+
+        // Add hidden field with search value
+        if ($search = $context->getSearch()) {
+            $builder->add(self::FIELDNAME_SEARCH, HiddenType::class, [
+                'empty_data' => $search
+            ]);
+        }
     }
 
     /**

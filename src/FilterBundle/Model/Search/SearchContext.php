@@ -22,13 +22,6 @@ class SearchContext
     private $page;
 
     /**
-     * Current type of view (eg. grid, list)
-     *
-     * @var string
-     */
-    private $view;
-
-    /**
      * Type type of sort
      *
      * @var string
@@ -78,6 +71,13 @@ class SearchContext
      * @var string
      */
     private $baseUrl;
+
+    /**
+     * Additional filter form fields
+     *
+     * @var array
+     */
+    private $filterFormFields = [];
 
     /**
      * Context constructor
@@ -164,16 +164,6 @@ class SearchContext
     public function getSorting(): string
     {
         return $this->sorting;
-    }
-
-    /**
-     * Get view
-     *
-     * @return string
-     */
-    public function getView(): string
-    {
-        return $this->view;
     }
 
     /**
@@ -273,20 +263,6 @@ class SearchContext
     }
 
     /**
-     * Set view
-     *
-     * @param string $view
-     *
-     * @return SearchContext
-     */
-    public function setView(string $view): SearchContext
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
      * Get baseUrl
      *
      * @return string
@@ -306,6 +282,30 @@ class SearchContext
     public function setBaseUrl(string $baseUrl): SearchContext
     {
         $this->baseUrl = $baseUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get filterFormFields
+     *
+     * @return array
+     */
+    public function getFilterFormFields(): array
+    {
+        return $this->filterFormFields;
+    }
+
+    /**
+     * Set filterFormFields
+     *
+     * @param array $filterFormFields
+     *
+     * @return SearchContext
+     */
+    public function setFilterFormFields(array $filterFormFields): SearchContext
+    {
+        $this->filterFormFields = $filterFormFields;
 
         return $this;
     }

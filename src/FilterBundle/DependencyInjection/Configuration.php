@@ -53,6 +53,7 @@ class Configuration implements ConfigurationInterface
                         ->defaultValue(86400)
                     ->end()
                 ->end()
+            ->append($this->getFilterFormNode())
             ->append($this->getSortingNode())
             ->append($this->getPaginationNode())
             ->append($this->getViewNode())
@@ -75,7 +76,7 @@ class Configuration implements ConfigurationInterface
         $node = (new TreeBuilder())->root('view');
 
         $node
-            ->info('View settings')
+            ->info('DEPRECATED! Use filter_form configuration for adding additional fields.')
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('default')
@@ -201,6 +202,30 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('neighbours')
                     ->info('Neighbours at pagination 1 => "1 2 3" | 2 => "1 2 3 4 5"')
                     ->defaultValue(1)
+                ->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
+     * Add the config for pagination
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getFilterFormNode(): ArrayNodeDefinition
+    {
+        $node = (new TreeBuilder())->root('filter_form');
+
+        $node
+            ->info('Filter form config')
+            ->addDefaultsIfNotSet()
+            ->fixXmlConfig('additional_field')
+            ->children()
+                ->arrayNode('additional_fields')
+                    ->useAttributeAsKey('name')
+                    ->prototype('scalar')->end()
+                    ->defaultValue(['view' => 'list'])
                 ->end()
             ->end();
 

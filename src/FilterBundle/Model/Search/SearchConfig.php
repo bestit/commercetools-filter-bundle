@@ -21,13 +21,6 @@ class SearchConfig
     private $itemsPerPage;
 
     /**
-     * Name of default view (eg. grid, list)
-     *
-     * @var string
-     */
-    private $defaultView;
-
-    /**
      * Name of default sorting (eg. name_asc)
      *
      * @var string
@@ -70,6 +63,13 @@ class SearchConfig
     private $fuzzyConfig;
 
     /**
+     * Additional filter form fields
+     *
+     * @var array
+     */
+    private $filterFormFields = [];
+
+    /**
      * Match variants
      *
      * @var bool
@@ -101,16 +101,6 @@ class SearchConfig
     public function getDefaultSorting(): string
     {
         return $this->defaultSorting;
-    }
-
-    /**
-     * Get defaultView
-     *
-     * @return string
-     */
-    public function getDefaultView(): string
-    {
-        return $this->defaultView;
     }
 
     /**
@@ -153,20 +143,6 @@ class SearchConfig
     public function setDefaultSorting(string $defaultSorting): SearchConfig
     {
         $this->defaultSorting = $defaultSorting;
-
-        return $this;
-    }
-
-    /**
-     * Set defaultView
-     *
-     * @param string $defaultView
-     *
-     * @return SearchConfig
-     */
-    public function setDefaultView(string $defaultView): SearchConfig
-    {
-        $this->defaultView = $defaultView;
 
         return $this;
     }
@@ -305,6 +281,30 @@ class SearchConfig
     public function setMatchVariants(bool $matchVariants): SearchConfig
     {
         $this->matchVariants = $matchVariants;
+
+        return $this;
+    }
+
+    /**
+     * Get filterFormFields
+     *
+     * @return array
+     */
+    public function getFilterFormFields(): array
+    {
+        return $this->filterFormFields;
+    }
+
+    /**
+     * Set filterFormFields
+     *
+     * @param array $filterFormFields
+     *
+     * @return SearchConfig
+     */
+    public function setFilterFormFields(array $filterFormFields): SearchConfig
+    {
+        $this->filterFormFields = $filterFormFields;
 
         return $this;
     }
