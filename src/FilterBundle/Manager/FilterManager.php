@@ -111,9 +111,9 @@ class FilterManager implements FilterManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function listing(Request $request, Category $category): SearchResult
+    public function listing(Request $request, Category $category, string $language = 'de'): SearchResult
     {
-        $context = $this->getContextFactory()->createFromCategory($request, $category);
+        $context = $this->getContextFactory()->createFromCategory($request, $category, $language);
         $sorting = $this->getSortingFactory()->create($context);
 
         $rawResponse = $this->getRequestBuilder()->execute($context, $sorting);
@@ -126,9 +126,9 @@ class FilterManager implements FilterManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function search(Request $request, string $search = null): SearchResult
+    public function search(Request $request, string $search = null, string $language = 'de'): SearchResult
     {
-        $context = $this->getContextFactory()->createFromSearch($request, $search);
+        $context = $this->getContextFactory()->createFromSearch($request, $language, $search);
         $sorting = $this->getSortingFactory()->create($context);
 
         $rawResponse = $this->getRequestBuilder()->execute($context, $sorting);

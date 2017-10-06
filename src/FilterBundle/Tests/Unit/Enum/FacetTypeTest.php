@@ -55,8 +55,9 @@ class FacetTypeTest extends TestCase
      */
     public function testLocalizedTextValue()
     {
-        static::assertEquals('localized_text', FacetType::LOCALIZED_TEXT);
-        static::assertTrue(FacetType::isValid('localized_text'));
+        static::assertEquals('ltext', FacetType::LOCALIZED_TEXT);
+        static::assertTrue(FacetType::isValid('ltext'));
+        static::assertFalse(FacetType::isValid('localized_text'));
     }
 
     /**

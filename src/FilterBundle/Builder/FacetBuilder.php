@@ -6,6 +6,7 @@ use BestIt\Commercetools\FilterBundle\Form\Transformer\PriceMaxDataTransformer;
 use BestIt\Commercetools\FilterBundle\Form\Transformer\PriceMinDataTransformer;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
 use Commercetools\Core\Model\Product\Search\Facet;
 use Commercetools\Core\Model\Product\Search\Filter;
 use Commercetools\Core\Model\Product\Search\FilterSubtree;
@@ -42,11 +43,12 @@ class FacetBuilder
      * Build facets to request
      *
      * @param ProductProjectionSearchRequest $request
+     * @param SearchContext $context
      * @param array $values
      *
      * @return ProductProjectionSearchRequest
      */
-    public function build(ProductProjectionSearchRequest $request, array $values = []): ProductProjectionSearchRequest
+    public function build(ProductProjectionSearchRequest $request, SearchContext $context, array $values = []): ProductProjectionSearchRequest
     {
         $aliases = array_map(
             function (FacetConfig $facetConfig) {
@@ -57,9 +59,11 @@ class FacetBuilder
 
         foreach ($aliases as $facetAlias) {
             $facetConfig = $this->facetConfigCollection->findByAlias($facetAlias);
-            $name = $facetConfig->getFilterField();
+            $name = $facetConfig->getFilterField($context->getLanguage());
 
-            $request->addFacet(Facet::ofName($facetConfig->getFacetField())->setAlias($facetConfig->getAlias()));
+            $request->addFacet(
+                Facet::ofName($facetConfig->getFacetField($context->getLanguage()))->setAlias($facetConfig->getAlias())
+            );
 
             // force price range to be calculate out of full result facets
             if ($facetConfig->getType() === 'range') {

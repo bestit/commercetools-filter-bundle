@@ -80,6 +80,13 @@ class SearchContext
     private $baseUrl;
 
     /**
+     * The language for searching
+     *
+     * @var string
+     */
+    private $language;
+
+    /**
      * Context constructor
      *
      * @param array $values
@@ -306,6 +313,30 @@ class SearchContext
     public function setBaseUrl(string $baseUrl): SearchContext
     {
         $this->baseUrl = $baseUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return SearchContext
+     */
+    public function setLanguage(string $language): SearchContext
+    {
+        $this->language = $language;
 
         return $this;
     }

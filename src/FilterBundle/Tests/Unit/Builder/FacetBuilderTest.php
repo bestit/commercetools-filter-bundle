@@ -6,6 +6,7 @@ use BestIt\Commercetools\FilterBundle\Builder\FacetBuilder;
 use BestIt\Commercetools\FilterBundle\Enum\FacetType;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
 use Commercetools\Core\Request\Products\ProductProjectionSearchRequest;
 use PHPUnit\Framework\TestCase;
 
@@ -62,7 +63,7 @@ class FacetBuilderTest extends TestCase
                 ->setName('foobar')
                 ->setField('foobar')
                 ->setAlias('foobar')
-                ->setType(FacetType::TEXT)
+                ->setType(FacetType::LOCALIZED_TEXT)
         );
 
         $this->fixture = new FacetBuilder($this->facetConfigCollection);
@@ -77,7 +78,11 @@ class FacetBuilderTest extends TestCase
     {
         $queryParams = [];
         $request = new ProductProjectionSearchRequest();
-        $this->fixture->build($request, $queryParams);
+
+        $context = new SearchContext();
+        $context->setLanguage('en');
+        $this->fixture->build($request, $context, $queryParams);
+
 
         $result = \GuzzleHttp\Psr7\parse_query((string)$request->httpRequest()->getBody());
 
@@ -88,7 +93,7 @@ class FacetBuilderTest extends TestCase
             $result['facet']
         );
 
-        static::assertContains('variants.attributes.foobar as foobar', $result['facet']);
+        static::assertContains('variants.attributes.foobar.en as foobar', $result['facet']);
 
         static::assertContains('price:range(0 to *)', $result['filter.facets']);
         static::assertContains('price:range(0 to *)', $result['filter']);
@@ -113,18 +118,18 @@ class FacetBuilderTest extends TestCase
             ]
         ];
 
-        $this->fixture->build($request, $selectedValues);
+        $context = new SearchContext();
+        $context->setLanguage('en');
+        $this->fixture->build($request, $context, $selectedValues);
 
         $result = \GuzzleHttp\Psr7\parse_query((string)$request->httpRequest()->getBody());
-
-        static::assertContains('variants.attributes.attribute_manufacturer_name:"Apple"', $result['facet']);
 
         static::assertContains(
             'variants.attributes.attribute_manufacturer_name as attribute_manufacturer_name',
             $result['facet']
         );
 
-        static::assertContains('variants.attributes.foobar as foobar', $result['facet']);
+        static::assertContains('variants.attributes.foobar.en as foobar', $result['facet']);
 
         static::assertContains('price:range(1800 to 259900)', $result['filter']);
         static::assertContains('variants.attributes.attribute_manufacturer_name:"Apple"', $result['filter']);

@@ -101,9 +101,11 @@ class FacetConfig
     /**
      * Get facetField
      *
+     * @param string $language
+     *
      * @return string
      */
-    public function getFacetField(): string
+    public function getFacetField(string $language): string
     {
         if ($this->facetField === null) {
             switch ($this->type) {
@@ -111,7 +113,7 @@ class FacetConfig
                     $this->facetField = sprintf('variants.attributes.%s', $this->getField());
                     break;
                 case FacetType::LOCALIZED_TEXT:
-                    $this->facetField = sprintf('variants.attributes.de.%s', $this->getField());
+                    $this->facetField = sprintf('variants.attributes.%s.%s', $this->getField(), $language);
                     break;
                 case FacetType::ENUM:
                 case FacetType::LENUM:
@@ -171,9 +173,11 @@ class FacetConfig
     /**
      * Get filterField
      *
+     * @param string $language
+     *
      * @return string
      */
-    public function getFilterField(): string
+    public function getFilterField(string $language): string
     {
         if ($this->filterField === null) {
             switch ($this->type) {
@@ -181,7 +185,7 @@ class FacetConfig
                     $this->filterField = sprintf('variants.attributes.%s', $this->getField());
                     break;
                 case FacetType::LOCALIZED_TEXT:
-                    $this->filterField = sprintf('variants.attributes.de.%s', $this->getField());
+                    $this->filterField = sprintf('variants.attributes.%s.%s', $this->getField(), $language);
                     break;
                 case FacetType::ENUM:
                 case FacetType::LENUM:

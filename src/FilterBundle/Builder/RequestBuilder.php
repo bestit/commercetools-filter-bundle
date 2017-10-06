@@ -99,9 +99,7 @@ class RequestBuilder
 
         // Filter to search value if exists
         if ($search = $context->getSearch()) {
-            foreach ($this->client->getConfig()->getContext()->getLanguages() as $language) {
-                $request->addParam(sprintf('text.%s', $language), $search);
-            }
+            $request->addParam(sprintf('text.%s', $context->getLanguage()), $search);
 
             // Fuzzy
             $fuzzyConfig = $context->getConfig()->getFuzzyConfig();
@@ -113,7 +111,7 @@ class RequestBuilder
 
         $builder = new FacetBuilder($this->facetConfigCollection);
         $resolvedValues = $builder->resolve($this->decode($context->getQuery()));
-        $request = $builder->build($request, $resolvedValues);
+        $request = $builder->build($request, $context, $resolvedValues);
 
         $event = new ProductProjectionSearchRequestEvent($request);
         $this->eventDispatcher->dispatch(FilterEvent::PRODUCTS_REQUEST_POST, $event);

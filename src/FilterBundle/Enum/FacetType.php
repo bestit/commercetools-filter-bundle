@@ -25,7 +25,7 @@ class FacetType
      *
      * @var string
      */
-    const LOCALIZED_TEXT = 'localized_text';
+    const LOCALIZED_TEXT = 'ltext';
 
     /**
      * Facet enum type

@@ -20,18 +20,20 @@ interface FilterManagerInterface
      *
      * @param Request $request
      * @param Category $category
+     * @param string $language
      *
      * @return SearchResult
      */
-    public function listing(Request $request, Category $category): SearchResult;
+    public function listing(Request $request, Category $category, string $language = 'de'): SearchResult;
 
     /**
      * Perform a search request
      *
      * @param Request $request
      * @param string $search
+     * @param string $language
      *
      * @return SearchResult
      */
-    public function search(Request $request, string $search = null): SearchResult;
+    public function search(Request $request, string $search = null, string $language = 'de'): SearchResult;
 }

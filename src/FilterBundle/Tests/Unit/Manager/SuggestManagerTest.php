@@ -99,7 +99,6 @@ class SuggestManagerTest extends TestCase
         $max = 10;
 
         $request = ProductsSuggestRequest::ofKeywords(LocalizedString::ofLangAndText('de', $keyword));
-        $request->addKeyword('en', $keyword);
         $request->fuzzy(true);
         $request->limit($max);
 
@@ -136,14 +135,6 @@ class SuggestManagerTest extends TestCase
 
         $this->client
             ->expects(static::once())
-            ->method('getConfig')
-            ->willReturn($clientConfig = new Config());
-
-        $clientConfig->setContext($context = new Context());
-        $context->setLanguages(['de', 'en']);
-
-        $this->client
-            ->expects(static::once())
             ->method('execute')
             ->with(static::equalTo($request))
             ->willReturn($response);
@@ -165,11 +156,6 @@ class SuggestManagerTest extends TestCase
     public function testGetKeywordsThrowException()
     {
         $this->expectException(ApiException::class);
-
-        $this->client
-            ->expects(static::once())
-            ->method('getConfig')
-            ->willReturn($clientConfig = new Config());
 
         $this->client
             ->expects(static::once())
@@ -206,7 +192,6 @@ class SuggestManagerTest extends TestCase
 
         $request = ProductProjectionSearchRequest::of();
         $request->addParam('text.de', $keyword);
-        $request->addParam('text.en', $keyword);
         $request->fuzzy(4);
         $request->limit($max);
         $request->markMatchingVariants(true);
@@ -245,14 +230,6 @@ class SuggestManagerTest extends TestCase
 
         $this->client
             ->expects(static::once())
-            ->method('getConfig')
-            ->willReturn($clientConfig = new Config());
-
-        $clientConfig->setContext($context = new Context());
-        $context->setLanguages(['de', 'en']);
-
-        $this->client
-            ->expects(static::once())
             ->method('execute')
             ->with(static::equalTo($request))
             ->willReturn($response);
@@ -271,14 +248,6 @@ class SuggestManagerTest extends TestCase
     public function testGetProductsThrowException()
     {
         $this->expectException(ApiException::class);
-
-        $this->client
-            ->expects(static::once())
-            ->method('getConfig')
-            ->willReturn($clientConfig = new Config());
-
-        $clientConfig->setContext($context = new Context());
-        $context->setLanguages(['de', 'en']);
 
         $this->client
             ->expects(static::once())

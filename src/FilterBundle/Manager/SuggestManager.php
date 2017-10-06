@@ -77,13 +77,11 @@ class SuggestManager implements SuggestManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getKeywords(string $keyword, int $max): KeywordsResult
+    public function getKeywords(string $keyword, int $max, string $language = 'de'): KeywordsResult
     {
         $collection = [];
         $request = new ProductsSuggestRequest();
-        foreach ($this->client->getConfig()->getContext()->getLanguages() as $language) {
-            $request->addKeyword($language, $keyword);
-        }
+        $request->addKeyword($language, $keyword);
 
         $request->limit($max);
         $request->fuzzy(false);
@@ -126,12 +124,10 @@ class SuggestManager implements SuggestManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getProducts(string $keyword, int $max): SuggestResult
+    public function getProducts(string $keyword, int $max, string $language = 'de'): SuggestResult
     {
         $request = ProductProjectionSearchRequest::of();
-        foreach ($this->client->getConfig()->getContext()->getLanguages() as $language) {
-            $request->addParam(sprintf('text.%s', $language), $keyword);
-        }
+        $request->addParam(sprintf('text.%s', $language), $keyword);
 
         $request->limit($max);
         $request->fuzzy(false);
