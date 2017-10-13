@@ -1,3 +1,7 @@
+## Unreleased
+### Added
+- Add SetType handling for EnumAttributeNormalizer @chowanski
+
 ## [7.0.0] - 2017-10-06
 ### Added
 - New argument for filter manager / suggest manager for defining search language @chowanski
