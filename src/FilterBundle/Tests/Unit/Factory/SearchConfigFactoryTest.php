@@ -60,7 +60,8 @@ class SearchConfigFactoryTest extends TestCase
                 'match_variants' => true,
                 'enable_fuzzy' => true,
                 'fuzzy_level' => 4
-            ]
+            ],
+            'base_category_query' => 'custom(fields(alias="_SHOP_ROOT"))'
         ];
 
         $resolvedConfig = (new SearchConfigFactory($configData))->create();
@@ -76,5 +77,6 @@ class SearchConfigFactoryTest extends TestCase
         static::assertEquals(true, $resolvedConfig->isMatchVariants());
         static::assertEquals(true, $resolvedConfig->getFuzzyConfig()->isActive());
         static::assertEquals(4, $resolvedConfig->getFuzzyConfig()->getLevel());
+        static::assertEquals('custom(fields(alias="_SHOP_ROOT"))', $resolvedConfig->getBaseCategoryQuery());
     }
 }

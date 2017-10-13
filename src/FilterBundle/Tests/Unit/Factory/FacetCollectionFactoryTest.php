@@ -9,6 +9,8 @@ use BestIt\Commercetools\FilterBundle\FilterEvent;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfigCollection;
+use BestIt\Commercetools\FilterBundle\Model\Normalizer\TermNormalizerCollection;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
 use BestIt\Commercetools\FilterBundle\Model\Term\Term;
 use Commercetools\Core\Model\Product\FacetResultCollection;
 use PHPUnit\Framework\TestCase;
@@ -43,9 +45,9 @@ class FacetCollectionFactoryTest extends TestCase
     /**
      * The event dispatcher
      *
-     * @var EventDispatcherInterface|PHPUnit_Framework_MockObject_MockObject
+     * @var TermNormalizerCollection
      */
-    private $eventDispatcher;
+    private $termNormalizerCollection;
 
     /**
      * {@inheritdoc}
@@ -54,7 +56,7 @@ class FacetCollectionFactoryTest extends TestCase
     {
         $this->fixture = new FacetCollectionFactory(
             $this->configCollection = new FacetConfigCollection(),
-            $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class)
+            $this->termNormalizerCollection = new TermNormalizerCollection()
         );
     }
 
@@ -122,40 +124,6 @@ class FacetCollectionFactoryTest extends TestCase
             ]
         ];
 
-        $this->eventDispatcher
-            ->expects(static::exactly(7))
-            ->method('dispatch')
-            ->withConsecutive(
-                [
-                    FilterEvent::FACET_TERM_COLLECT,
-                    new TermEvent($manufacturerFacetConfig, new Term(200, 'Astro', 'Astro'))
-                ],
-                [
-                    FilterEvent::FACET_TERM_COLLECT,
-                    new TermEvent($manufacturerFacetConfig, new Term(78, 'Bestit', 'Bestit'))
-                ],
-                [
-                    FilterEvent::FACET_TERM_COLLECT,
-                    new TermEvent($manufacturerFacetConfig, new Term(4, 'Foobar GmbH', 'Foobar GmbH'))
-                ],
-                [
-                    FilterEvent::FACET_TERM_COLLECT,
-                    new TermEvent($dummyFacetConfig, new Term(0, 'Malcom', 'Malcom'))
-                ],
-                [
-                    FilterEvent::FACET_TERM_COLLECT,
-                    new TermEvent($dummyFacetConfig, new Term(98, 'Mustermann', 'Mustermann'))
-                ],
-                [
-                    FilterEvent::FACET_TERM_COLLECT,
-                    new TermEvent($enumFacetConfig, new Term(0, 'Key1', 'Key1'))
-                ],
-                [
-                    FilterEvent::FACET_TERM_COLLECT,
-                    new TermEvent($enumFacetConfig, new Term(42, 'Key2', 'Key2'))
-                ]
-            );
-
         $resultCollection = $this->createMock(FacetResultCollection::class);
         $resultCollection
             ->expects(self::once())
@@ -163,7 +131,7 @@ class FacetCollectionFactoryTest extends TestCase
             ->willReturn($facets);
 
 
-        $result = $this->fixture->create($resultCollection);
+        $result = $this->fixture->create($resultCollection, new SearchContext());
 
         static::assertInstanceOf(FacetCollection::class, $result);
         static::assertCount(3, $result->getFacets());
@@ -227,7 +195,7 @@ class FacetCollectionFactoryTest extends TestCase
             ->method('toArray')
             ->willReturn($facets);
 
-        $result = $this->fixture->create($resultCollection);
+        $result = $this->fixture->create($resultCollection, new SearchContext());
 
         static::assertCount(1, $result->getFacets());
     }

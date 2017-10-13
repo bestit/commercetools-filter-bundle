@@ -77,6 +77,13 @@ class SearchConfig
     private $matchVariants = false;
 
     /**
+     * Optional base category query
+     *
+     * @var string|null
+     */
+    private $baseCategoryQuery;
+
+    /**
      * Config constructor
      *
      * @param array $values
@@ -305,6 +312,30 @@ class SearchConfig
     public function setMatchVariants(bool $matchVariants): SearchConfig
     {
         $this->matchVariants = $matchVariants;
+
+        return $this;
+    }
+
+    /**
+     * Get baseCategoryQuery
+     *
+     * @return null|string
+     */
+    public function getBaseCategoryQuery()
+    {
+        return $this->baseCategoryQuery;
+    }
+
+    /**
+     * Set baseCategoryQuery
+     *
+     * @param null|string $baseCategoryQuery
+     *
+     * @return SearchConfig
+     */
+    public function setBaseCategoryQuery(string $baseCategoryQuery = null): SearchConfig
+    {
+        $this->baseCategoryQuery = $baseCategoryQuery;
 
         return $this;
     }

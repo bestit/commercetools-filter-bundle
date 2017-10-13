@@ -43,14 +43,6 @@ class BestItCommercetoolsFilterExtension extends Extension
             'best_it_commercetools_filter.normalizer.enum.cache',
             $config['enum_normalizer']['cache_id']
         );
-        $container->setAlias(
-            'best_it_commercetools_filter.normalizer.enum',
-            $config['enum_normalizer']['normalizer_id']
-        );
-        $container->setAlias(
-            'best_it_commercetools_filter.normalizer.category',
-            $config['category_normalizer']['normalizer_id']
-        );
 
         // Set parameters
         $container->setParameter(
@@ -61,14 +53,18 @@ class BestItCommercetoolsFilterExtension extends Extension
             'best_it_commercetools_filter.config.category_normalizer.cache_life_time',
             $config['category_normalizer']['cache_life_time']
         );
+        $container->setParameter(
+            'best_it_commercetools_filter.config.category_normalizer.facet_filter_type',
+            $config['category_normalizer']['facet_filter_type']
+        );
 
         // Disable services
         if ($config['enum_normalizer']['enable'] === false) {
-            $container->removeDefinition('best_it_commercetools_filter.listener_term.enum_attribute_listener');
+            $container->removeDefinition('best_it_commercetools_filter.normalizer_term.enum_attribute_normalizer');
         }
 
         if ($config['category_normalizer']['enable'] === false) {
-            $container->removeDefinition('best_it_commercetools_filter.listener_term.category_listener');
+            $container->removeDefinition('best_it_commercetools_filter.normalizer_term.category_normalizer');
         }
 
         // Set config factory

@@ -95,6 +95,9 @@ best_it_commercetools_filter:
     # Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.
     # DEPRECATED: Do not use. Switch to enum_normalizer
     cache_life_time:      86400
+    
+    # Optional query for defining a base category. If used, only products under the base category will be selected. (default: null)
+    base_category_query: 'custom(fields(alias="_SHOP_ROOT"))'
  
     # Sorting. At least one sorting options must exist
     sorting:              # Required
@@ -174,9 +177,6 @@ best_it_commercetools_filter:
         # Switch this normalizer on / off (default: true)
         enable: false
         
-        # You can define your own normalizer service (default: see id below)
-        normalizer_id: best_it_commercetools_filter.normalizer_term.enum_attribute_normalizer
-        
         # You can define your own cache pool (default: see id below)
         cache_id: cache.app
         
@@ -191,14 +191,18 @@ best_it_commercetools_filter:
         # Switch this normalizer on / off (default: true)
         enable: false
         
-        # You can define your own normalizer service (default: see id below)
-        normalizer_id: best_it_commercetools_filter.normalizer_term.category_normalizer
-        
         # You can define your own cache pool (default: see id below)
         cache_id: cache.app
         
         # Time in seconds (default: 86400)
-        cache_life_time: 60        
+        cache_life_time: 60      
+          
+        # Optional facet filter mode for listing (default: 'none')
+        # Possible values:
+        #   - none: No filter will be applied
+        #   - parent: Only direct childrens categories will be shown
+        #   - ancestors: All childrens and subchildrens will be shown
+        facet_filter_type: 'parent'
 ```
 
 ## Usage
@@ -270,7 +274,10 @@ This bundle contains two default normalizers:
 * CategoryNormalizer: Converts category id's to their real name
 * EnumAttributeNormalizer: Converts enum keys to their label
 
-But you can define your own TermNormalizer as well. Just implement the _TermNormalizerInterface_ and set the service id in your config.
+But you can define your own TermNormalizer as well. Just implement the _TermNormalizerInterface_ and add the tag `best_it_commercetools_filter.term_normalizer`
+to your service. Remember to disable the default normalizer in your config.
+
+If you want to skip a term, just throw a `SkipTermException`. No further normalizer will be applied and the term will not be shown at frontend.
 
 ### Config Provider id
 

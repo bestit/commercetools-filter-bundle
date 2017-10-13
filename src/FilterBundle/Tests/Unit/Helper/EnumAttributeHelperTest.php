@@ -3,6 +3,7 @@
 namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Manager;
 
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
 use BestIt\Commercetools\FilterBundle\Model\Term\Term;
 use BestIt\Commercetools\FilterBundle\Normalizer\Term\EnumAttributeNormalizer;
 use Commercetools\Commons\Helper\QueryHelper;
@@ -127,7 +128,7 @@ class EnumAttributeHelperTest extends TestCase
                 }
             );
 
-        self::assertEquals('Wert1', $this->fixture->normalize($facetConfig1, $term1)->getTitle());
-        self::assertEquals('Wert3', $this->fixture->normalize($facetConfig2, $term2)->getTitle());
+        self::assertEquals('Wert1', $this->fixture->normalize($facetConfig1, $term1, new SearchContext())->getTitle());
+        self::assertEquals('Wert3', $this->fixture->normalize($facetConfig2, $term2, new SearchContext())->getTitle());
     }
 }
