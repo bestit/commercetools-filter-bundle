@@ -13,6 +13,7 @@ use Commercetools\Core\Model\ProductType\ProductType;
 use Commercetools\Core\Model\ProductType\ProductTypeCollection;
 use Commercetools\Core\Model\ProductType\EnumType;
 use Commercetools\Core\Model\ProductType\LocalizedEnumType;
+use Commercetools\Core\Model\ProductType\SetType;
 use Commercetools\Core\Request\ProductTypes\ProductTypeQueryRequest;
 use Exception;
 use Psr\Cache\CacheItemPoolInterface;
@@ -133,6 +134,11 @@ class EnumAttributeNormalizer implements TermNormalizerInterface
 
                     if ($attribute instanceof AttributeDefinition) {
                         $type = $attribute->getType();
+
+                        // "Set" is just a type which contains multiple values from a real type (like enum)
+                        if ($type instanceof SetType) {
+                            $type = $type->getElementType();
+                        }
 
                         if ($type instanceof LocalizedEnumType) {
                             $values = $type->getValues();
