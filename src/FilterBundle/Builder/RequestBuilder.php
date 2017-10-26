@@ -113,7 +113,7 @@ class RequestBuilder
         $resolvedValues = $builder->resolve($this->decode($context->getQuery()));
         $request = $builder->build($request, $context, $resolvedValues);
 
-        $event = new ProductProjectionSearchRequestEvent($request);
+        $event = new ProductProjectionSearchRequestEvent($request, $context->getSearch());
         $this->eventDispatcher->dispatch(FilterEvent::PRODUCTS_REQUEST_POST, $event);
 
         /**

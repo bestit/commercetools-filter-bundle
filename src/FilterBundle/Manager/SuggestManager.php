@@ -142,7 +142,7 @@ class SuggestManager implements SuggestManagerInterface
         // Match variants
         $request->markMatchingVariants($this->config->isMatchVariants());
 
-        $event = new ProductProjectionSearchRequestEvent($request);
+        $event = new ProductProjectionSearchRequestEvent($request, $keyword);
         $this->eventDispatcher->dispatch(SuggestEvent::PRODUCTS_REQUEST_POST, $event);
 
         $response = $this->client->execute($event->getRequest());

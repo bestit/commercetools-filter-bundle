@@ -1,6 +1,7 @@
 ## Unreleased
 ### Added
 - Add SetType handling for EnumAttributeNormalizer @chowanski
+- Add search keyword for products request events @chowanski
 
 ## [7.0.0] - 2017-10-06
 ### Added
