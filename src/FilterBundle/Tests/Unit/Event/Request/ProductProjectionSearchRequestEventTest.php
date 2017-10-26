@@ -25,9 +25,10 @@ class ProductProjectionSearchRequestEventTest extends TestCase
      */
     public function testSetAndGetRequest()
     {
-        $event = new ProductProjectionSearchRequestEvent($request = new ProductProjectionSearchRequest());
+        $event = new ProductProjectionSearchRequestEvent($request = new ProductProjectionSearchRequest(), 'Foobar');
 
         static::assertSame($request, $event->getRequest());
+        static::assertSame('Foobar', $event->getSearchKeyword());
 
         $newRequest = new ProductProjectionSearchRequest();
         static::assertNotSame($newRequest, $event->getRequest());
