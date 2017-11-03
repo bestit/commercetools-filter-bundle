@@ -1,4 +1,4 @@
-## Unreleased
+## [8.0.0] - 2017-11-03
 ### Added
 - Add TermNormalizerCollection and tag `best_it_commercetools_filter.term_normalizer` @chowanski
 - Add FacetFilterType configuration for category normalizer @chowanski
