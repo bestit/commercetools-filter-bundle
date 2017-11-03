@@ -84,7 +84,7 @@ class ResponseBuilder
         $facets = $pagedSearchResponse->getFacets();
 
         $pagination = $this->getPaginationFactory()->create($context, $totalProducts);
-        $facetCollection = $this->getFacetCollectionFactory()->create($facets);
+        $facetCollection = $this->getFacetCollectionFactory()->create($facets, $context);
 
         $form = $this->getFormFactory()->create(
             FilterType::class,

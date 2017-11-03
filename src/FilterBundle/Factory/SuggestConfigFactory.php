@@ -40,6 +40,7 @@ class SuggestConfigFactory
     {
         $config = new SuggestConfig();
         $config->setMatchVariants($this->config['suggest']['match_variants']);
+        $config->setBaseCategoryQuery($this->config['base_category_query']);
 
         // Fuzzy
         $fuzzyConfig = new FuzzyConfig();

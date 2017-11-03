@@ -9,8 +9,10 @@ use BestIt\Commercetools\FilterBundle\Model\Suggest\KeywordsResult;
 use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestConfig;
 use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestResult;
 use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
+use BestIt\Commercetools\FilterBundle\Repository\CategoryRepository;
 use BestIt\Commercetools\FilterBundle\SuggestEvent;
 use Commercetools\Core\Client;
+use Commercetools\Core\Model\Product\Search\Filter;
 use Commercetools\Core\Model\Product\SuggestionResult;
 use Commercetools\Core\Request\Products\ProductProjectionSearchRequest;
 use Commercetools\Core\Request\Products\ProductsSuggestRequest;
@@ -55,23 +57,33 @@ class SuggestManager implements SuggestManagerInterface
     private $config;
 
     /**
+     * The category repository
+     *
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    /**
      * SuggestManager constructor.
      *
      * @param Client $client
      * @param ProductNormalizerInterface $productNormalizer
      * @param EventDispatcherInterface $eventDispatcher
      * @param SuggestConfig $config
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(
         Client $client,
         ProductNormalizerInterface $productNormalizer,
         EventDispatcherInterface $eventDispatcher,
-        SuggestConfig $config
+        SuggestConfig $config,
+        CategoryRepository $categoryRepository
     ) {
         $this->client = $client;
         $this->productNormalizer = $productNormalizer;
         $this->eventDispatcher = $eventDispatcher;
         $this->config = $config;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -141,6 +153,15 @@ class SuggestManager implements SuggestManagerInterface
 
         // Match variants
         $request->markMatchingVariants($this->config->isMatchVariants());
+
+        // Corral request
+        if ($query = $this->config->getBaseCategoryQuery()) {
+            if ($category = $this->categoryRepository->findOneBy($query)) {
+                $request->addFilterQuery(new Filter('categories.id', $category->getId()));
+            } else {
+                throw new ApiException(sprintf('Could not fetch any base category by query: "%s"', $query));
+            }
+        }
 
         $event = new ProductProjectionSearchRequestEvent($request, $keyword);
         $this->eventDispatcher->dispatch(SuggestEvent::PRODUCTS_REQUEST_POST, $event);

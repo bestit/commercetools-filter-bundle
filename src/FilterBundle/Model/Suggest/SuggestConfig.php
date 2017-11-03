@@ -28,6 +28,13 @@ class SuggestConfig
     private $matchVariants = false;
 
     /**
+     * Optional base category query
+     *
+     * @var string|null
+     */
+    private $baseCategoryQuery;
+
+    /**
      * SuggestConfig constructor.
      */
     public function __construct()
@@ -79,6 +86,30 @@ class SuggestConfig
     public function setMatchVariants(bool $matchVariants): SuggestConfig
     {
         $this->matchVariants = $matchVariants;
+
+        return $this;
+    }
+
+    /**
+     * Get baseCategoryQuery
+     *
+     * @return null|string
+     */
+    public function getBaseCategoryQuery()
+    {
+        return $this->baseCategoryQuery;
+    }
+
+    /**
+     * Set baseCategoryQuery
+     *
+     * @param null|string $baseCategoryQuery
+     *
+     * @return SuggestConfig
+     */
+    public function setBaseCategoryQuery(string $baseCategoryQuery = null): SuggestConfig
+    {
+        $this->baseCategoryQuery = $baseCategoryQuery;
 
         return $this;
     }

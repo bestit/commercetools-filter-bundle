@@ -84,7 +84,8 @@ class SuggestManagerTest extends TestCase
             $this->client = static::createMock(Client::class),
             $this->productNormalizer = static::createMock(ProductNormalizerInterface::class),
             $this->eventDispatcher = static::createMock(EventDispatcherInterface::class),
-            $this->config = new SuggestConfig()
+            $this->config = new SuggestConfig(),
+            static::createMock(CategoryRepository::class)
         );
     }
 

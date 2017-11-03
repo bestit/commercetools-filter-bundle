@@ -2,6 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\DependencyInjection;
 
+use BestIt\Commercetools\FilterBundle\Enum\CategoryFacetFilterType;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -51,6 +52,10 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('cache_life_time')
                         ->info('DEPRECATED! Cache life time. Enum Attribute labels are cached to minimize CommerceTools requests.')
                         ->defaultValue(86400)
+                    ->end()
+                    ->scalarNode('base_category_query')
+                        ->defaultNull()
+                        ->info('Query for searching the base category. The query should match only one category or null for disable.')
                     ->end()
                 ->end()
             ->append($this->getSortingNode())
@@ -224,10 +229,6 @@ class Configuration implements ConfigurationInterface
                     ->info('Enable the normalization (default: true)')
                     ->defaultTrue()
                 ->end()
-                ->scalarNode('normalizer_id')
-                    ->info('Optional Service id for own normalizer')
-                    ->defaultValue('best_it_commercetools_filter.normalizer_term.enum_attribute_normalizer')
-                ->end()
                 ->scalarNode('cache_id')
                     ->info('Service id if for cache (default: cache.app)')
                     ->defaultValue('cache.app')
@@ -258,10 +259,6 @@ class Configuration implements ConfigurationInterface
                     ->info('Enable the normalization (default: true)')
                     ->defaultTrue()
                 ->end()
-                ->scalarNode('normalizer_id')
-                    ->info('Optional service id for own normalizer')
-                    ->defaultValue('best_it_commercetools_filter.normalizer_term.category_normalizer')
-                ->end()
                 ->scalarNode('cache_id')
                     ->info('Service id if for cache (default: cache.app)')
                     ->defaultValue('cache.app')
@@ -269,6 +266,15 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('cache_life_time')
                     ->info('Cache life time. Categories labels are cached to minimize CommerceTools requests.')
                     ->defaultValue(86400)
+                ->end()
+                    ->enumNode('facet_filter_type')
+                    ->info('You can optional filter category facets to get only child of current category')
+                    ->values([
+                        CategoryFacetFilterType::NONE,
+                        CategoryFacetFilterType::PARENT,
+                        CategoryFacetFilterType::ANCESTORS
+                    ])
+                    ->defaultValue(CategoryFacetFilterType::NONE)
                 ->end()
             ->end();
 

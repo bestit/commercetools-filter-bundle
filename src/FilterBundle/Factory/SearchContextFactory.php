@@ -2,10 +2,12 @@
 
 namespace BestIt\Commercetools\FilterBundle\Factory;
 
+use BestIt\Commercetools\FilterBundle\Exception\ApiException;
 use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Generator\FilterUrlGeneratorInterface;
 use BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig;
 use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Repository\CategoryRepository;
 use Commercetools\Core\Model\Category\Category;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,16 +35,27 @@ class SearchContextFactory
     private $filterUrlGenerator;
 
     /**
-     * ContextFactory constructor.
+     * The category respoitory
+     *
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    /**
+     * SearchContextFactory constructor.
      *
      * @param SearchConfig $config
      * @param FilterUrlGeneratorInterface $filterUrlGenerator
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(SearchConfig $config, FilterUrlGeneratorInterface $filterUrlGenerator)
-    {
-        $this
-            ->setConfig($config)
-            ->setFilterUrlGenerator($filterUrlGenerator);
+    public function __construct(
+        SearchConfig $config,
+        FilterUrlGeneratorInterface $filterUrlGenerator,
+        CategoryRepository $categoryRepository
+    ) {
+        $this->config = $config;
+        $this->filterUrlGenerator = $filterUrlGenerator;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -56,8 +69,6 @@ class SearchContextFactory
      */
     public function createFromCategory(Request $request, Category $category, string $language): SearchContext
     {
-        $config = $this->getConfig();
-
         $filter = $request->get('filter', []);
 
         $page = 1;
@@ -65,25 +76,25 @@ class SearchContextFactory
             $page = $filter[FilterType::FIELDNAME_PAGE];
         }
 
-        $view = $this->getConfig()->getDefaultView();
+        $view = $this->config->getDefaultView();
         if (array_key_exists(FilterType::FIELDNAME_VIEW, $filter) && $filter[FilterType::FIELDNAME_VIEW] !== '') {
             $view = $filter[FilterType::FIELDNAME_VIEW];
         }
 
-        $sorting = $this->getConfig()->getDefaultSorting();
+        $sorting = $this->config->getDefaultSorting();
         if (array_key_exists(FilterType::FIELDNAME_SORTING, $filter) && $filter[FilterType::FIELDNAME_SORTING] !== '') {
             $sorting = $filter[FilterType::FIELDNAME_SORTING];
         }
 
         $context = new SearchContext(
             [
-                'page' => (int) $page,
-                'view' => (string) $view,
-                'sorting' => (string) $sorting,
+                'page' => (int)$page,
+                'view' => (string)$view,
+                'sorting' => (string)$sorting,
                 'query' => $request->query->all(),
-                'config' => $config,
+                'config' => $this->config,
                 'route' => $category,
-                'baseUrl' => $this->getFilterUrlGenerator()->generateByCategory($request, $category),
+                'baseUrl' => $this->filterUrlGenerator->generateByCategory($request, $category),
                 'category' => $category,
                 'language' => $language
             ]
@@ -100,11 +111,11 @@ class SearchContextFactory
      * @param string|null $search
      *
      * @return SearchContext
+     *
+     * @throws ApiException
      */
     public function createFromSearch(Request $request, string $language, string $search = null): SearchContext
     {
-        $config = $this->getConfig();
-
         $filter = $request->get('filter', []);
 
         $page = 1;
@@ -112,78 +123,38 @@ class SearchContextFactory
             $page = $filter[FilterType::FIELDNAME_PAGE];
         }
 
-        $view = $this->getConfig()->getDefaultView();
+        $view = $this->config->getDefaultView();
         if (array_key_exists(FilterType::FIELDNAME_VIEW, $filter) && $filter[FilterType::FIELDNAME_VIEW] !== '') {
             $view = $filter[FilterType::FIELDNAME_VIEW];
         }
 
-        $sorting = $this->getConfig()->getDefaultSorting();
+        $sorting = $this->config->getDefaultSorting();
         if (array_key_exists(FilterType::FIELDNAME_SORTING, $filter) && $filter[FilterType::FIELDNAME_SORTING] !== '') {
             $sorting = $filter[FilterType::FIELDNAME_SORTING];
         }
 
         $context = new SearchContext(
             [
-                'page' => (int) $page,
-                'view' => (string) $view,
-                'sorting' => (string) $sorting,
+                'page' => (int)$page,
+                'view' => (string)$view,
+                'sorting' => (string)$sorting,
                 'query' => $request->query->all(),
-                'config' => $config,
+                'config' => $this->config,
                 'route' => 'search_index',
-                'baseUrl' => $this->getFilterUrlGenerator()->generateBySearch($request, $search),
+                'baseUrl' => $this->filterUrlGenerator->generateBySearch($request, $search),
                 'search' => $search,
                 'language' => $language
             ]
         );
 
+        if ($query = $this->config->getBaseCategoryQuery()) {
+            if ($category = $this->categoryRepository->findOneBy($query)) {
+                $context->setCategory($category);
+            } else {
+                throw new ApiException(sprintf('Could not fetch any base category by query: "%s"', $query));
+            }
+        }
+
         return $context;
-    }
-
-    /**
-     * Get filterUrlGenerator
-     *
-     * @return FilterUrlGeneratorInterface
-     */
-    private function getFilterUrlGenerator(): FilterUrlGeneratorInterface
-    {
-        return $this->filterUrlGenerator;
-    }
-
-    /**
-     * Set filterUrlGenerator
-     *
-     * @param FilterUrlGeneratorInterface $filterUrlGenerator
-     *
-     * @return SearchContextFactory
-     */
-    private function setFilterUrlGenerator(FilterUrlGeneratorInterface $filterUrlGenerator): SearchContextFactory
-    {
-        $this->filterUrlGenerator = $filterUrlGenerator;
-
-        return $this;
-    }
-
-    /**
-     * Get config
-     *
-     * @return SearchConfig
-     */
-    private function getConfig(): SearchConfig
-    {
-        return $this->config;
-    }
-
-    /**
-     * Set config
-     *
-     * @param SearchConfig $config
-     *
-     * @return SearchContextFactory
-     */
-    private function setConfig(SearchConfig $config): SearchContextFactory
-    {
-        $this->config = $config;
-
-        return $this;
     }
 }

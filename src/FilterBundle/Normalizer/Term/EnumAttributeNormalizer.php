@@ -2,7 +2,9 @@
 
 namespace BestIt\Commercetools\FilterBundle\Normalizer\Term;
 
+use BestIt\Commercetools\FilterBundle\Enum\FacetType;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
+use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
 use BestIt\Commercetools\FilterBundle\Model\Term\Term;
 use BestIt\Commercetools\FilterBundle\Normalizer\TermNormalizerInterface;
 use Commercetools\Commons\Helper\QueryHelper;
@@ -10,7 +12,6 @@ use Commercetools\Core\Client;
 use Commercetools\Core\Error\ApiException;
 use Commercetools\Core\Model\ProductType\AttributeDefinition;
 use Commercetools\Core\Model\ProductType\ProductType;
-use Commercetools\Core\Model\ProductType\ProductTypeCollection;
 use Commercetools\Core\Model\ProductType\EnumType;
 use Commercetools\Core\Model\ProductType\LocalizedEnumType;
 use Commercetools\Core\Model\ProductType\SetType;
@@ -92,7 +93,7 @@ class EnumAttributeNormalizer implements TermNormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize(FacetConfig $config, Term $term): Term
+    public function normalize(FacetConfig $config, Term $term, SearchContext $context): Term
     {
         // Collect labels if not already cached
         if (!array_key_exists($config->getField(), $this->labels)) {
@@ -180,5 +181,13 @@ class EnumAttributeNormalizer implements TermNormalizerInterface
         }
 
         return $this->productTypes;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function support(string $type): bool
+    {
+        return $type === FacetType::ENUM || $type === FacetType::LENUM;
     }
 }

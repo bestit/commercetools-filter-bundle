@@ -1,3 +1,18 @@
+## Unreleased
+### Added
+- Add TermNormalizerCollection and tag `best_it_commercetools_filter.term_normalizer` @chowanski
+- Add FacetFilterType configuration for category normalizer @chowanski
+- Add SkipTermException possibility for TermNormalizer if you want to skip the term @chowanski
+- Add `base_category_query` for defining a base category via config @chowanski
+
+### Removed
+- Remove CategoryListener and EnumAttributeListener - normalizer now injected directly via the term normalizer tag @chowanski
+- Remove event dispatcher from FacetCollectionFactory (use TermNormalizer tag and interface instead) @chowanski
+- Remove configuration for `normalizer_id` @chowanski
+
+### Changed
+- TermNormalizerInterface has a new additional argument: SearchContext @chowanski
+
 ## [7.1.0] - 2017-10-26
 ### Added
 - Add SetType handling for EnumAttributeNormalizer @chowanski

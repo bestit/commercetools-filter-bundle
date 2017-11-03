@@ -7,6 +7,7 @@ use BestIt\Commercetools\FilterBundle\Form\FilterType;
 use BestIt\Commercetools\FilterBundle\Generator\FilterUrlGeneratorInterface;
 use BestIt\Commercetools\FilterBundle\Model\Search\SearchConfig;
 use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
+use BestIt\Commercetools\FilterBundle\Repository\CategoryRepository;
 use Commercetools\Core\Model\Category\Category;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,7 +73,8 @@ class ContextFactoryTest extends TestCase
 
         $this->fixture = new SearchContextFactory(
             $this->config,
-            $this->filterUrlGenerator = $this->createMock(FilterUrlGeneratorInterface::class)
+            $this->filterUrlGenerator = $this->createMock(FilterUrlGeneratorInterface::class),
+            $this->createMock(CategoryRepository::class)
         );
     }
 
