@@ -1,3 +1,7 @@
+## unreleased
+### Added
+- Added SortType as enum to config. Added sorting in buildForm-Function to be backwards compatible @andre.varelmann
+
 ## [8.0.0] - 2017-11-03
 ### Added
 - Add TermNormalizerCollection and tag `best_it_commercetools_filter.term_normalizer` @chowanski

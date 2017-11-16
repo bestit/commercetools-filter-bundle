@@ -2,7 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Enum;
 
-use ReflectionClass;
+use BestIt\Commercetools\FilterBundle\Helper\EnumIsValidTrait;
 
 /**
  * Enum for facet types
@@ -13,6 +13,8 @@ use ReflectionClass;
  */
 class FacetType
 {
+    use EnumIsValidTrait;
+
     /**
      * Facet text type
      *
@@ -61,18 +63,4 @@ class FacetType
      * @var string
      */
     const TERM = 'terms';
-
-    /**
-     * Check if the given value is a valid enum type
-     *
-     * @param string $value
-     *
-     * @return bool
-     */
-    public static function isValid(string $value): bool
-    {
-        $class = new ReflectionClass(__CLASS__);
-
-        return in_array($value, $class->getConstants());
-    }
 }

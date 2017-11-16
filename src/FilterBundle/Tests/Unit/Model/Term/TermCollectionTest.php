@@ -90,9 +90,9 @@ class TermCollectionTest extends TestCase
      */
     public function testSortedTerms()
     {
-        $this->fixture->addTerm((new Term())->setTitle('yLast'));
         $this->fixture->addTerm((new Term())->setTitle('aFirst'));
         $this->fixture->addTerm((new Term())->setTitle('gMiddle'));
+        $this->fixture->addTerm((new Term())->setTitle('yLast'));
 
         self::assertEquals('aFirst', $this->fixture->toArray()[0]->getTitle());
         self::assertEquals('gMiddle', $this->fixture->toArray()[1]->getTitle());

@@ -3,6 +3,7 @@
 namespace BestIt\Commercetools\FilterBundle\Model\Facet;
 
 use BestIt\Commercetools\FilterBundle\Enum\FacetType;
+use BestIt\Commercetools\FilterBundle\Enum\SortType;
 use InvalidArgumentException;
 
 /**
@@ -76,6 +77,13 @@ class FacetConfig
      * @var int
      */
     private $weight = 0;
+
+    /**
+     * How are the results sorted (alphabetical, by number)
+     * @var string
+     */
+
+    private $sortType = SortType::ALPHABETICAL;
 
     /**
      * Show term count in label
@@ -167,6 +175,29 @@ class FacetConfig
     public function setShowCount(bool $showCount): FacetConfig
     {
         $this->showCount = $showCount;
+        return $this;
+    }
+
+    /**
+     * Getter for sortType.
+     */
+    public function getSortType(): string
+    {
+        return $this->sortType;
+    }
+
+    /**
+     * Setter for sortType
+     *
+     * @param string $sortType
+     *
+     * @return FacetConfig
+     */
+    public function setSortType(string $sortType): FacetConfig
+    {
+        if (SortType::isValid($sortType)) {
+            $this->sortType = $sortType;
+        }
         return $this;
     }
 

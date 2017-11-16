@@ -3,6 +3,7 @@
 namespace BestIt\Commercetools\FilterBundle\Model\Term;
 
 use ArrayIterator;
+use BestIt\Commercetools\FilterBundle\Model\Facet\FacetConfig;
 use IteratorAggregate;
 
 /**
@@ -60,14 +61,6 @@ class TermCollection implements IteratorAggregate
      */
     public function toArray(): array
     {
-        $termsSorted = $this->terms;
-        usort(
-            $termsSorted,
-            function (Term $a, Term $b) {
-                return $a->getTitle() <=> $b->getTitle();
-            }
-        );
-
-        return $termsSorted;
+        return $this->terms;
     }
 }

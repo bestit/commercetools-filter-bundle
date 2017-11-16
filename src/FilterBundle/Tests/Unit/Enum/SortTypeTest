@@ -1,0 +1,39 @@
+<?php
+
+namespace BestIt\Commercetools\FilterBundle\Tests\Unit\Enum;
+
+use BestIt\Commercetools\FilterBundle\Enum\SortType;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Test for facet type enum
+ *
+ * @author     andre.varelmann <andre.varelmann@bestit-online.de>
+ * @category   Tests\Unit
+ * @package    BestIt\Commercetools\FilterBundle
+ * @subpackage Enum
+ * @version    $id$
+ */
+class SortTypeTest extends TestCase
+{
+    /**
+     * Test alphabetical value
+     *
+     * @return void
+     */
+    public function testAlphabeticalValue()
+    {
+        static::assertEquals('alphabetical', SortType::ALPHABETICAL);
+        static::assertTrue(SortType::isValid('alphabetical'));
+    }
+
+    /**
+     * Test by number value
+     *
+     * @return void
+     */
+    public function testByNumberValue()
+    {
+        static::assertEquals('by number', SortType::BY_NUMBER);
+    }
+}

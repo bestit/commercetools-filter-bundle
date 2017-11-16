@@ -2,6 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Form;
 
+use BestIt\Commercetools\FilterBundle\Enum\SortType;
 use BestIt\Commercetools\FilterBundle\Model\Search\SearchContext;
 use BestIt\Commercetools\FilterBundle\Model\Facet\Facet;
 use BestIt\Commercetools\FilterBundle\Model\Facet\FacetCollection;
@@ -58,8 +59,34 @@ class FilterType extends AbstractType
                         continue 2;
                     }
 
+                    /**
+                     * Alphabetical ordered $terms
+                     *
+                     * @var Term[] $terms
+                     */
+                    $terms = $facet->getTerms()->toArray();
+
+                    switch ($facet->getConfig()->getSortType()) {
+                        case SortType::ALPHABETICAL:
+                            usort(
+                                $terms,
+                                function (Term $a, Term $b) {
+                                    return $a->getTitle() <=> $b->getTitle();
+                                }
+                            );
+                            break;
+                        case SortType::BY_NUMBER:
+                            usort(
+                                $terms,
+                                function (Term $a, Term $b) {
+                                    return $b->getCount() <=> $a->getCount();
+                                }
+                            );
+                            break;
+                    }
+
                     $choices = [];
-                    foreach ($facet->getTerms() as $term) {
+                    foreach ($terms as $term) {
                         if (!$title = $term->getTitle()) {
                             continue;
                         }
