@@ -1,4 +1,4 @@
-## unreleased
+## [8.1.0] - 2017-11-16
 ### Added
 - Added SortType as enum to config. Added sorting in buildForm-Function to be backwards compatible @andre.varelmann
 
