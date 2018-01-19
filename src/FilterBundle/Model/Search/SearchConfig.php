@@ -35,6 +35,20 @@ class SearchConfig
     private $defaultSorting;
 
     /**
+     * Name of default sorting for the listing (eg. name_asc)
+     *
+     * @var string
+     */
+    private $defaultSortingListing;
+
+    /**
+     * Name of default sorting for the search (eg. name_asc)
+     *
+     * @var string
+     */
+    private $defaultSortingSearch;
+
+    /**
      * Amount of neighbours at pagination
      *
      * @var int
@@ -121,6 +135,26 @@ class SearchConfig
     }
 
     /**
+     * Get DefaultSortingListing
+     *
+     * @return string
+     */
+    public function getDefaultSortingListing(): string
+    {
+        return $this->defaultSortingListing;
+    }
+
+    /**
+     * Get DefaultSortingSearch
+     *
+     * @return string
+     */
+    public function getDefaultSortingSearch(): string
+    {
+        return $this->defaultSortingSearch;
+    }
+
+    /**
      * Get itemsPerPage
      *
      * @return int
@@ -175,6 +209,30 @@ class SearchConfig
     {
         $this->defaultView = $defaultView;
 
+        return $this;
+    }
+
+    /**
+     * Set DefaultSortingListing
+     *
+     * @param string $defaultSortingListing
+     * @return self
+     */
+    public function setDefaultSortingListing(string $defaultSortingListing): SearchConfig
+    {
+        $this->defaultSortingListing = $defaultSortingListing;
+        return $this;
+    }
+
+    /**
+     * Set DefaultSortingSearch
+     *
+     * @param string $defaultSortingSearch
+     * @return self
+     */
+    public function setDefaultSortingSearch(string $defaultSortingSearch): SearchConfig
+    {
+        $this->defaultSortingSearch = $defaultSortingSearch;
         return $this;
     }
 

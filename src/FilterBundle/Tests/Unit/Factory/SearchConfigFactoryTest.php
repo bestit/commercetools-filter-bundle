@@ -68,6 +68,8 @@ class SearchConfigFactoryTest extends TestCase
 
         static::assertInstanceOf(SearchConfig::class, $resolvedConfig);
         static::assertEquals('price_asc', $resolvedConfig->getDefaultSorting());
+        static::assertEquals('price_asc', $resolvedConfig->getDefaultSortingSearch());
+        static::assertEquals('price_asc', $resolvedConfig->getDefaultSortingListing());
         static::assertEquals('grid', $resolvedConfig->getDefaultView());
         static::assertEquals(4, $resolvedConfig->getNeighbours());
         static::assertEquals(23, $resolvedConfig->getItemsPerPage());
@@ -78,5 +80,13 @@ class SearchConfigFactoryTest extends TestCase
         static::assertEquals(true, $resolvedConfig->getFuzzyConfig()->isActive());
         static::assertEquals(4, $resolvedConfig->getFuzzyConfig()->getLevel());
         static::assertEquals('custom(fields(alias="_SHOP_ROOT"))', $resolvedConfig->getBaseCategoryQuery());
+
+        $configData['sorting']['default_listing'] = 'name_desc';
+        $configData['sorting']['default_search'] = 'name_desc';
+
+        $resolvedConfig = (new SearchConfigFactory($configData))->create();
+        
+        static::assertEquals('name_desc', $resolvedConfig->getDefaultSortingListing());
+        static::assertEquals('name_desc', $resolvedConfig->getDefaultSortingSearch());
     }
 }

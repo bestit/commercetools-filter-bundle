@@ -42,6 +42,12 @@ class SearchConfigFactory
         $config->setItemsPerPage($this->config['pagination']['products_per_page']);
         $config->setDefaultView($this->config['view']['default']);
         $config->setDefaultSorting($this->config['sorting']['default']);
+        $config->setDefaultSortingListing(
+            $this->config['sorting']['default_listing'] ?? $this->config['sorting']['default']
+        );
+        $config->setDefaultSortingSearch(
+            $this->config['sorting']['default_search'] ?? $this->config['sorting']['default']
+        );
         $config->setNeighbours($this->config['pagination']['neighbours']);
         $config->setSortings($this->config['sorting']['choices']);
         $config->setFacet($this->config['facet']);
