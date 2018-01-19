@@ -104,6 +104,12 @@ best_it_commercetools_filter:
 
         # The default sort
         default:              ~ # Required
+        
+        # Default Sorting for the listing pages
+        default_listing:      ~ # optional, if not set fallback to default sorting
+        
+        # Default Sorting for the search page
+        default_search:       ~ # optional, if not set fallback to default sorting
 
         # Define the sorting id, the translation key and sort query. This is an array with all available sortings.
         choices:              # Required

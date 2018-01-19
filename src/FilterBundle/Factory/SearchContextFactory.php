@@ -81,7 +81,7 @@ class SearchContextFactory
             $view = $filter[FilterType::FIELDNAME_VIEW];
         }
 
-        $sorting = $this->config->getDefaultSorting();
+        $sorting = $this->config->getDefaultSortingListing();
         if (array_key_exists(FilterType::FIELDNAME_SORTING, $filter) && $filter[FilterType::FIELDNAME_SORTING] !== '') {
             $sorting = $filter[FilterType::FIELDNAME_SORTING];
         }
@@ -128,7 +128,7 @@ class SearchContextFactory
             $view = $filter[FilterType::FIELDNAME_VIEW];
         }
 
-        $sorting = $this->config->getDefaultSorting();
+        $sorting = $this->config->getDefaultSortingSearch();
         if (array_key_exists(FilterType::FIELDNAME_SORTING, $filter) && $filter[FilterType::FIELDNAME_SORTING] !== '') {
             $sorting = $filter[FilterType::FIELDNAME_SORTING];
         }

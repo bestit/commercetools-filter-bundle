@@ -53,6 +53,8 @@ class ContextFactoryTest extends TestCase
             [
                 'defaultView' => 'grid',
                 'defaultSorting' => 'name_asc',
+                'defaultSortingListing' => 'name_asc',
+                'defaultSortingSearch' => 'name_asc',
                 'neighbours' => 3,
                 'itemsPerPage' => 30,
                 'viewQueryKey' => 'v',
