@@ -1,3 +1,7 @@
+## [8.2.1] - 2018-02-05
+### Bugfix
+- Fix exception while execute invalid request caused by invalid attributes names @andre.varelmann
+
 ## [8.2.0] - 2018-01-19
 ### Added
 - Added options for setting a different default sorting for search and listing @bestit-knoop
