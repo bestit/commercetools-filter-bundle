@@ -57,6 +57,10 @@ class FacetBuilder
             $this->facetConfigCollection->all()
         );
 
+        $aliases = array_filter($aliases, function ($alias) {
+            return preg_match('/^([\w-]+)$/', $alias);
+        });
+
         foreach ($aliases as $facetAlias) {
             $facetConfig = $this->facetConfigCollection->findByAlias($facetAlias);
             $name = $facetConfig->getFilterField($context->getLanguage());
