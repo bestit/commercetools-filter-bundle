@@ -7,19 +7,19 @@ use BestIt\Commercetools\FilterBundle\Event\Request\ProductsSuggestRequestEvent;
 use BestIt\Commercetools\FilterBundle\Exception\ApiException;
 use BestIt\Commercetools\FilterBundle\Manager\SuggestManager;
 use BestIt\Commercetools\FilterBundle\Manager\SuggestManagerInterface;
-use BestIt\Commercetools\FilterBundle\Model\Fuzzy\FuzzyConfig;
 use BestIt\Commercetools\FilterBundle\Model\Suggest\KeywordsResult;
 use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestConfig;
 use BestIt\Commercetools\FilterBundle\Model\Suggest\SuggestResult;
 use BestIt\Commercetools\FilterBundle\Normalizer\ProductNormalizerInterface;
+use BestIt\Commercetools\FilterBundle\Repository\CategoryRepository;
 use BestIt\Commercetools\FilterBundle\SuggestEvent;
 use Commercetools\Core\Client;
-use Commercetools\Core\Config;
-use Commercetools\Core\Model\Common\Context;
+use Commercetools\Core\Model\Category\Category;
 use Commercetools\Core\Model\Common\LocalizedString;
 use Commercetools\Core\Model\Product\LocalizedSuggestionCollection;
 use Commercetools\Core\Model\Product\ProductProjection;
 use Commercetools\Core\Model\Product\ProductProjectionCollection;
+use Commercetools\Core\Model\Product\Search\Filter;
 use Commercetools\Core\Model\Product\Suggestion;
 use Commercetools\Core\Model\Product\SuggestionCollection;
 use Commercetools\Core\Model\Product\SuggestionResult;
@@ -76,6 +76,11 @@ class SuggestManagerTest extends TestCase
     private $config;
 
     /**
+     * @var CategoryRepository|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $categoryRepository;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()
@@ -85,7 +90,7 @@ class SuggestManagerTest extends TestCase
             $this->productNormalizer = static::createMock(ProductNormalizerInterface::class),
             $this->eventDispatcher = static::createMock(EventDispatcherInterface::class),
             $this->config = new SuggestConfig(),
-            static::createMock(CategoryRepository::class)
+            $this->categoryRepository = $this->createMock(CategoryRepository::class)
         );
     }
 
@@ -189,10 +194,13 @@ class SuggestManagerTest extends TestCase
     public function testGetProducts()
     {
         $keyword = 'foobar';
+        $baseCategoryQuery = 'foo=bar';
+        $category = Category::fromArray(['id' => '1']);
         $max = 10;
 
         $request = ProductProjectionSearchRequest::of();
         $request->addParam('text.de', $keyword);
+        $request->addFilterQuery(new Filter('categories.id', $category->getId()));
         $request->fuzzy(4);
         $request->limit($max);
         $request->markMatchingVariants(true);
@@ -208,6 +216,13 @@ class SuggestManagerTest extends TestCase
         $this->config->getFuzzyConfig()->setIsActive(true);
         $this->config->getFuzzyConfig()->setLevel(4);
         $this->config->setMatchVariants(true);
+        $this->config->setBaseCategoryQuery($baseCategoryQuery);
+
+        $this->categoryRepository
+            ->expects(static::once())
+            ->method('findOneBy')
+            ->with($baseCategoryQuery)
+            ->willReturn($category);
 
         $productProjectionCollection = new ProductProjectionCollection();
 
@@ -238,6 +253,7 @@ class SuggestManagerTest extends TestCase
         $result = $this->fixture->getProducts($keyword, $max);
         static::assertInstanceOf(SuggestResult::class, $result);
         static::assertEquals([['foo' => 'bar'], ['bar' => 'foo']], $result->getProducts());
+        static::assertEquals($category, $result->getBaseCategory());
         static::assertInstanceOf(ApiResponseInterface::class, $result->getHttpResponse());
     }
 
