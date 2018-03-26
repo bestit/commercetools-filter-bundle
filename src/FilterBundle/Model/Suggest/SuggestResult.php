@@ -2,6 +2,7 @@
 
 namespace BestIt\Commercetools\FilterBundle\Model\Suggest;
 
+use Commercetools\Core\Model\Category\Category;
 use Commercetools\Core\Response\ApiResponseInterface;
 
 /**
@@ -28,6 +29,11 @@ class SuggestResult
     private $httpResponse;
 
     /**
+     * @var Category $baseCategory
+     */
+    private $baseCategory;
+
+    /**
      * Get products
      *
      * @return array
@@ -46,6 +52,38 @@ class SuggestResult
     public function setProducts(array $products): SuggestResult
     {
         $this->products = $products;
+        return $this;
+    }
+
+    /**
+     * Get the category
+     *
+     * @return Category
+     */
+    public function getBaseCategory(): Category
+    {
+        return $this->baseCategory;
+    }
+
+    /**
+     * Checks if base category is set
+     *
+     * @return bool
+     */
+    public function hasBaseQuery(): bool
+    {
+        return $this->baseCategory !== null;
+    }
+
+    /**
+     * Set the category
+     *
+     * @param Category $baseCategory
+     * @return SuggestResult
+     */
+    public function setBaseCategory(Category $baseCategory): SuggestResult
+    {
+        $this->baseCategory = $baseCategory;
         return $this;
     }
 

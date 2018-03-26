@@ -155,6 +155,7 @@ class SuggestManager implements SuggestManagerInterface
         $request->markMatchingVariants($this->config->isMatchVariants());
 
         // Corral request
+        $category = null;
         if ($query = $this->config->getBaseCategoryQuery()) {
             if ($category = $this->categoryRepository->findOneBy($query)) {
                 $request->addFilterQuery(new Filter('categories.id', $category->getId()));
@@ -178,8 +179,13 @@ class SuggestManager implements SuggestManagerInterface
         }
 
         $result = new SuggestResult();
-        $result->setProducts($products);
-        $result->setHttpResponse($response);
+        $result
+            ->setProducts($products)
+            ->setHttpResponse($response);
+
+        if ($category !== null) {
+            $result->setBaseCategory($category);
+        }
 
         return $result;
     }

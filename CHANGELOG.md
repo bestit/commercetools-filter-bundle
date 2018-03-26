@@ -1,6 +1,10 @@
+## [8.3.0] - 2018-02-05
+### Added
+- Added the base query to the suggest result to prevent duplicated queries in frontends @avareldev
+
 ## [8.2.1] - 2018-02-05
 ### Bugfix
-- Fix exception while execute invalid request caused by invalid attributes names @andre.varelmann
+- Fix exception while execute invalid request caused by invalid attributes names @avareldev
 
 ## [8.2.0] - 2018-01-19
 ### Added
@@ -8,7 +12,7 @@
 
 ## [8.1.0] - 2017-11-16
 ### Added
-- Added SortType as enum to config. Added sorting in buildForm-Function to be backwards compatible @andre.varelmann
+- Added SortType as enum to config. Added sorting in buildForm-Function to be backwards compatible @avareldev
 
 ## [8.0.0] - 2017-11-03
 ### Added
